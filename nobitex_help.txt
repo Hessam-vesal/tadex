@@ -1,0 +1,3942 @@
+مستندات API نوبیتکس
+NOBITEX
+به مستندات API نوبیتکس، بزرگترین بازار ارز دیجیتال ایران خوش آمدید. نوبیتکس از ابتدای کار API خود را در اختیار تمامی کاربران و توسعه‌دهندگان گرامی قرار داده است. با استفاده از API نوبیتکس می‌توانید علاوه بر اطلاع از آخرین قیمت‌ها و وضعیت بازار رمزارزها در ایران، اقدام به مدیریت حساب نوبیتکس خود به روش خودکار و مبتنی بر کد نمایید. استفاده از API علاوه بر فراهم‌سازی امکانات نوین برای کاربران، امکان انجام معاملات خودکار که باعث سیال و منصفانه‌تر شدن قیمت در بازارها می‌شود را فراهم می‌کند.
+
+پیش از استفاده از API نوبیتکس اطمینان حاصل کنید که با قوانین نوبیتکس و همچنین قوانین و شرایط استفاده از API نوبیتکس آشنایی کامل دارید. همین طور با توجه به احتمال ایجاد تغییرات در بستر نوبیتکس یا ساختار و جزئیات APIها، همواره به اطلاعیه‌های کانال رسمی تلگرام نوبیتکس و کانال رسمی تلگرام API نوبیتکس دقت کنید. به علاوه به صورت مستمر صفحه سابقه تغییرات API نوبیتکس را رصد کنید تا از تمامی تغییرات API نوبیتکس مطلع باشید.
+
+در استفاده از API همواره اطمینان حاصل کنید که کد شما قابلیت مواجهه با حالت‌های خطا و شرایط و تغییرات پیش‌بینی نشده را داشته باشد و عکس العمل مناسبی در این خصوص نشان دهد. با توجه به حساسیت‌های بازارهای مالی، لازم است که کدهای استفاده کننده از API به صورت اصولی و با ملاحظاتی مانند کنترل نرخ درخواست‌ها در شرایط مختلف، مدیریت حالت‌های خطا، پیش‌گیری از تشدید آبشاری خطاها، سازوکارهای حفاظت در عمق، وجود سامانه‌های مانیتورینگ و اعلان، وجود سازوکارهای مدیریت ریسک و ... توسعه داده شود.
+
+اگر برای اولین بار است که از API نوبیتکس استفاده می‌کنید، می‌توانید از بخش راهنمای شروع به کار با API کمک بگیرید.
+
+احراز هویت و توکن
+Authorization: Token yourTOKENhereHEX0000000000
+برای استفاده از APIهای غیر عمومی نیاز به ارسال توکن وجود دارد. این توکن باید به عنوان HTTP Header درخواست به صورت زیر ارسال شود:
+
+Authorization: Token yourTOKENhereHEX0000000000
+
+به جز APIهای بخش‌هایی که عنوان «عمومی» در انتهای نام‌شان آورده شده باشد، برای استفاده از تمام APIها نیاز به ارسال توکن وجود دارد. توکن مشخص می‌کند که کدام کاربر در حال ارسال این درخواست است.
+
+ به هیچ عنوان توکن خود را در اختیار دیگران قرار ندهید.
+اگر این توکن به صورت تصادفی در اختیار دیگران قرار گرفت سریعاً logout کرده و اقدام به لاگین و دریافت توکن جدید کنید.
+برای دریافت توکن می‌توانید با مراجعه به پنل کاربری خود در نوبیتکس، از بخش پروفایل وارد صفحه تنظیمات شده و توکن خود را دریافت نمایید. در صورتی که گزینه «مرا به خاطر بسپار» را در هنگام ورود به نوبیتکس انتخاب کرده باشید، این توکن تا ۳۰ روز یا زمان لاگ‌اوت شما از نوبیتکس معتبر خواهد ماند.
+
+در صورت تمایل به دریافت دوره‌ای و خودکار توکن، می‌توانید از API ورود - دریافت توکن استفاده نمایید. ولی این کار ضروری نیست و روش پیشنهادی ما برای اغلب کاربران دریافت مستقیم توکن از پنل کاربری است. تنها در صورتی که با مخاطرات ذخیره گذرواژه خود در کد و روش‌های امن این کار آشنا هستید، در استفاده از API مهارت دارید، و از طرفی نیاز به دریافت کاملاً خودکار توکن دارید، از API دریافت توکن استفاده نمایید.
+
+کلید ای‌پی‌آی (آزمایشی)
+کلید ای پی آی برای دسترسی امن تر و با مجوز مشخص به ای پی آی‌های نوبیتکس طراحی شده است. کلید ای پی آی به شما اجازه می‌دهد به صورت کنترل شده و از روی آی پی مشخص، به ای پی آی های نوبیتکس دسترسی داشته باشید و مدت زمان اعتبار کلید را مشخص کنید.
+
+اهداف و کاربردها
+چرا API Key؟
+امنیت بیشتر (امکان تعریف سطح دسترسی محدود) با سه دسترسی READ, WITHDRAW, TRADE
+پشتیبانی از IP Whitelist
+قابلیت تنظیم تاریخ انقضای دلخواه
+قابلیت غیرفعال‌سازی یا حذف بدون تغییر پسورد اصلی
+مناسب برای ربات‌ها و اسکریپت‌های خودکار
+سطوح دسترسی (Permissions)
+READ →دریافت اطلاعات بدون تغییر در دیتابیس
+TRADE → عملیات‌های مربوط به معامله و ترید، که منجر به تغییری در دیتابیس می‌شوند.
+WITHDRAW → دسترسی عملیات برداشت
+توجه کنید که برای دسترسی به ای پی آی هایی مانند لیست سفارشات، دسترسی READ الزامی است. هر کلید می‌تواند یکی یا چند دسترسی داشته باشد.
+
+ایجاد API Key
+آدرس
+POST /apikeys/create
+
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+name	string	الزامی	نام کلید برای شناسایی توسط کاربر	"my-api-key"
+description	string	خالی ('')	توضیحات دلخواه کاربر	"API key for internal services"
+permissions	string (enum)	الزامی	مقادیر مجاز: READ, TRADE, WITHDRAW (به صورت رشته و جداشده با کاما)	"READ,TRADE"
+ipAddressesWhitelist	list	[]	لیست آدرس‌های IP مجاز (IPv4/IPv6)	["192.168.1.10", "10.0.0.5"]
+expirationDate	datetime (UTC)	None	تاریخ انقضای کلید (اختیاری)	"2025-12-31T23:59:59Z"
+نکات امنیتی
+ارسال OTP (2FA) در هدر X-totp الزامی است.
+بعد از ایجاد کلید، یک ایمیل اطلاع‌رسانی برای کاربر ارسال می‌شود.
+رویداد ایجاد کلید در لاگ ثبت می‌شود.
+نمونه درخواست
+
+{
+  "name": "my-api-key",
+  "description": "API key for internal services",
+  "permissions": "READ,TRADE",
+  "ipAddressesWhitelist": [
+    "192.168.1.10",
+    "10.0.0.5"
+  ],
+  "expirationDate": "2025-12-31T23:59:59Z"
+}
+نمونه پاسخ
+
+{
+  "key": {
+    "createdAt": "2025-09-02T16:50:29.381869Z",
+    "description": "API key for internal services",
+    "expirationDate": "2025-12-31T23:59:59Z",
+    "ipAddressesWhitelist": ["192.168.1.10", "10.0.0.5"],
+    "key": "5XOCQZSPLQM4MiLzuUnZoBuqgYgTKl40W2X5j1pxfIA=",
+    "name": "my-api-key",
+    "permissions": "READ,TRADE",
+    "updatedAt": "2025-09-02T16:50:29.381876Z"
+  },
+  "privateKey": "S5y19KewZzheCWCO4xqMcwwvtR8vQ-hHjE_cdjz-XxE=",
+  "status": "ok"
+}
+⚠️ توجه: کلید خصوصی (privateKey) فقط یک بار در پاسخ نمایش داده می‌شود. حتماً آن را در مکان امن (Secret Manager) ذخیره کنید.
+
+مدیریت کلیدها
+لیست کلیدها
+GET /apikeys/list
+
+خروجی: لیست کلیدهای کاربر + وضعیت و اطلاعات آنها.
+
+حذف کلید
+POST /apikeys/delete/
+
+ورودی: public_key در آدرس خروجی: json { "status": "ok" }
+
+کلید عمومی را در یو آر ال قرار دهید.
+
+بروزرسانی کلید
+POST /apikeys/update/
+
+قابل تغییر: name, description, ipAddressesWhitelist خروجی: شیء کلید به‌روزرسانی‌شده.
+
+نمونه درخواست
+
+{
+  "name": "my-api-key",
+  "description": "API key for internal services",
+  "ipAddressesWhitelist": [
+    "192.168.1.10",
+    "10.0.0.5"
+  ]
+}
+نمونه پاسخ
+
+{
+  "key": {
+    "createdAt": "2025-09-02T16:50:29.381869Z",
+    "description": "API key for internal services",
+    "expirationDate": "2025-12-31T23:59:59Z",
+    "ipAddressesWhitelist": ["192.168.1.10", "10.0.0.5"],
+    "key": "5XOCQZSPLQM4MiLzuUnZoBuqgYgTKl40W2X5j1pxfIA=",
+    "name": "my-api-key",
+    "permissions": "READ,TRADE",
+    "updatedAt": "2025-09-02T16:50:29.381876Z"
+  },
+  "status": "ok"
+}
+دسترسی ها
+سه دسترسی خواندن، معامله و برداشت تعریف شده است.
+
+READ
+دسترسی خواندن مخصوص تمام ای پی آی هایی است که تغییری در دیتابیس ایجاد نمی‌کنند. با ایجاد این دسترسی روی یک کلید، دسترسی به ای پی آی های زیر، ایجاد می‌شود.:
+
+اطلاعات کاربر
+
+users/preferences
+users/profile
+users/verification/status
+notifications/list
+users/limitations
+مارکت
+
+market/orders/status
+market/orders/list
+market/trades/list
+پورتفولیو
+
+users/portfolio/last-week-daily-profit
+users/portfolio/last-week-daily-total-profit
+users/portfolio/last-month-total-profit
+users/portfolio/daily_total_balance
+واریز شتابی
+
+users/payments/ids-list
+کیف پول
+
+users/wallets/list
+v2/wallets
+users/wallets/balance
+users/wallets/transactions/list
+users/transactions-history
+users/wallets/deposits/list
+users/wallets/withdraws/list
+users/wallets/deposit/bank
+users/wallets/deposit/shetab
+withdraws/<withdraw_id>
+معاملات تعهدی
+
+margin/fee-rates
+margin/delegation-limit
+margin/v2/delegation-limit
+positions/list
+positions/active-count
+positions/<position_id>/status
+positions/<position_id>/edit-collateral/options
+margin/predict/<category>
+Trade
+کلید با این دسترسی، به ای پی آی هایی که برای ثبت و کنسل سفارشات و در کل کنترل سفارشات استفاده می‌شوند، دسترسی دارد.
+
+با اختصاص این مجوز به یک کلید، دسترسی به ای پی آی های زیر به آن کلید داده می‌شود:
+
+معاملات تعهدی
+
+margin/orders/add
+positions/<int:pk>/close
+positions/<int:pk>/edit-collateral
+معاملات بازار اسپات
+
+market/orders/add
+market/orders/batch-add
+market/orders/update-status
+market/orders/cancel-old
+market/orders/cancel-batch
+users/wallets/convert
+Withdraw
+کلید با این دسترسی، به ای پی آی های برداشت دسترسی دارد. پیشنهاد می‌کنیم برای این کلید حتما آی پی مشخص کنید. با اختصاص این مجوز به یک کلید، دسترسی به این اند پوینت ها باز می‌شود:
+
+withdraws/<withdraw_id>/update-status
+users/wallets/withdraw
+users/wallets/withdraw-confirm
+users/wallets/withdraw-cancel
+استفاده از کلید API
+برای استفاده از API باید سه هدر زیر در هر درخواست ارسال شوند:
+
+Header	توضیح
+Nobitex-Key	کلید عمومی تولید شده توسط کاربر
+Nobitex-Signature	امضای محاسبه‌شده با الگوریتم Ed25519
+Nobitex-Timestamp	زمان جاری به ثانیه (Unix timestamp) در منطقه زمانی UTC
+نحوه محاسبه امضا (Signature)
+امضا به صورت زیر محاسبه می‌شود:
+
+   signature = base64(Ed25519(timestamp + method + url + body))
+timestamp: عدد ثانیه‌ای (Unix time) بر اساس UTC
+method: متد HTTP درخواست (مانند GET, POST)
+url: مسیر کامل درخواست (endpoint) مانند /market/orders/list?fromId=123
+body: محتوای خام بدنه درخواست (برای متدهای POST، PUT و …)
+توجه: مقدار Nobitex-Key همان کلید عمومی شماست و باید به صورت ثابت در هدر ارسال شود.
+
+curl -X POST "https://apiv2.nobitex.ir/orders/cancel-old" \
+  -H "Content-Type: application/json" \
+  -H "Nobitex-Key: <Your-Public-Key>" \
+  -H "Nobitex-Signature: <Generated-Signature>" \
+  -H "Nobitex-Timestamp: <Unix-Timestamp>" \
+  -d '{
+        "order": 27032,
+        "status": "canceled"
+      }'
+تنظیم User Agent
+جهت شناسایی و تفکیک بهتر بات‌ها و پشتیبانی از آن‌ها، اکیداً توصیه می‌شود که در تمامی درخواست‌ها مقدار هدر User-Agent را مطابق الگوی TraderBot/XXXXX ارسال نمایید، که بخش XXXXX هر نام یکتایی است که می‌توانید برای بات خود انتخاب کنید. با رعایت این نام‌گذاری پاسخگویی به درخواست‌های پشتیبانی و عیب‌یابی مشکلات بهتر صورت می‌گیرد.
+
+محدودیت‌ها
+توجه داشته باشید، برای استفاده از APIها محدودیت هایی وجود دارد که در قسمت توضیحات هر کدام از APIها این موارد ذکر شده است.
+
+همچنین به منظور حفظ امنیت حساب کاربران، در هنگام احرازهویت(لاگین)، در صورتی که دستگاه شما جدید شناخته شود، محدودیت برداشت به مدت یک‌ساعت روی حساب کاربری شما اعمال خواهد شد. کاربرانی که فرایند دریافت توکن با زمان کمتر از این یک‌ساعت دارند میتوانند مقدار device را که در جواب دریافت توکن دریافت کرده‌اند را در مراحل بعدی به همراه دیگر پارامترها ارسال، تا از اعمال این محدودیت جلوگیری نمایند.
+
+روش دیگری که پیش و روی شماست استفاده از توکن‌های بلندمدت است.
+
+تغییرات و موارد قدیمی
+با توجه به ماهیت نوین و تغییرات مستمر مورد نیاز در حوزه رمزارزها، در API نوبیتکس نیز ممکن است در طول زمان تغییراتی ایجاد شود. پشتیبانی طولانی‌مدت از نسخه‌های قدیمی API معمولاً فرآیندی پیچیده و سخت است و باعث کاهش سرعت ایجاد تغییرات جدید در بستر نوبیتکس می‌شود. به همین دلیل API نوبیتکس همواره در عین حفظ ساختار کلی و اجزای اصلی ثابت، در حال بهبود مستمر و به‌روزرسانی است. کاربران گرامی می‌توانند با پیگیری تغییرات API که در صفحه سابقه تغییرات API نوبیتکس اطلاع‌رسانی می‌شود، همواره از تغییرات احتمالی ضروری در کد خود مطلع شوند تا بتوانند به صورت بدون وقفه از جدیدترین امکانات و روش‌های دسترسی به API نوبیتکس بهره‌مند شوند.
+
+مواردی که قبلاً در API موجود بودند ولی در حال حاضر پشتیبانی نمی‌شوند، جهت ثبت سابقه در صفحه API قدیمی موجود هستند. ممکن است APIهای دیگری علاوه بر موارد مستند شده در مستندات پیش‌رو وجود داشته باشند، که این موارد جز API رسمی نوبیتکس نبوده و تضمینی در قبال ادامه‌دار بودن پشتیبانی از آن‌ها وجود ندارد. همین طور در استفاده از APIهای فعلی لازم به توضیح است که ممکن است علاوه بر فیلدهایی که در ورودی یا خروجی مستند شده است، فیلدهای دیگری نیز وجود داشته باشند. این فیلدها تا زمانی که در مستندات اضافه نشده باشند باید به عنوان امکانات آزمایشی و موقت در نظر گرفته شوند و نباید مورد استفاده عموم کاربران قرار گیرد. تنها کافی است که کدهای توسعه داده شده در صورت مشاهده فیلدی غیر از فیلدهای مورد انتظار خود، دچار خطا نشوند و صرفاً وجود آن فیلد را نادیده بگیرند.
+
+راهنمای حل مشکلات
+در صورتی که پاسخ مد نظر خود را از API دریافت نمی‌کنید، ابتدا اطمینان حاصل کنید که تمامی موارد ذکر شده در مستندات مربوطه را به درستی رعایت کرده باشید. بهترین روش حل مشکلات برنامه‌نویسی سعی در ریشه‌یابی مشکلات با تغییر متغیرها و بررسی تمام حالت‌ها و استفاده از روش‌های مرسوم عیب‌یابی کد است.
+
+در صورت حل نشدن مشکل، مراجعه به بخش سوالات متداول و ملاحظات عمومی می‌تواند در عیب‌یابی مفید باشد. همین طور اگر مشکل مربوط به حساب شما باشد و اقدامی را نه از طریق API و نه از طریق سایت نوبیتکس نتوانید انجام دهید، باید با پشتیبانی آنلاین نوبیتکس در ارتباط باشید.
+
+در صورتی که بخشی از مستندات API مبهم است، یا پیشنهادی درباره APIهای موجود دارید، یا پس از بررسی کامل اطمینان دارید که مشکلی در API نوبیتکس وجود دارد، می‌توانید در مخزن گیت‌هاب مستندات نوبیتکس API مورد (issue) جدیدی را ایجاد نمایید و با ما در ارتباط باشید. دقت کنید که این کانال عمومی است و نباید در آن هیچ گونه اطلاعات حساس یا توکن یا سایر اطلاعات حساب خود را مطرح کنید.
+
+راهنمای شروع به کار با API
+اگر برای اولین بار از API نوبیتکس یا سایر بازارهای رمزارز استفاده می‌کنید، برای شروع کار پیشنهاد می‌شود گام‌های زیر را طی کنید:
+
+برای شروع کار با API پیشنهاد می‌شود که ابتدا در نوبیتکس ثبت‌نام نمایید و مراحل احراز هویت خود را حداقل تا سطح یک انجام دهید.
+با مراجعه به پنل کاربری خود در نوبیتکس، از بخش پروفایل وارد صفحه تنظیمات شده و توکن خود را دریافت نمایید. دسترسی به این توکن به منزله دسترسی کامل به حساب شماست، در نتیجه در حفاظت آن دقت کامل داشته باشید.
+اگر با نرم‌افزار Postman آشنا هستید، می‌توانید برای تست فراخوانی APIهای اصلی نوبیتکس، از کالکشن Postman نوبیتکس استفاده کنید. لازم به توضیح است که این کالکشن تنها شامل برخی از APIهای نوبیتکس و کاربرد آن‌ها است و مرجع اصلی مستندات، همین صفحه است.
+همین طور می‌توانید بنا به نیاز خود این موارد را نیز در ادامه در نظر بگیرید:
+
+در صورت تمایل به دریافت دوره‌ای و خودکار توکن، می‌توانید از API ورود - دریافت توکن استفاده نمایید.
+اطلاعات بازار (عمومی)
+لیست سفارش‌ها: اردربوک
+curl 'https://apiv2.nobitex.ir/v3/orderbook/BTCIRT'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "lastUpdate": 1644991756704,
+    "lastTradePrice": "35650565900",
+    "asks": [
+        ["1476091000", "1.016"],
+        ["1479700000", "0.2561"]
+    ],
+    "bids": [
+        ["1470001120", "0.126571"],
+        ["1470000000", "0.818994"]
+    ]
+}
+برای دریافت لیست سفارش‌ها یا همان اردربوک بازارهای مختلف، از این درخواست استفاده نمایید:
+
+درخواست: GET /v3/orderbook/SYMBOL
+محدودیت فراخوانی: 300 درخواست در دقیقه
+نیاز به ارسال توکن: ندارد
+ برای دریافت اردربوک حتماً از متد GET و با ارسال نماد در آدرس url استفاده نمایید. در حال حاضر در این اندپوینت متد POST پشتیبانی نمی‌شود.
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+SYMBOL	string	الزامی	نماد بازار	BTCIRT
+ لیست نمادهای معتبر بازارها عبارتند از:
+BTCIRT, ETHIRT, LTCIRT, USDTIRT, XRPIRT, BCHIRT, BNBIRT, EOSIRT, XLMIRT, ETCIRT, TRXIRT, DOGEIRT, UNIIRT, DAIIRT, LINKIRT, DOTIRT, AAVEIRT, ADAIRT, SHIBIRT, FTMIRT, MATICIRT, AXSIRT, MANAIRT, SANDIRT, AVAXIRT, MKRIRT, GMTIRT, USDCIRT, BTCUSDT, ETHUSDT, LTCUSDT, XRPUSDT, BCHUSDT, BNBUSDT, EOSUSDT, XLMUSDT, ETCUSDT, TRXUSDT, PMNUSDT, DOGEUSDT, UNIUSDT, DAIUSDT, LINKUSDT, DOTUSDT, AAVEUSDT, ADAUSDT, SHIBUSDT, FTMUSDT, MATICUSDT, AXSUSDT, MANAUSDT, SANDUSDT, AVAXUSDT, MKRUSDT, GMTUSDT, USDCUSDT, CHZIRT, GRTIRT, CRVIRT, BANDUSDT, COMPUSDT, EGLDIRT, HBARUSDT, GALIRT, HBARIRT, WBTCUSDT, IMXIRT, WBTCIRT, ONEIRT, GLMUSDT, ENSIRT, 1M_BTTIRT, SUSHIIRT, LDOIRT, ATOMUSDT, ZROIRT, STORJIRT, ANTIRT, AEVOUSDT, 100K_FLOKIIRT, RSRUSDT, API3USDT, GLMIRT, XMRIRT, ENSUSDT, OMIRT, RDNTIRT, MAGICUSDT, TIRT, ATOMIRT, NOTIRT, CVXIRT, XTZIRT, FILIRT, UMAIRT, 1B_BABYDOGEIRT, BANDIRT, SSVIRT, DAOIRT, BLURIRT, ONEUSDT, EGALAUSDT, GMXIRT, XTZUSDT, FLOWUSDT, GALUSDT, WIRT, CVCUSDT, NMRUSDT, SKLIRT, SNTIRT, BATUSDT, TRBUSDT, NMRIRT, RDNTUSDT, API3IRT, CVCIRT, WLDIRT, YFIUSDT, SOLIRT, TUSDT, QNTUSDT, IMXUSDT, AEVOIRT, GMXUSDT, ETHFIUSDT, QNTIRT, GRTUSDT, WLDUSDT, FETIRT, AGIXIRT, NOTUSDT, LPTIRT, SLPIRT, MEMEUSDT, SOLUSDT, BALUSDT, DAOUSDT, COMPIRT, MEMEIRT, TONUSDT, BATIRT, SNXIRT, TRBIRT, 1INCHUSDT, OMUSDT, RSRIRT, RNDRIRT, SLPUSDT, SSVUSDT, RNDRUSDT, AGLDIRT, NEARUSDT, WOOUSDT, YFIIRT, MDTIRT, CRVUSDT, MDTUSDT, EGLDUSDT, LRCIRT, LPTUSDT, BICOUSDT, 1M_PEPEIRT, BICOIRT, MAGICIRT, ETHFIIRT, ANTUSDT, 1INCHIRT, APEUSDT, 1M_NFTIRT, ARBIRT, LRCUSDT, WUSDT, BLURUSDT, CELRUSDT, DYDXIRT, CVXUSDT, BALIRT, TONIRT, 100K_FLOKIUSDT, JSTUSDT, ZROUSDT, ARBUSDT, APTIRT, 1M_NFTUSDT, CELRIRT, UMAUSDT, SKLUSDT, ZRXUSDT, AGLDUSDT, ALGOIRT, NEARIRT, APTUSDT, ZRXIRT, SUSHIUSDT, FETUSDT, ALGOUSDT, 1M_PEPEUSDT, MASKIRT, EGALAIRT, FLOWIRT, 1B_BABYDOGEUSDT, MASKUSDT, 1M_BTTUSDT, STORJUSDT, XMRUSDT, OMGIRT, SNTUSDT, APEIRT, FILUSDT, ENJUSDT, OMGUSDT, WOOIRT, CHZUSDT, ENJIRT, DYDXUSDT, AGIXUSDT, JSTIRT, LDOUSDT, SNXUSDT
+curl 'https://apiv2.nobitex.ir/v3/orderbook/all'
+نمونه پاسخ درخواست /v3/orderbook/all:
+
+{
+  "status": "ok",
+  "BTCIRT": {
+    "lastUpdate": 1644991756704,
+    "asks": [
+      ["1476091000", "1.016"],
+      ["1479700000", "0.2561"]
+    ],`
+    "bids": [
+      ["1470001120", "0.126571"],
+      ["1470000000", "0.818994"]
+    ]
+  },
+  "USDTIRT": {
+    "lastUpdate": 1644991767392,
+    "asks": [
+      ["277990", "6688.3"],
+      ["278000", "28185.03"]
+    ],
+    "bids": [
+      ["277960", "119.31"],
+      ["271240", "1079.75"]
+    ]
+  }
+}
+ در صورت تمایل به دریافت لیست سفارشات همه بازارها به صورت یکجا از مقدار all برای symbol استفاده نمایید.
+پارامترهای پاسخ
+خروجی شامل دو آرایه asks و bids بوده که در هر یک قیمت و مقدار سفارش‌های بازار وجود دارد. سفارش‌های خرید در bids و سفارش‌های فروش در asks بازگردانده می‌شوند. هر یک از این آرایه‌ها شامل دوتایی‌های «قیمت، مقدار» هستند.
+
+همچنین زمان آخرین به‌روزرسانی در اردربوک ذیل پارامتر lastUpdate به فرمت یونیکس داده می‌شود.
+
+پارامتر پاسخ	نوع	توضیحات	نمونه
+asks	array	حاوی دوتایی‌های «قیمت، مقدار» از سفارش‌های فروش	[["1231", "0.1"],["1243", "1.02"]]
+bids	array	حاوی دوتایی‌های «قیمت، مقدار» از سفارش‌های خرید	[["1243", "1"],["1231", "2"]]
+lastTradePrice	string	مبلغ آخرین معامله	"35602702700"
+lastUpdate	int	زمان آخرین به‌روزرسانی به فرمت یونیکس	1726651067347
+روش پیشنهادی نگهداری اردربوک
+به این منظور از وب‌سوکت استفاده نمایید. برای اطلاعات بیشتر به مستندات وب‌سوکت نوبیتکس مراجعه فرمایید.
+
+در صورتی‌که نمی‌توانید از وب‌سوکت استفاده کنید و در پروژه‌ی خود نیاز به نگهداری آخرین وضعیت اردربوک نوبیتکس هستید، در یک حلقه اقدام به دریافت اردربوک نوبیتکس نمایید. حتماً در میان هر دو بار اجرای حلقه حداقل یک تا ده ثانیه صبر نمایید و از فراخوانی پیاپی و بی‌مکث اردربوک خودداری کنید. به دلیل وجود لایه‌های کش، در صورت فراخوانی در بازه‌های زیر یک ثانیه، همان داده فراخوانی قبلی را دریافت خواهید نمود. اگر در اغلب بازارهای نوبیتکس فعال هستید، می‌توانید در هر فراخوانی کل اردربوک را دریافت نمایید تا نیازی به فراخوانی همزمان چند اردربوک نداشته باشید. اگر کد خود را در چند رشته (ترد) یا پردازه یا سرور اجرا می‌کنید، حتماً اردربوک را در یک مرجع واحد دریافت نمایید و آن را در میان نمونه‌های برنامه خود به اشتراک بگذارید.
+
+نمودار عمق (آزمایشی)
+curl 'https://apiv2.nobitex.ir/v2/depth/BTCIRT'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "lastUpdate": "1658565992195",
+  "bids": [["7309999000", "2.200274"], ["7310000000", "2.199856"], ["7310025000", "2.102569"]],
+  "asks": [["7409894000", "0.054789"], ["7447665000", "0.055276"], ["7450000000", "0.059756"]],
+  "lastTradePrice": "7417000000"}
+برای دریافت داده‌های نمودار عمق، یا همان اردربوک بازارهای مختلف، از این درخواست استفاده نمایید:
+
+درخواست: GET /v2/depth/SYMBOL
+محدودیت فراخوانی: 300 درخواست در دقیقه
+نیاز به ارسال توکن: ندارد
+ برای دریافت اردربوک حتماً از متد GET و با ارسال نماد در آدرس url استفاده نمایید.
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+SYMBOL	string	الزامی	نماد بازار	BTCIRT
+ لیست نمادهای معتبر بازارها عبارتند از:
+BTCIRT, ETHIRT, LTCIRT, USDTIRT, XRPIRT, BCHIRT, BNBIRT, EOSIRT, XLMIRT, ETCIRT, TRXIRT, DOGEIRT, UNIIRT, DAIIRT, LINKIRT, DOTIRT, AAVEIRT, ADAIRT, SHIBIRT, FTMIRT, MATICIRT, AXSIRT, MANAIRT, SANDIRT, AVAXIRT, MKRIRT, GMTIRT, USDCIRT, BTCUSDT, ETHUSDT, LTCUSDT, XRPUSDT, BCHUSDT, BNBUSDT, EOSUSDT, XLMUSDT, ETCUSDT, TRXUSDT, PMNUSDT, DOGEUSDT, UNIUSDT, DAIUSDT, LINKUSDT, DOTUSDT, AAVEUSDT, ADAUSDT, SHIBUSDT, FTMUSDT, MATICUSDT, AXSUSDT, MANAUSDT, SANDUSDT, AVAXUSDT, MKRUSDT, GMTUSDT, USDCUSDT, CHZIRT, GRTIRT, CRVIRT, BANDUSDT, COMPUSDT, EGLDIRT, HBARUSDT, GALIRT, HBARIRT, WBTCUSDT, IMXIRT, WBTCIRT, ONEIRT, GLMUSDT, ENSIRT, 1M_BTTIRT, SUSHIIRT, LDOIRT, ATOMUSDT, ZROIRT, STORJIRT, ANTIRT, AEVOUSDT, 100K_FLOKIIRT, RSRUSDT, API3USDT, GLMIRT, XMRIRT, ENSUSDT, OMIRT, RDNTIRT, MAGICUSDT, TIRT, ATOMIRT, NOTIRT, CVXIRT, XTZIRT, FILIRT, UMAIRT, 1B_BABYDOGEIRT, BANDIRT, SSVIRT, DAOIRT, BLURIRT, ONEUSDT, EGALAUSDT, GMXIRT, XTZUSDT, FLOWUSDT, GALUSDT, WIRT, CVCUSDT, NMRUSDT, SKLIRT, SNTIRT, BATUSDT, TRBUSDT, NMRIRT, RDNTUSDT, API3IRT, CVCIRT, WLDIRT, YFIUSDT, SOLIRT, TUSDT, QNTUSDT, IMXUSDT, AEVOIRT, GMXUSDT, ETHFIUSDT, QNTIRT, GRTUSDT, WLDUSDT, FETIRT, AGIXIRT, NOTUSDT, LPTIRT, SLPIRT, MEMEUSDT, SOLUSDT, BALUSDT, DAOUSDT, COMPIRT, MEMEIRT, TONUSDT, BATIRT, SNXIRT, TRBIRT, 1INCHUSDT, OMUSDT, RSRIRT, RNDRIRT, SLPUSDT, SSVUSDT, RNDRUSDT, AGLDIRT, NEARUSDT, WOOUSDT, YFIIRT, MDTIRT, CRVUSDT, MDTUSDT, EGLDUSDT, LRCIRT, LPTUSDT, BICOUSDT, 1M_PEPEIRT, BICOIRT, MAGICIRT, ETHFIIRT, ANTUSDT, 1INCHIRT, APEUSDT, 1M_NFTIRT, ARBIRT, LRCUSDT, WUSDT, BLURUSDT, CELRUSDT, DYDXIRT, CVXUSDT, BALIRT, TONIRT, 100K_FLOKIUSDT, JSTUSDT, ZROUSDT, ARBUSDT, APTIRT, 1M_NFTUSDT, CELRIRT, UMAUSDT, SKLUSDT, ZRXUSDT, AGLDUSDT, ALGOIRT, NEARIRT, APTUSDT, ZRXIRT, SUSHIUSDT, FETUSDT, ALGOUSDT, 1M_PEPEUSDT, MASKIRT, EGALAIRT, FLOWIRT, 1B_BABYDOGEUSDT, MASKUSDT, 1M_BTTUSDT, STORJUSDT, XMRUSDT, OMGIRT, SNTUSDT, APEIRT, FILUSDT, ENJUSDT, OMGUSDT, WOOIRT, CHZUSDT, ENJIRT, DYDXUSDT, AGIXUSDT, JSTIRT, LDOUSDT, SNXUSDT
+پارامترهای پاسخ
+خروجی شامل دو آرایه asks و bids بوده که در هر یک قیمت و مقدار سفارش‌های بازار وجود دارد. سفارش‌های خرید در bids و سفارش‌های فروش در asks بازگردانده می‌شوند. هر یک از این آرایه‌ها شامل دوتایی‌های «قیمت، مقدار» هستند که در هر دوتایی، مقدار قیمت، تجمیع شده و گرد شده با دقت مناسب بازار مورد نظر است.
+
+همچنین زمان آخرین به‌روزرسانی نمودار عمق ذیل پارامتر lastUpdate به فرمت یونیکس داده می‌شود.
+
+همچنین، مبلغ آخرین معامله ذیل پارامتر lastTradePrice ارسال می‌شود.
+
+روش پیشنهادی نگهداری نمودار عمق
+در صورتی که در کد خود نیاز به نگهداری آخرین وضعیت نمودار عمق نوبیتکس هستید، در یک حلقه اقدام به دریافت نمودار عمق نوبیتکس نمایید. حتماً در میان هر دو بار اجرای حلقه حداقل یک تا ده ثانیه صبر نمایید و از فراخوانی پیاپی و بی‌مکث خودداری کنید. به دلیل وجود لایه‌های کش، در صورت فراخوانی در بازه‌های زیر یک ثانیه، همان داده فراخوانی قبلی را دریافت خواهید نمود.
+
+لیست معاملات
+curl 'https://apiv2.nobitex.ir/v2/trades/BCHIRT'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "trades": [
+        {
+            "time": 1588689375067,
+            "price": "1470000110",
+            "volume": "0",
+            "type": "sell"
+        },
+        {
+            "time": 1588689360464,
+            "price": "1470000110",
+            "volume": "0.002",
+            "type": "buy"
+        }
+    ]
+}
+برای دریافت لیست معاملات از این نوع درخواست استفاده نمایید:
+
+درخواست: GET v2/trades/SYMBOL
+محدودیت فراخوانی: 60 درخواست در دقیقه
+نیاز به ارسال توکن: ندارد
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+symbol	string	الزامی	نماد	BTCIRT
+ لیست نمادهای معتبر بازار ها عبارتند از:
+BTCIRT, ETHIRT, LTCIRT, USDTIRT, XRPIRT, BCHIRT, BNBIRT, EOSIRT, XLMIRT, ETCIRT, TRXIRT, DOGEIRT, UNIIRT, DAIIRT, LINKIRT, DOTIRT, AAVEIRT, ADAIRT, SHIBIRT, FTMIRT, MATICIRT, AXSIRT, MANAIRT, SANDIRT, AVAXIRT, MKRIRT, GMTIRT, USDCIRT, BTCUSDT, ETHUSDT, LTCUSDT, XRPUSDT, BCHUSDT, BNBUSDT, EOSUSDT, XLMUSDT, ETCUSDT, TRXUSDT, PMNUSDT, DOGEUSDT, UNIUSDT, DAIUSDT, LINKUSDT, DOTUSDT, AAVEUSDT, ADAUSDT, SHIBUSDT, FTMUSDT, MATICUSDT, AXSUSDT, MANAUSDT, SANDUSDT, AVAXUSDT, MKRUSDT, GMTUSDT, USDCUSDT, CHZIRT, GRTIRT, CRVIRT, BANDUSDT, COMPUSDT, EGLDIRT, HBARUSDT, GALIRT, HBARIRT, WBTCUSDT, IMXIRT, WBTCIRT, ONEIRT, GLMUSDT, ENSIRT, 1M_BTTIRT, SUSHIIRT, LDOIRT, ATOMUSDT, ZROIRT, STORJIRT, ANTIRT, AEVOUSDT, 100K_FLOKIIRT, RSRUSDT, API3USDT, GLMIRT, XMRIRT, ENSUSDT, OMIRT, RDNTIRT, MAGICUSDT, TIRT, ATOMIRT, NOTIRT, CVXIRT, XTZIRT, FILIRT, UMAIRT, 1B_BABYDOGEIRT, BANDIRT, SSVIRT, DAOIRT, BLURIRT, ONEUSDT, EGALAUSDT, GMXIRT, XTZUSDT, FLOWUSDT, GALUSDT, WIRT, CVCUSDT, NMRUSDT, SKLIRT, SNTIRT, BATUSDT, TRBUSDT, NMRIRT, RDNTUSDT, API3IRT, CVCIRT, WLDIRT, YFIUSDT, SOLIRT, TUSDT, QNTUSDT, IMXUSDT, AEVOIRT, GMXUSDT, ETHFIUSDT, QNTIRT, GRTUSDT, WLDUSDT, FETIRT, AGIXIRT, NOTUSDT, LPTIRT, SLPIRT, MEMEUSDT, SOLUSDT, BALUSDT, DAOUSDT, COMPIRT, MEMEIRT, TONUSDT, BATIRT, SNXIRT, TRBIRT, 1INCHUSDT, OMUSDT, RSRIRT, RNDRIRT, SLPUSDT, SSVUSDT, RNDRUSDT, AGLDIRT, NEARUSDT, WOOUSDT, YFIIRT, MDTIRT, CRVUSDT, MDTUSDT, EGLDUSDT, LRCIRT, LPTUSDT, BICOUSDT, 1M_PEPEIRT, BICOIRT, MAGICIRT, ETHFIIRT, ANTUSDT, 1INCHIRT, APEUSDT, 1M_NFTIRT, ARBIRT, LRCUSDT, WUSDT, BLURUSDT, CELRUSDT, DYDXIRT, CVXUSDT, BALIRT, TONIRT, 100K_FLOKIUSDT, JSTUSDT, ZROUSDT, ARBUSDT, APTIRT, 1M_NFTUSDT, CELRIRT, UMAUSDT, SKLUSDT, ZRXUSDT, AGLDUSDT, ALGOIRT, NEARIRT, APTUSDT, ZRXIRT, SUSHIUSDT, FETUSDT, ALGOUSDT, 1M_PEPEUSDT, MASKIRT, EGALAIRT, FLOWIRT, 1B_BABYDOGEUSDT, MASKUSDT, 1M_BTTUSDT, STORJUSDT, XMRUSDT, OMGIRT, SNTUSDT, APEIRT, FILUSDT, ENJUSDT, OMGUSDT, WOOIRT, CHZUSDT, ENJIRT, DYDXUSDT, AGIXUSDT, JSTIRT, LDOUSDT, SNXUSDT
+پارامتر بازگشتی time زمان دقیق انجام شدن معامله است که با فرمت یونیکس نمایش داده میشود
+
+آمار بازار نوبیتکس
+curl 'https://apiv2.nobitex.ir/market/stats?srcCurrency=btc&dstCurrency=rls'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "stats": {
+    "btc-rls": {
+      "isClosed": false,
+      "bestSell": "749976360",
+      "bestBuy": "733059600",
+      "volumeSrc": "0.2929480000",
+      "volumeDst": "212724856.0678640000",
+      "latest": "750350000",
+      "mark": "747461987",
+      "dayLow": "686021860",
+      "dayHigh": "750350000",
+      "dayOpen": "686021860",
+      "dayClose": "750350000",
+      "dayChange": "9.38"
+    }
+  }
+}
+برای دریافت آخرین آمار بازار نوبیتکس از این نوع درخواست استفاده نمایید:
+
+درخواست GET /market/stats
+محدودیت فراخوانی: 20 درخواست در دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+srcCurrency	string	اختیاری	ارزها مبدا	btc,usdt
+dstCurrency	string	اختیاری	ارز مقصد	rls
+پارامترهای srcCurrency و dstCurrency اختیاری هستند و در صورت وارد نکردن آن‌ها، آمار مربوط به کل بازار نوبیتکس نمایش داده می‌شود. همچنین، وارد کردن هر کدام از این پارامترها به‌تنهایی امکان‌پذیر است؛ برای مثال، اگر dstCurrency=rls را تنظیم کنید، تمام بازارهای ریالی را دریافت خواهید کرد.
+
+ انواع ارز:
+rls, btc, eth, ltc, usdt, xrp, bch, bnb, eos, xlm, etc, trx, pmn, doge, uni, dai, link, dot, aave, ada, shib, ftm, matic, axs, mana, sand, avax, mkr, gmt, atom, uma, w, rsr, wld, 1m_nft, flow, agld, ton, mask, snt, agix, algo, ssv, band, omg, comp, zrx, rdnt, imx, 1inch, mdt, sushi, bico, gmx, zro, bal, dao, gal, not, nmr, xmr, enj, apt, lrc, dydx, grt, near, cvx, 100k_floki, fil, sol, ldo, crv, aevo, qnt, om, woo, storj, ant, 1m_btt, magic, ape, rndr, hbar, lpt, glm, blur, wbtc, meme, ethfi, egala, arb, fet, skl, cvc, snx, jst, ens, trb, chz, xtz, api3, slp, t, bat, 1b_babydoge, celr, yfi, egld, one, 1m_pepe, usdc
+ در شی پاسخ جهت سازگاری با نسخه‌های پیشین، آمار بازار بایننس نیز برگردانده می‌شود. دقت کنید این قسمت از اطلاعات (متناظر با کلید global) منسوخ شده و در نسخه‌های آتی به طور کامل حذف خواهد شد.
+آمار OHLC بازار نوبیتکس
+curl 'https://apiv2.nobitex.ir/market/udf/history?symbol=BTCIRT&resolution=D&from=1562058167&to=1562230967'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "s": "ok",
+  "t": [1562095800, 1562182200],
+  "o": [146272500, 150551000],
+  "h": [155869600, 161869500],
+  "l": [140062400, 150551000],
+  "c": [151440200, 157000000],
+  "v": [18.221362316, 9.8592626506]
+}
+برای توضیحات بیشتر در مورد OHLC به این لینک مراجعه کنید.
+
+برای دریافت آمار OHLC نوبیتکس از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /market/udf/history
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+symbol	string	الزامی	نماد بازار	BTCIRT
+resolution	string	الزامی	بازه زمانی هر کندل	D
+to	int	الزامی	زمان پایان بازه	1562230967
+from	int	اختیاری	زمان ابتدای بازه	1562058167
+countback	int	اختیاری	تعداد کندل‌های پیش از زمان پایان
+(اولویت آن از from بیشتر است)	4
+page	int	1	شماره صفحه	3
+در صورت ورودی اشتباه برای resolution پاسخ به این صورت خواهد بود:
+
+{
+  "s": "error",
+  "errmsg": "Invalid resolution!"
+}
+پارامتر resolution بازه زمانی کندل‌های خروجی می‌باشد و مقدار آن می‌تواند یکی از مقادیر زیر باشد:
+دقیقه‌ای	توضیح	ساعتی	توضیح	روزانه	توضیح
+1	یک دقیقه	60	یک ساعت	D	یک روز
+5	پنج دقیقه	180	سه ساعت	2D	دو روز
+15	یک ربع	240	چهار ساعت	3D	سه روز
+30	نیم ساعت	360	شش ساعت		
+720	دوازده ساعت		
+مقادیر from و to زمان شروع و پایان جست‌وجو را مشخص می‌کند و با فرمت یونیکس به ثانیه مشخص می‌شود.
+در صورت نبودن داده در بازه درخواستی پاسخ به این صورت خواهد بود:
+
+{
+  "s": "no_data"
+}
+ کندل‌های دقیقه‌ای بازارها از آغاز سال 1401 در دسترسند و دسترسی به کندل‌های دقیقه‌ای پیش از آن موجود نیست.
+ لیست نمادهای معتبر بازارها عبارتند از:
+BTCIRT, ETHIRT, LTCIRT, USDTIRT, XRPIRT, BCHIRT, BNBIRT, EOSIRT, XLMIRT, ETCIRT, TRXIRT, DOGEIRT, UNIIRT, DAIIRT, LINKIRT, DOTIRT, AAVEIRT, ADAIRT, SHIBIRT, FTMIRT, MATICIRT, AXSIRT, MANAIRT, SANDIRT, AVAXIRT, MKRIRT, GMTIRT, USDCIRT, BTCUSDT, ETHUSDT, LTCUSDT, XRPUSDT, BCHUSDT, BNBUSDT, EOSUSDT, XLMUSDT, ETCUSDT, TRXUSDT, PMNUSDT, DOGEUSDT, UNIUSDT, DAIUSDT, LINKUSDT, DOTUSDT, AAVEUSDT, ADAUSDT, SHIBUSDT, FTMUSDT, MATICUSDT, AXSUSDT, MANAUSDT, SANDUSDT, AVAXUSDT, MKRUSDT, GMTUSDT, USDCUSDT, CHZIRT, GRTIRT, CRVIRT, BANDUSDT, COMPUSDT, EGLDIRT, HBARUSDT, GALIRT, HBARIRT, WBTCUSDT, IMXIRT, WBTCIRT, ONEIRT, GLMUSDT, ENSIRT, 1M_BTTIRT, SUSHIIRT, LDOIRT, ATOMUSDT, ZROIRT, STORJIRT, ANTIRT, AEVOUSDT, 100K_FLOKIIRT, RSRUSDT, API3USDT, GLMIRT, XMRIRT, ENSUSDT, OMIRT, RDNTIRT, MAGICUSDT, TIRT, ATOMIRT, NOTIRT, CVXIRT, XTZIRT, FILIRT, UMAIRT, 1B_BABYDOGEIRT, BANDIRT, SSVIRT, DAOIRT, BLURIRT, ONEUSDT, EGALAUSDT, GMXIRT, XTZUSDT, FLOWUSDT, GALUSDT, WIRT, CVCUSDT, NMRUSDT, SKLIRT, SNTIRT, BATUSDT, TRBUSDT, NMRIRT, RDNTUSDT, API3IRT, CVCIRT, WLDIRT, YFIUSDT, SOLIRT, TUSDT, QNTUSDT, IMXUSDT, AEVOIRT, GMXUSDT, ETHFIUSDT, QNTIRT, GRTUSDT, WLDUSDT, FETIRT, AGIXIRT, NOTUSDT, LPTIRT, SLPIRT, MEMEUSDT, SOLUSDT, BALUSDT, DAOUSDT, COMPIRT, MEMEIRT, TONUSDT, BATIRT, SNXIRT, TRBIRT, 1INCHUSDT, OMUSDT, RSRIRT, RNDRIRT, SLPUSDT, SSVUSDT, RNDRUSDT, AGLDIRT, NEARUSDT, WOOUSDT, YFIIRT, MDTIRT, CRVUSDT, MDTUSDT, EGLDUSDT, LRCIRT, LPTUSDT, BICOUSDT, 1M_PEPEIRT, BICOIRT, MAGICIRT, ETHFIIRT, ANTUSDT, 1INCHIRT, APEUSDT, 1M_NFTIRT, ARBIRT, LRCUSDT, WUSDT, BLURUSDT, CELRUSDT, DYDXIRT, CVXUSDT, BALIRT, TONIRT, 100K_FLOKIUSDT, JSTUSDT, ZROUSDT, ARBUSDT, APTIRT, 1M_NFTUSDT, CELRIRT, UMAUSDT, SKLUSDT, ZRXUSDT, AGLDUSDT, ALGOIRT, NEARIRT, APTUSDT, ZRXIRT, SUSHIUSDT, FETUSDT, ALGOUSDT, 1M_PEPEUSDT, MASKIRT, EGALAIRT, FLOWIRT, 1B_BABYDOGEUSDT, MASKUSDT, 1M_BTTUSDT, STORJUSDT, XMRUSDT, OMGIRT, SNTUSDT, APEIRT, FILUSDT, ENJUSDT, OMGUSDT, WOOIRT, CHZUSDT, ENJIRT, DYDXUSDT, AGIXUSDT, JSTIRT, LDOUSDT, SNXUSDT
+پارامترهای پاسخ
+در هر درخواست بسته به پارامتر countback یا بازه زمانی تعیین شده و resolution انتخابی، تعداد کندل‌های برگشتی متفاوت است. برای مثال تعداد کندل‌های 1 ساعته از تاریخ 2019/2/9 15:39:41 تا چهار ساعت قبل آن، ۴ تاست.
+
+پارامتر	توضیح	نوع	نمونه
+s	وضعیت پاسخ	string	ok
+t	شروع زمان	[ ] int	[1562182200]
+o	قیمت شروع	[ ] float	[150551000]
+h	بیشترین قیمت	[ ] float	[161869500]
+l	کمترین قیمت	[ ] float	[150551000]
+c	قیمت پایانی	[ ] float	[157000000]
+v	حجم معاملات	[ ] float	[9.8592626506]
+در هر درخواست حداکثر 500 کندل بازگردانده می‌شود. برای بازیابی همه کندل‌های یک بازه با بیش از 500 کندل، از پارامتر page برای صفحه‌بندی استفاده نمایید.
+اطلاعات کاربر
+پروفایل
+curl 'https://apiv2.nobitex.ir/users/profile' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "profile": {
+    "firstName": "مهدی",
+    "lastName": "رضایی",
+    "nationalCode": "011122333",
+    "email": "name@example.com",
+    "username": "name@example.com",
+    "phone": "02142719000-9012",
+    "mobile": "09151111111",
+    "city": "مشهد",
+    "bankCards": [
+      {
+        "number": "6037-9900-0000-0000",
+        "bank": "ملی",
+        "owner": "مهدی رضایی",
+        "confirmed": true,
+        "status": "confirmed"
+      }
+    ],
+    "bankAccounts": [
+      {
+        "id": 1999,
+        "number": "0346666666666",
+        "shaba": "IR460170000000346666666666",
+        "bank": "ملی",
+        "owner": "مهدی رضایی",
+        "confirmed": true,
+        "status": "confirmed"
+      }
+    ],
+    "verifications": {
+      "email": true,
+      "phone": true,
+      "mobile": true,
+      "identity": true,
+      "selfie": false,
+      "bankAccount": true,
+      "bankCard": true,
+      "address": true,
+      "city": true,
+      "nationalSerialNumber": true
+    },
+    "pendingVerifications": {
+      "email": false,
+      "phone": false,
+      "mobile": false,
+      "identity": false,
+      "selfie": false,
+      "bankAccount": false,
+      "bankCard": false
+    },
+    "options": {
+      "fee": "0.35",
+      "feeUsdt": "0.2",
+      "isManualFee": false,
+      "tfa": false,
+      "socialLoginEnabled": false
+    },
+    "withdrawEligible": true
+  },
+  "tradeStats": {
+    "monthTradesTotal": "10867181.5365000000",
+    "monthTradesCount": 3
+  },
+  "websocketAuthParam": "1987577cdf7c7422dee369e188e276ee"
+}
+این api، اطلاعات پروفایل شما، کارت بانکی، حساب بانکی، موارد تایید شده(ایمیل، شماره تلفن، موبایل ...)، تنظمیات مربوط به پروفایل(فی تراکنش، فی مبادلات usdt و ...) و خلاصه آمار مبادلات شما را برمیگرداند.
+
+برای دریافت پروفایل کاربر از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /users/profile
+پارامترهای ورودی
+برای دریافت پاسخ، کافیست توکن احراز هویت را ارسال نمایید
+
+تولید آدرس بلاکچین
+curl 'https://apiv2.nobitex.ir/users/wallets/generate-address' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"currency":"btc", "network": "BSC"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "address": "LRf3vuTMy4UwD5b72G84hmkfGBQYJeTwUs"
+}
+برای تولید آدرس بلاکچین از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /users/wallets/generate-address
+محدودیت فراخوانی: ۳۰ درخواست در ساعت
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+currency ارجح	string	الزامی (جایگزین wallet)	رمزارز کیف	btc
+wallet قدیمی	string	(در نبود currency الزامی)	شناسه کیف پول	4159
+network	string	اختیاری	شبکه	BSC
+ برای ایجاد آدرس بلاکچین می‌توانید از currency کیف مقصد استفاده نمایید. ارسال wallet برای ایجاد آدرس قدیمی است و توصیه نمی‌شود.
+افزودن کارت بانکی
+curl 'https://apiv2.nobitex.ir/users/cards-add' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"number":"5041721011111111","bank":"رسالت"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok"
+}
+برای افزودن کارت بانکی جدید از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /users/cards-add
+محدودیت فراخوانی: ۳۰ درخواست در هر ۳۰ دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+number	string	الزامی	شماره کارت	5041721011111111
+bank	string	الزامی	نام بانک	رسالت
+افزودن حساب بانکی
+curl 'https://apiv2.nobitex.ir/users/accounts-add' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"number":"5041721011111111","shaba":"IR111111111111111111111111","bank":"رسالت"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok"
+}
+برای افزودن حساب بانکی جدید از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /users/accounts-add
+محدودیت فراخوانی: ۳۰ درخواست در ۳۰ دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+number	string	الزامی	شماره حساب	5041721011111111
+shaba	string	الزامی	شماره شبا	IR111111111111111111111111
+bank	string	الزامی	نام بانک	رسالت
+محدودیت های کاربر
+curl 'https://apiv2.nobitex.ir/users/limitations' \
+  -X GET \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "limitations": {
+    "userLevel": "level2",
+    "features": {
+      "crypto_trade": false,
+      "rial_trade": false,
+      "coin_deposit": false,
+      "rial_deposit": false,
+      "coin_withdrawal": false,
+      "rial_withdrawal": false
+    },
+    "limits": {
+      "withdrawRialDaily": {
+        "used": "0",
+        "limit": "900000000"
+      },
+      "withdrawCoinDaily": {
+        "used": "0",
+        "limit": "2000000000"
+      },
+      "withdrawTotalDaily": {
+        "used": "0",
+        "limit": "2000000000"
+      },
+      "withdrawTotalMonthly": {
+        "used": "0",
+        "limit": "30000000000"
+      }
+    }
+  }
+}
+توضیحات
+کاربران در نوبیتکس بر اساس سطح کاربری خود، محدودیت هایی در برداشت، واریز و مبادلات خود دارند. هر کاربر نسبت به نیاز خود و میزان مبادلاتی که دارد میتواند با ارائه مدارک مورد نیاز ، سطح کاربری خود را پس از احراز هویت و تایید مدراک، ارتقا دهد. اطلاعات نمایش داده شده در خروجی api شامل همین محدودیت ها میباشد:
+
+برای دریافت محدودیت های کاربر از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /users/limitations
+پارامترهای ورودی
+در این بخش به ورودی نیاز نیست.
+توکن دریافتی از بخش لاگین باید در هدر ارسال شود.
+پارامترهای خروجی
+features: شرایط حساب کاربری
+crypto_trade: امکان مبادله رمز ارزها
+rial_trade: امکان مبادله با ریال
+coin_deposit: امکان واریز رمز ارز به کیف پول نوبیتکس
+rial_deposit: امکان واریز ریال به کیف پول نوبیتکس
+coin_withdrawal: امکان برداشت رمز ارز از کیف پول نوبیتکس به کیف پول دیگر
+rial_withdrawal: امکان برداشت ریال از کیف پول نوبیتکس به حساب بانکی
+limits: محدودیت های حساب کاربری
+withdrawRialDaily: مقدار مجاز برای برداشت روزانه ریال
+withdrawRialDaily: مقدار مجاز برای برداشت روزانه رمز ارز
+withdrawTotalDaily: مقدار مجاز برای برداشت روزانه مجموع رمز ارز و ریال
+withdrawTotalMonthly: مقدار مجاز برای برداشت ماهیانه مجموع رمز ارز و ریال
+نکات و ملاحظات
+تمامی مبالغ در خروجی به ریال هستند.
+برای اطلاع از جزئیات سطوح کاربری، میزان محدودیت ها، مدارک مورد نیاز هر سطح و توضیحات کامل هر سطح به سطوح حساب کاربری در نوبیتکس مراجعه کنید. #اطلاعات مالی کاربر
+لیست کیف پول ها
+curl 'https://apiv2.nobitex.ir/users/wallets/list' \
+  --header "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "wallets": [
+    {
+      "depositAddress": null,
+      "depositTag": null,
+      "depositInfo": {
+        "FIAT_MONEY": {
+          "address": null,
+          "tag": null
+        }
+      },
+      "id": 2693280,
+      "currency": "rls",
+      "balance": "746212980",
+      "blockedBalance": "0",
+      "activeBalance": "746212980",
+      "rialBalance": 746212980,
+      "rialBalanceSell": 746212980
+    },
+    {
+      "depositAddress": "bc1qp8dvtrhgjae6qhjfmvs2dj80ck0hgdjs6ts720",
+      "depositTag": null,
+      "depositInfo": {
+        "BTC-LEGACY": {
+          "address": null,
+          "tag": null
+        },
+        "BTC": {
+          "address": "bc1qp8dvtrhgjae6qhjfmvs2dj80ck0hgdjs6ts720",
+          "tag": null
+        },
+        "BTCLN": {
+          "address": null,
+          "tag": null
+        },
+        "BSC": {
+          "address": null,
+          "tag": null
+        }
+      },
+      "id": 133778,
+      "currency": "btc",
+      "balance": "0",
+      "blockedBalance": "0",
+      "activeBalance": "0",
+      "rialBalance": 0,
+      "rialBalanceSell": 0
+    }
+  ]
+}
+برای دریافت لیست کیف پول های کاربر از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /users/wallets/list
+محدودیت فراخوانی: 20 درخواست در 2 دقیقه
+نکات و ملاحظات
+کیف پول یک رمزارز در صورتی برای کاربر ایجاد می‌شود که کاربر سفارشی در بازار آن رمزارز ثبت کرده و یا آدرس واریز برای آن ایجاد کرده باشد. این ویژگی در رمزارزهای آتی نوبیتکس نمایش خواهد یافت. برای رمزارزهای قدیمی کاربران سابق، همه کیف‌پول‌های از پیش موجود کاربر باقی خواهند ماند.
+در برخی از موارد به دلیل کنترل بار ترافیک ورودی این سرویس، ممکن است پاسخ مورد انتظار دریافت نگردد، در این حالت می بایست مجددا فراخوانی را انجام داد و یا اینکه از این سرویس برای دریافت لیست کیف پول ها استفاده نمائید
+برای مشخص کردن نوع کیف پول (spot or margin) میتوانید نوع آن را با استفاده از پارامتر type مشخص نمایید. به صورت پیش فرض کیف پول‌های spot لیست خواهند شد
+لیست کیف پول ها (انتخابی)
+curl 'https://apiv2.nobitex.ir/v2/wallets?currencies=rls,btc' \
+  --header "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "wallets": {
+        "RLS": {
+            "id": 133777,
+            "balance": "0E-10",
+            "blocked": "0"
+        },
+        "BTC": {
+            "id": 133778,
+            "balance": "0E-10",
+            "blocked": "0"
+        }
+    }
+}
+برای دریافت لیست کیف پول های کاربر از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /v2/wallets
+محدودیت فراخوانی: 15 درخواست در دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+currencies	string	اختیاری	نوع کیف پول(ارز)، به صورت رشته ای از ارزهای جداشده با کاما	rls,btc
+type	string	spot	نوع کیف پول (اسپات یا فروش تعهدی)	spot یا margin
+نکات و ملاحظات
+کیف پول یک رمزارز در صورتی برای کاربر ایجاد می‌شود که کاربر سفارشی در بازار آن رمزارز ثبت کرده و یا آدرس واریز برای آن ایجاد کرده باشد. این ویژگی در رمزارزهای آتی نوبیتکس نمایش خواهد یافت. برای رمزارزهای قدیمی کاربران سابق، همه کیف‌پول‌های از پیش موجود کاربر باقی خواهند ماند.
+
+موجودی
+curl 'https://apiv2.nobitex.ir/users/wallets/balance' \
+  -X POST \
+  --header "Authorization: Token yourTOKENhereHEX0000000000" \
+  --data '{"currency":"ltc"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "balance": "10.2649975000",
+    "status": "ok"
+}
+برای دریافت موجودی کیف پول های خود در نوبیتکس (شامل کیف پول ریالی و کیف پول های رمز ارزی) از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /users/wallets/balance
+محدودیت فراخوانی: ۶۰ درخواست در ۲ دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+currency	string	الزامی	نوع کیف پول(ارز)	ltc
+نکات و ملاحظات
+مقدار بازگشتی برای موجودی، یک عدد است که به صورت string برگردانده میشود. این مقدار می‌تواند اعداد اعشاری زیادی داشته باشد.
+اگر قصد محاسبات مهمی بر روی این اعداد را دارید، پیشنهاد ما این است که از انواع fixed precision برای نگهداری این اعداد استفاده کنید.
+لیست تراکنش‌های کیف‌پول
+curl 'https://apiv2.nobitex.ir/users/wallets/transactions/list?wallet=4159' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "transactions": [
+        {
+            "currency": "ltc",
+            "created_at": "2018-10-17T09:41:08.519151+00:00",
+            "calculatedFee": "0",
+            "id": 99050,
+            "amount": "4.3802000000",
+            "description": "خرید 4.400 LTC به قیمت واحد ﷼7450000"
+        },
+        {
+            "currency": "ltc",
+            "created_at": "2018-10-04T13:05:01.384902+00:00",
+            "calculatedFee": "0",
+            "id": 96541,
+            "amount": "-1.0000000000",
+            "description": "Withdraw to \"Lgn1zc77mEjk72KvXPqyXq8K1mAfcDE6YR\""
+        },
+        ...
+    ],
+    "hasNext": true
+}
+برای دریافت لیست آخرین تراکنش‌های یک کیف پول از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /users/wallets/transactions/list
+محدودیت فراخوانی: ۶۰ درخواست در ۲ دقیقه
+صفحه بندی: دارد (پیشفرض ۵۰)
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+wallet	int	الزامی	شناسه کیف پول(id)	4159
+تاریخچه تراکنش‌ها (انتخابی)
+curl 'https://apiv2.nobitex.ir/users/transactions-history?currency=ltc' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "transactions": [
+        {
+          "id": 99050,
+          "amount": "4.3802000000",
+          "description": "خرید 4.400 LTC به قیمت واحد ﷼7450000",
+          "created_at": "2018-10-17T09:41:08.519151+00:00",
+          "balance": "21.2502000000",
+          "tp": "buy",
+          "calculatedFee": null,
+          "type": "معامله",
+          "currency": "ltc"
+        },
+        {
+          "id": 96541,
+          "amount": "-1.0000000000",
+          "description": "Withdraw to \"Lgn1zc77mEjk72KvXPqyXq8K1mAfcDE6YR\"",
+          "created_at": "2018-10-04T13:05:01.384902+00:00",
+          "balance": "16.8700000000",
+          "tp": "withdraw",
+          "calculatedFee": null,
+          "type": "برداشت",
+          "currency": "ltc"
+        }
+    ],
+    "hasNext": false
+}
+برای دریافت تاریخچه تراکنش‌ها از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /users/transactions-history
+محدودیت فراخوانی: ۶۰ درخواست در ساعت
+صفحه بندی: دارد (پیشفرض ۵۰)
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+currency	string	اختیاری	ارز/رمزارز تراکنش	rls یا usdt یا btc یا ...
+tp	string	اختیاری	نوع تراکنش	deposit یا withdraw یا ...
+from	datetime	اختیاری	شروع بازه زمانی تراکنش	2018-10-01T00:00:00.000000+00:00
+to	datetime	اختیاری	پایان بازه زمانی تراکنش	2018-10-20T00:00:00.000000+00:00
+from_id	datetime	اختیاری	شناسه‌های بیشتر از ورودی	96124
+نکات و ملاحظات
+لازم است پارامتر from در صورت وجود از پارامتر to عقب‌تر باشد.
+بازه زمانی انتخاب شده بین from و to حداکثر می‌تواند ۹۰ روز باشد.
+انواع مقادیر tp:
+deposit: واریز
+withdraw: برداشت
+buy: دریافتی معامله
+sell: پرداختی معامله
+manual: سیستمی
+referral: ریفرال
+transfer: انتقال
+pnl: سود/زیان تعهدی
+delegate: استخر مشارکت
+staking: استیکینگ
+yield_farming: ییلد فارمینگ
+discount: تخفیف
+لیست واریزها
+curl 'https://apiv2.nobitex.ir/users/wallets/deposits/list?wallet=4159' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "deposits": [
+        {
+            "txHash": "c5d84268a0bf02307b5a0460a68b61987a9b3009d3a82a817e41558e619ec1d2",
+            "address": "32KfyTNh162UoKithfDrWHZPYq5uePGmf7",
+            "confirmed": true,
+            "transaction": {
+                "id": 10,
+                "amount": "3.0000000000",
+                "currency": "btc",
+                "description": "Deposit - address:36n452uGq1x4mK7bfyZR8wgE47AnBb2pzi, tx:c5d84268a0bf02307b5a0460a68b61987a9b3009d3a82a817e41558e619ec1d2",
+                "created_at": "2018-11-06T03:56:18+00:00",
+                "calculatedFee": "0"
+            },
+            "currency": "Bitcoin",
+            "blockchainUrl": "https://btc.com/c5d84268a0bf02307b5a0460a68b61987a9b3009d3a82a817e41558e619ec1d2",
+            "confirmations": 2,
+            "requiredConfirmations": 3,
+            "amount": "3.0000000000"
+        }
+    ],
+    "hasNext": true
+}
+برای دریافت لیست واریزها از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /users/wallets/deposits/list
+محدودیت فراخوانی: ۶۰ درخواست در ۲ دقیقه
+صفحه بندی: دارد (پیشفرض ۱۰برای ریال و ۲۰برای سایر)
+فیلترزمانی: دارد
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+wallet	string	all	شناسه کیف پول	4159
+نکات و ملاحظات
+از این طریق واریزهای حداکثر سه ماهه اخیر قابل نمایش است.
+صفحه بندی و فیلترزمانی فقط برای حالتی است که wallet تعیین شده باشد و برای حالت پیشفرض یعنی all کارایی ندارد.
+بازارهای مورد علاقه
+با استفاده از این امکان، کاربران قادر خواهند بود بازارهای مورد علاقه خود را مشخص کنند.
+
+دریافت لیست بازارهای مورد علاقه
+curl 'https://apiv2.nobitex.ir/users/markets/favorite' \
+  -X GET
+
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "favoriteMarkets": [
+        "XLMIRT",
+        "BTCUSDT",
+        "BTCIRT"
+    ]
+}
+درخواست: GET /users/markets/favorite
+محدودیت فراخوانی: 6 درخواست در ۱ دقیقه
+نیاز به ارسال توکن: دارد
+ثبت بازار(های) مورد علاقه
+curl 'https://apiv2.nobitex.ir/users/markets/favorite' \
+  -X POST
+
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "favoriteMarkets": [
+        "BTCIRT",
+        "DOGEUSDT"
+    ]
+}
+درخواست: POST /users/markets/favorite
+محدودیت فراخوانی: 12 درخواست در ۱ دقیقه
+نیاز به ارسال توکن: دارد
+پارامتر ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+market	string	الزامی	نماد بازار comma-separated	BTCIRT or BTCIRT,DOGEUSDT
+ لیست نمادهای معتبر بازارها عبارتند از:
+BTCIRT, ETHIRT, LTCIRT, USDTIRT, XRPIRT, BCHIRT, BNBIRT, EOSIRT, XLMIRT, ETCIRT, TRXIRT, DOGEIRT, UNIIRT, DAIIRT, LINKIRT, DOTIRT, AAVEIRT, ADAIRT, SHIBIRT, FTMIRT, MATICIRT, AXSIRT, MANAIRT, SANDIRT, AVAXIRT, MKRIRT, GMTIRT, USDCIRT, BTCUSDT, ETHUSDT, LTCUSDT, XRPUSDT, BCHUSDT, BNBUSDT, EOSUSDT, XLMUSDT, ETCUSDT, TRXUSDT, PMNUSDT, DOGEUSDT, UNIUSDT, DAIUSDT, LINKUSDT, DOTUSDT, AAVEUSDT, ADAUSDT, SHIBUSDT, FTMUSDT, MATICUSDT, AXSUSDT, MANAUSDT, SANDUSDT, AVAXUSDT, MKRUSDT, GMTUSDT, USDCUSDT, CHZIRT, GRTIRT, CRVIRT, BANDUSDT, COMPUSDT, EGLDIRT, HBARUSDT, GALIRT, HBARIRT, WBTCUSDT, IMXIRT, WBTCIRT, ONEIRT, GLMUSDT, ENSIRT, 1M_BTTIRT, SUSHIIRT, LDOIRT, ATOMUSDT, ZROIRT, STORJIRT, ANTIRT, AEVOUSDT, 100K_FLOKIIRT, RSRUSDT, API3USDT, GLMIRT, XMRIRT, ENSUSDT, OMIRT, RDNTIRT, MAGICUSDT, TIRT, ATOMIRT, NOTIRT, CVXIRT, XTZIRT, FILIRT, UMAIRT, 1B_BABYDOGEIRT, BANDIRT, SSVIRT, DAOIRT, BLURIRT, ONEUSDT, EGALAUSDT, GMXIRT, XTZUSDT, FLOWUSDT, GALUSDT, WIRT, CVCUSDT, NMRUSDT, SKLIRT, SNTIRT, BATUSDT, TRBUSDT, NMRIRT, RDNTUSDT, API3IRT, CVCIRT, WLDIRT, YFIUSDT, SOLIRT, TUSDT, QNTUSDT, IMXUSDT, AEVOIRT, GMXUSDT, ETHFIUSDT, QNTIRT, GRTUSDT, WLDUSDT, FETIRT, AGIXIRT, NOTUSDT, LPTIRT, SLPIRT, MEMEUSDT, SOLUSDT, BALUSDT, DAOUSDT, COMPIRT, MEMEIRT, TONUSDT, BATIRT, SNXIRT, TRBIRT, 1INCHUSDT, OMUSDT, RSRIRT, RNDRIRT, SLPUSDT, SSVUSDT, RNDRUSDT, AGLDIRT, NEARUSDT, WOOUSDT, YFIIRT, MDTIRT, CRVUSDT, MDTUSDT, EGLDUSDT, LRCIRT, LPTUSDT, BICOUSDT, 1M_PEPEIRT, BICOIRT, MAGICIRT, ETHFIIRT, ANTUSDT, 1INCHIRT, APEUSDT, 1M_NFTIRT, ARBIRT, LRCUSDT, WUSDT, BLURUSDT, CELRUSDT, DYDXIRT, CVXUSDT, BALIRT, TONIRT, 100K_FLOKIUSDT, JSTUSDT, ZROUSDT, ARBUSDT, APTIRT, 1M_NFTUSDT, CELRIRT, UMAUSDT, SKLUSDT, ZRXUSDT, AGLDUSDT, ALGOIRT, NEARIRT, APTUSDT, ZRXIRT, SUSHIUSDT, FETUSDT, ALGOUSDT, 1M_PEPEUSDT, MASKIRT, EGALAIRT, FLOWIRT, 1B_BABYDOGEUSDT, MASKUSDT, 1M_BTTUSDT, STORJUSDT, XMRUSDT, OMGIRT, SNTUSDT, APEIRT, FILUSDT, ENJUSDT, OMGUSDT, WOOIRT, CHZUSDT, ENJIRT, DYDXUSDT, AGIXUSDT, JSTIRT, LDOUSDT, SNXUSDT
+حذف بازار مورد علاقه
+curl 'https://apiv2.nobitex.ir/users/markets/favorite' \
+  -X DELETE
+
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "favoriteMarkets": [
+        "BTCIRT",
+        "DOGEUSDT"
+    ]
+}
+درخواست: DELETE /users/markets/favorite
+محدودیت فراخوانی: 12 درخواست در ۱ دقیقه
+نیاز به ارسال توکن: دارد
+پارامتر ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+market	string	الزامی	نماد بازار و یا All برای حذف همه	All or BTCIRT
+معامله در بازار اسپات
+ثبت سفارش جدید
+curl 'https://apiv2.nobitex.ir/market/orders/add' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"type":"buy","srcCurrency":"btc","dstCurrency":"rls","amount":"0.6","price":520000000,"clientOrderId":"order1"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "order": {
+    "type": "sell",
+    "srcCurrency": "Bitcoin",
+    "dstCurrency": "ریال",
+    "price": "520000000",
+    "amount": "0.6",
+    "totalPrice": "312000000.0",
+    "matchedAmount": 0,
+    "unmatchedAmount": "0.6",
+    "id": 25,
+    "status": "Active",
+    "partial": false,
+    "fee": 0,
+    "created_at": "2018-11-28T11:36:13.592827+00:00",
+    "clientOrderId": "order1",
+  }
+}
+برای ثبت سفارش معامله در بازار نوبیتکس از این درخواست استفاده نمایید.
+
+درخواست:: POST /market/orders/add
+محدودیت فراخوانی: 300 درخواست در هر ۱۰ دقیقه (محدودیت مشترک)
+ثبت سفارش الزاماً به معنی انجام معامله نیست و بسته به نوع و قیمت سفارش و وضعیت لحظه‌ای بازار ممکن است معامله انجام شود یا نشود. با درخواست «مشاهده وضعیت سفارش» می‌توانید از وضعیت سفارش خود مطلع شوید.
+
+سفارش‌ها پس از ثبت، پیش از ورود به دفتر معاملاتی و انجام معامله، مجدداً از نظر اعتبار مورد بررسی قرار گرفته و در صورت نامعتبر بودن، به وضعیت «رد شده» برده خواهند شد. به همین علت در صورتی که سفارش‌های شما ثبت می‌شود ولی بلافاصله به وضعیت «رد شده» تغییر حالت پیدا می‌کنند، پارامترهای ارسالی خود به ویژه مقدار و قیمت سفارش و موجودی حساب خود را دقیق‌تر بررسی نمایید.
+
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+type	string	الزامی	نوع سفارش	buy یا sell
+execution	string	limit	نحوه‌ی اجرای سفارش	market: با قیمت بازار
+limit: با قیمت معین
+srcCurrency	string	الزامی	رمزارز مبدا	btc یا eth یا xrp یا ...
+dstCurrency	string	الزامی	رمزارز مقصد	rls یا usdt
+amount	monetary	الزامی	مقدار رمزارز (حجم)	0.0623
+price	monetary	الزامی	قیمت واحد	1210000000
+clientOrderId	string	null	شناسه سفارش کاربر، تا ۳۲ کاراکتر،‌ یکتا برای هر کاربر و در میان سفارش های open/active/inactive (آزمایشی)	order1
+نمونه سفارش حد ضرر:
+
+curl 'https://apiv2.nobitex.ir/market/orders/add' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"type":"sell","srcCurrency":"doge","dstCurrency":"rls","amount":"64","execution":"stop_market","stopPrice":47500,"clientOrderId":"order1"}'
+{
+  "status": "ok",
+  "order": {
+    "id": 26,
+    "type": "sell",
+    "execution": "StopMarket",
+    "market": "DOGE-RLS",
+    "srcCurrency": "Dogecoin",
+    "dstCurrency": "\ufdfc",
+    "price": "market",
+    "amount": "64",
+    "param1": "47500",
+    "totalPrice": "0",
+    "totalOrderPrice": "3008000",
+    "matchedAmount": "0",
+    "unmatchedAmount": "64",
+    "status": "Inactive",
+    "partial": false,
+    "fee": 0,
+    "created_at": "2022-01-17T12:14:18.005896+00:00",
+    "averagePrice": "0",
+    "clientOrderId": "order1",
+  }
+}
+سفارش حد ضرر
+این سفارش در زمان رسیدن قیمت بازار به قیمت توقف فعال خواهد شد. کاربرد اصلی آن، جلوگیری از زیان در صورت تغییر غیرمنتظره قیمت بازار است. با ثبت این نوع سفارش می‌توان بدون نیاز به رصد مداوم بازار، در صورت خروج قیمت از بازه مد نظر، اقدام به تبدیل دارایی نمود.
+
+پارامترهای ویژه حد ضرر
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+execution	string	الزامی	نحوه‌ی اجرای سفارش	stop_market: حد ضرر
+stop_limit: حد ضرر معین
+stopPrice	monetary	الزامی	قیمت توقف	1180000000
+نمونه سفارش OCO:
+
+curl 'https://apiv2.nobitex.ir/market/orders/add' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"type":"buy","srcCurrency":"btc","dstCurrency":"usdt","amount":"0.01","mode":"oco","price":42390,"stopPrice":42700,"stopLimitPrice":42715,"clientOrderId":"order1"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "orders": [
+    {
+      "id": 27,
+      "type": "buy",
+      "execution": "Limit",
+      "market": "BTC-USDT",
+      "srcCurrency": "Bitcoin",
+      "dstCurrency": "Tether",
+      "price": "42390",
+      "amount": "0.01",
+      "totalPrice": "0",
+      "totalOrderPrice": "423.9",
+      "matchedAmount": "0",
+      "unmatchedAmount": "0.01",
+      "status": "Active",
+      "created_at": "2022-04-10T10:12:38.402795+00:00",
+      "pairId": 28,
+      "clientOrderId": "order1"
+    },
+    {
+      "id": 28,
+      "type": "buy",
+      "execution": "StopLimit",
+      "market": "BTC-USDT",
+      "srcCurrency": "Bitcoin",
+      "dstCurrency": "Tether",
+      "price": "42715",
+      "amount": "0.01",
+      "param1": "42700",
+      "totalPrice": "0",
+      "totalOrderPrice": "427.15",
+      "matchedAmount": "0",
+      "unmatchedAmount": "0.01",
+      "status": "Inactive",
+      "created_at": "2022-04-10T10:12:38.402795+00:00",
+      "pairId": 27,
+      "clientOrderId": null
+    }
+  ]
+}
+سفارش OCO
+یک سفارش OCO در واقع متشکل از دو سفارش است: یک سفارش با قیمت معین، و یک سفارش با حد ضرر معین.
+
+در صورتی که هر کدام از این دو سفارش انجام شوند، سفارش دیگر لغو خواهد شد. به عنوان مثال، اگر قیمت بازار، به قیمت سفارش معین برسد، سفارش معین اجرا می‌شود و سفارش حد ضرر، به طور خودکار لغو می‌گردد. عکس این حالت نیز برقرار است. اگر قیمت به حد ضرر تعیین شده برسد، سفارش حد ضرر اجرا شده، سفارش با قیمت معین لغو می‌گردد.
+
+پارامترهای ویژه OCO
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+mode	string	الزامی	حالت سفارش	oco
+stopPrice	monetary	الزامی	قیمت توقف حد ضرر	1180000000
+stopLimitPrice	monetary	الزامی	قیمت حد ضرر	1179500000
+ شرط قیمت سفارش OCO:
+خرید: price < آخرین قیمت بازار < stopPrice و stopLimitPrice
+فروش: price > آخرین قیمت بازار > stopPrice و stopLimitPrice
+حالت‌های خطا
+در صورت عدم پذیرش سفارش، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message",
+  "clientOrderId": "order1"
+}
+در صورتی که درخواست ثبت سفارش معتبر نباشد، ممکن است یکی از این خطاها برگردانده شود. در صورت دریافت هر یک از این خطاها، آن سفارش شما ثبت نشده است و در صورت تمایل باید درخواست ثبت آن سفارش را دوباره ارسال کنید.
+
+کد خطا	توضیحات
+InvalidOrderPrice	قیمت سفارش (price) تعیین نشده یا اشتباه است
+BadPrice	در سفارش عادی: قیمت تعیین شده برای سفارش نسبت به قیمت فعلی بازار تفاوت زیادی دارد. قیمت سفارش خود را در بازه‌ی ۳۰٪ قیمت کنونی بازار تعیین کنید.
+در سفارش حد ضرر: قیمت تعیین شده برای سفارش بازار نمی‌تواند از قیمت توقف بهتر باشد.
+PriceConditionFailed	شرط قیمت در سفارش لحاظ نشده است. شرط قیمت میان پارامترهای قیمتی و قیمت بازار تعریف می‌شود.
+OverValueOrder	مقدار سفارش فروش (amount) یا ارزش کل سفارش خرید (amount*price) از موجودی کیف پول نوبیتکس شما کمتر است.
+SmallOrder	حداقل ارزش معامله رعایت نشده است. حداقل ارزش معامله برای بازارهای ریالی، 3 میلیون ریال و برای بازارهای تتری، ۱۱ تتر است و مبلغ کل سفارش (amount*price) باید بیشتر از این حداقل باشد.
+DuplicateOrder	سفارشی با همین مشخصات توسط کاربر شما در بازه زمانی ده ثانیه اخیر ارسال شده است.
+InvalidMarketPair	رمزارز مبدا (srcCurrency) یا رمزارز مقصد (dstCurrency) به درستی مقداردهی نشده است یا چنین بازاری در نوبیتکس وجود ندارد.
+MarketClosed	بازار مد نظر در حال حاضر به صورت موقت بسته است.
+TradingUnavailable	کاربر اجازه‌ی معامله ندارد، فرآیند احراز هویت خود را تکمیل نمایید.
+FeatureUnavailable	شما از کاربران مجاز به استفاده از امکانات آزمایشی نیستید.
+DuplicateClientOrderId	شناسه سفارش کاربر تکراری است (برای هر کاربر در لحطه فقط یه سفارش open/active/inactive با یک شماره سفارش ممکن است).
+نکات و ملاحظات
+واحدها: واحد قیمت در بازارهای ریالی به ریال (و نه تومان) می‌باشد. واحد قیمت در بازارهای تتری نیز تتر می‌باشد. واحد پارامتر مقدار (amount) بر حسب رمزارز مبدا (srcCurrency) است.
+سفارش مارکت: برای ثبت سفارش سریع (سفارش مارکت، سفارش به قیمت بازار)، مقدار پارامتر execution را برابر market ارسال نمایید. منظور از سفارش مارکت سفارشی است که کاربر درخواست دارد تا به بهترین قیمت موجود بازار مورد انجام قرار گیرد. ℹB - ℹI
+تعیین محدوده مورد انتظار قیمت: در سفارش‌های مارکت به شدت توصیه می‌شود که پارامتر price را نیز مشخص نمایید. این پارامتر در سفارش مارکت تخمین شما از قیمت بازار را نمایش می‌دهد و باعث می‌شود سفارش شما تنها تا جایی پر شود که قیمت معامله در بازه‌ی قیمتی مشخص شده باشد. برای نمونه اگر نوع سفارش خرید مارکت باشد و قیمت ۱۰۰ میلیون تومان تعیین شود، تنها تا جایی در بازار range کشیده می‌شود که قیمت زیر ۱۰۱ میلیون تومان باشد. برای پیش‌گیری از معاملات با قیمت ناخواسته به علت نوسانات دفعی بازار، پیشنهاد می‌شود که حتماً قیمت تقریبی مد نظر خود را در سفارش‌های مارکت نیز ارسال کنید. با این حال اگر اطمینان به کد خود و تبعات احتمالی این موضوع دارید، می‌توانید پارامتر price را اصلاً ارسال ننمایید که در این شرایط معامله با قیمت لحظه‌ای بازار جهانی، به هر میزان که باشد تا بازه نوسان ۱٪، انجام خواهد شد.
+دقت مقادیر پولی (monetary): نوع monetary که در پارامترهای amount و price به کار می‌رود، بسته به بازار هر رمزارز، تعداد رقم اعشار متغیری بین ۰ تا ۸ رقم دارد. در صورت ارسال مقادیر با ارقام اعشاری بیشتر، ارقام بی‌معنی در مقدار به پایین و در قیمت به روش بانکداری گرد خواهند شد.
+مشاهده جدول دقت‌ها
+clientOrderId: دقت کنید که این پارامتر برای هر کاربر در میان سفارش های open/active/inactive یکتاست.
+سفارش تکراری: برای جلوگیری از ثبت سفارش تکراری ناشی از اختلالات شبکه و سرور، در صورتی که دو یا چند سفارش با پارامترهای ورودی کاملاً مشابه از جمله نوع و قیمت و مقدار، در بازه‌ی زمانی کمتر از ده ثانیه ارسال نمایید، تنها سفارش اول پذیرفته می‌شود و باقی درخواست‌های مشابه تا ده ثانیه پیام خطای DuplicateOrder دریافت می‌کنند. (غیرفعال در حالت Pro) توصیه می‌شود در صورت استفاده از این حالت Pro حتما از پارامتر clientOrderId استفاده نمایید تا از ثبت سفارش تکراری ناشی از اختلالات شبکه و سرور جلوگیری نماید.
+مشاهده وضعیت سفارش
+curl 'https://apiv2.nobitex.ir/market/orders/status' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"id":5684}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "order": {
+        "unmatchedAmount": "3.0000000000",
+        "fee": "0E-10",
+        "matchedAmount": "0E-10",
+        "partial": false,
+        "price": "8500000.0000000000",
+        "created_at": "2018-11-28T12:25:22.696029+00:00",
+        "id": 5684,
+        "srcCurrency": "Litecoin",
+        "totalPrice": "25500000.00000000000000000000",
+        "type": "sell",
+        "dstCurrency": "\ufdfc",
+        "isMyOrder": false,
+        "status": "Active",
+        "amount": "3.0000000000",
+        "clientOrderId": "order1"
+    }
+}
+برای دریافت وضعیت سفارش از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /market/orders/status
+محدودیت فراخوانی: 300 درخواست در هر دقیقه
+پارامترهای ورودی:
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+id	int	اختیاری	شناسه سفارش	5684
+clientOrderId	string	اختیاری	شناسه سفارش کاربر (آزمایشی)	order1
+نکات و ملاحظات
+حتما باید حداقل یکی از دو پارامتر ‍order و clientOrderId ارسال شوند.
+اگر هر دو پارامتر ‍order و clientOrderId ارسال شوند، اولویت با id است.
+clientOrderId فقط در میان سفارشات open/active/inactive جستجو میشود.
+clientOrderId .در حالت آزمایشی است و ممکن است در آینده تغییر کند
+انواع مقادیر status:
+
+Active: سفارش مقدار پر نشده (unmatched_amount) برای شرکت در معاملات دارد و در بازار فعال است.
+Done: سفارش تماما معامله شده است.
+Inactive: سفارش حد ضرر هنوز به محدوده قیمت توقف تعیین شده نرسیده و غیرفعال است.
+Canceled: سفارش پیش از پر شدن کامل توسط کاربر یا سامانه لغو شده است. سفارش به چند دلیل می‌تواند توسط سامانه لغو شود:
+مقدار سفارش کافی در بازار در بازه ۱٪ قیمت تعیین شده برای پر کردن سفارش وجود نداشته است.
+موجودی کیف پول کاربر از طریق سایر تراکنش‌ها کاهش یافته است و از موجودی لازم برای پر شدن معامله کمتر شده است.
+حالت‌های خطا
+در صورت عدم پذیرش سفارش، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+NullIdAndClientOrderId	باید یکی از دو پارامتر id و clientOrderId ارسال شود
+فهرست سفارش‌های کاربر
+curl 'https://apiv2.nobitex.ir/market/orders/list?srcCurrency=btc&dstCurrency=usdt&details=2' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "orders": [
+    {
+      "id": 173546223,
+      "type": "sell",
+      "execution": "Limit",
+      "status": "Active",
+      "srcCurrency": "Bitcoin",
+      "dstCurrency": "Tether",
+      "price": "9750.01",
+      "amount": "0.0123",
+      "matchedAmount": "0E-10",
+      "averagePrice": "0",
+      "fee": "0E-10",
+      "clientOrderId": "order1"
+    }
+  ]
+}
+برای دریافت فهرست سفارش‌های خود، از این درخواست استفاده نمایید.
+
+درخواست: GET /market/orders/list
+محدودیت فراخوانی: 30 درخواست در دقیقه
+صفحه بندی: دارد (پیش فرض ۱۰۰)
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+status	string	open	وضعیت سفارش	all یا open یا done یا close
+type	string	تمام انواع سفارش	نوع سفارش‌های مد نظر، خرید یا فروش	sell یا buy
+execution	string	تمام انواع سفارش گذاری‌ها	لیست سفارشات با نحوه سفارش‌گذاری مشخص	limit, market, stop_limit, stop_market
+tradeType	string	تمام انواع سفارش	نوع سفارش اسپات یا فروش تعهدی	spot یا margin
+srcCurrency	string	تمام رمزارزها	رمزارز مبدا	btc یا eth یا xrp یا ...
+dstCurrency	string	تمام رمزارزها	رمزارز مقصد	rls یا usdt
+details	int	1	میزان جزئیات پاسخ، اعداد بزرگ‌تر تعداد فیلدهای بیشتری را از وضعیت هر سفارش بازمی‌گرداند	1 یا 2
+fromId	int	1	با مشخص کردن این پارامتر سفارشات با شناسه بزرگتر از این عدد لیست خواهند شد	100
+order	string	متغیر براساس پارامترهای fromId و type	ترتیب دریافت سفارشات	id یا created_at یا price به صورت صعودی و یا به صورت نزولی با اضافه کردن- به ابتدای کلید
+توضیحات تکمیلی پارامترهای ورودی
+وضعیت سفارش یکی از مقادیر زیر می‌تواند باشد:
+all: سفارش‌های در تمامی وضعیت‌ها در پاسخ بازگردانده می‌شوند.
+open: سفارش‌های باز، شامل سفارش‌های فعال و غیرفعال بازگردانده می‌شوند. منظور از سفارش‌های باز غیرفعال، مثلاً سفارش‌های حد ضرری است که هنوز فعال نشده باشند.
+done: سفارش‌هایی که بخشی یا تمام آن پر شده باشند بازگردانده می‌شوند.
+close: سفارش‌هایی که وضعیت آن‌ها «انجام شده» یا «لغو شده» باشد بازگردانده می‌شوند.
+دو وضعیت active و undone از موارد قدیمی بوده و دیگر پشتیبانی نمی‌شوند.
+
+پارامتر ترتیب ارسال سفارشات می‌تواند یکی از مقادیر زیر را داشته باشد:
+
+id یا -id: سفارش‌ها به ترتیب شناسه‌ی سفارش به صورت صعودی و یا نزولی (در صورت ارسال علامت -) بازگردانده می‌شوند.
+created_at یا -created_at: سفارش‌ها در پاسخ براساس زمان سفارش‌گذاری به صورت صعودی/نزولی مرتب می‌شوند.
+price یا -price: سفارش‌ها در پاسخ بر اساس قیمتشان به صورت صعودی/نزولی مرتب می‌شوند.
+در صورتیکه پارامتر ترتیب ارسال سفارشات در درخواست ارسال نشود:
+
+اگر پارامتر fromId در درخواست ارسال شده باشد سفارش‌ها در پاسخ براساس شناسه‌ی سفارش به صورت نزولی مرتب می‌شوند.
+اگر پارامتر نوع سفارش ارسال نشده باشد، سفارش‌ها در پاسخ به ترتیب زمان ایجاد سفارش به صورت نزولی بازگردانده می‌شوند.
+اگر نوع سفارش با مقدار خرید تعیین شده باشد سفارش‌ها به ترتیب قیمت به صورت نزولی و اگر نوع سفارش با مقدار فروش تعیین شده باشد سفارش‌ها به ترتیب قیمت به صورت صعودی بازگردانده می‌شوند.
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+orders	list of Order	فهرست سفارش‌های کاربر	[{...Order...}, ...]
+شی Order
+فیلد	نوع	توضیحات	نمونه
+type	string	نو ع خرید یا فروش سفارش	buy یا sell
+execution	string	نوع اجرای سفارش	Limit یا Market یا StopMarket یا StopLimit
+tradeType	string	نوع معامله سفارش	Spot یا Margin
+srcCurrency	string	رمزارز مبدا سفارش	Bitcoin یا Ethereum یا TRON یا ...
+dstCurrency	string	رمزارز مقصد سفارش	﷼ یا Tether
+price	monetary	قیمت ثبت شده برای سفارش	2900000000 یا market
+amount	monetary	مقدار ثبت شده برای سفارش	0.023324
+matchedAmount	monetary	مقدار پر شده از سفارش	0.012001
+param1	monetary	قیمت توقف در حد ضرر	2790000000
+
+همچنین در صورتی که پارامتر details=2 باشد این فیلدها نیز برای هر سفارش بازگردانده می‌شود:
+
+فیلد	نوع	توضیحات	نمونه
+id	int	شناسه سفارش	180258791
+status	string	وضعیت فعلی سفارش	New یا Active یا Inactive یا Done یا Canceled
+fee	monetary	کارمزد سفارش تاکنون	0.00001
+created_at	datetime	تاریخ ایجاد سفارش	2020-07-15T11:32:38.326809+00:00
+averagePrice	monetary	میانگین قیمت اجرا شده از سفارش	2899500000
+نکات و ملاحظات
+در پاسخ به صورت پیش‌فرض اطلاعات ۱۰۰ سفارش بازگردانده می‌شود که با استفاده از پارامترهای ورودی می‌توانید تعداد متفاوتی از سفارش‌های خود را، تا حداکثر ۱۰۰۰ سفارش، دریافت کنید. در صورتی‌که میخواهید تعداد بیشتری از سفارش‌ها و یا سفارش‌های گذشته را دریافت کنید می‌توانید از پارامتر‌های page یا fromId استفاده کنید. توجه کنید که استفاده‌ی همزمان از این دو پارامتر ممکن نیست و در صورت ارسال پارامتر fromId یک صفحه از سفارش‌ها به تعداد مشخص بازگردانده می‌شود، که این تعداد با ارسال پارامتر pageSize قابل تنظیم است. همچنین پیشنهاد می‌شود که در صورتی که تعداد زیادی سفارش باز دارید، شناسه آن‌ها را در زمان ثبت سفارش دریافت و ذخیره نمایید و به صورت مستقل با استفاده از درخواست «مشاهده وضعیت سفارش» اطلاعات هر یک را بنا به نیاز به‌روز کنید. همچنین برای اطلاع از معاملات انجام شده خود می‌توانید از درخواست فهرست معاملات کاربر استفاده نمایید.
+منظور از وضعیت Done سفارشی است که به صورت صد در صد اجرا شده باشد. ممکن است سفارش شما به تدریج اجرا شود، و در این حالت وضعیت آن کماکان Active می‌ماند. از فیلد matchedAmount برای تشخیص وضعیت اجرا و پر شدن سفارش استفاده کنید. همچنین ممکن است سفارش شما قبل از اجرای کامل، به دلیل درخواست «لغو سفارش» یا کمبود موجودی یا تغییر شدید قیمت بازار (در سفارش‌های مارکت) لغو شود که در این حالت وضعیت آن Canceled خواهد بود، به این معنی که به صورت صد در صد اجرا نشده است ولی می‌تواند مقدار matchedAmount آن بزرگ‌تر از صفر باشد.
+این API متناظر مواردی مانند Current Open Orders و All Orders در اکسچنج بایننس است.
+تغییر وضعیت سفارش
+curl 'https://apiv2.nobitex.ir/market/orders/update-status' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"order":5684,"status":"canceled"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "updatedStatus": "Canceled",
+  "order": {
+    "amount": "60",
+    "averagePrice": "0",
+    "clientOrderId": null,
+    "created_at": "2025-10-28T09:25:17.774332+00:00",
+    "dstCurrency": "﷼",
+    "execution": "Market",
+    "fee": "0",
+    "id": 5684,
+    "market": "USDT-RLS",
+    "matchedAmount": "0",
+    "partial": false,
+    "price": "market",
+    "srcCurrency": "Tether",
+    "status": "Canceled",
+    "totalOrderPrice": "2550000",
+    "totalPrice": "0",
+    "tradeType": "Spot",
+    "type": "sell",
+    "unmatchedAmount": "60"
+  }
+}
+برای تغییر وضعیت یک سفارش (لغو یا فعال‌سازی) از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /market/orders/update-status
+محدودیت فراخوانی: 90 درخواست در دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+order	int	اختیاری	شناسه سفارش	5684
+clientOrderId	string	اختیاری	شناسه سفارش کاربر (آزمایشی)	order1
+status	string	الزامی	وضعیت جدید	canceled
+نکات و ملاحظات
+حتما باید حداقل یکی از دو پارامتر ‍order و clientOrderId ارسال شوند.
+اگر هر دو پارامتر ‍order و clientOrderId ارسال شوند، اولویت با id است.
+clientOrderId فقط در میان سفارشات open/active/inactive جستجو میشود.
+clientOrderId .در حالت آزمایشی است و ممکن است در آینده تغییر کند
+مقدار status میتواند از 'new' به 'active' و یا از 'active'/'inactive' به 'canceled' تغییر کند. در غیر اینصورت، درخواست رد میشود.
+در صورتی که سفارش درخواست شده جزئی از یک سفارش OCO انجام نشده باشد، هر دو سفارش مرتبط لغو خواهند شد.
+حالت‌های خطا
+در صورت عدم پذیرش سفارش، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+NullIdAndClientOrderId	باید یکی از دو پارامتر id و clientOrderId ارسال شود
+لغو جمعی سفارشات
+curl 'https://apiv2.nobitex.ir/market/orders/cancel-old' \
+  -X POST \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"execution":"limit","srcCurrency":"btc","dstCurrency":"rls","hours":2.4}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok"
+}
+برای لغو دسته‌جمعی سفارشات فعال از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /market/orders/cancel-old
+محدودیت فراخوانی: 30 درخواست در دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+hours	float	اختیاری	زمان سفارش	4.2
+execution	string	اختیاری	نحوه سفارش	market یا limit یا stop_market یا stop_limit
+tradeType	string	اختیاری	نوع معامله سفارش	spot یا margin
+srcCurrency	string	اختیاری	ارز مبدا	btc
+dstCurrency	string	اختیاری	ارز مقصد	rls
+نکات و ملاحظات
+مقدار hours در واقع مقدار ساعت قبل از زمان ارسال درخواست میباشد. برای مثال اگر مقدار ساعت '2' ارسال شود، سفارش های 2 ساعت قبل لغو خواهند شد.
+در صورتی که مقدار hours ارسال نشود، تمامی سفارشات فعال مربوط لغو خواهد شد.
+سفارشات حد ضرر غیرفعال غیر OCO مشمول این نوع لغو نخواهند شد.
+در بعضی شرایط امکان دارد به شما خطا پاسخ داده شود. این خطاها در فیلد error برگردانده میشوند.
+حالت‌های خطا
+در صورت عدم پذیرش سفارش، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+فهرست معاملات کاربر
+curl 'https://apiv2.nobitex.ir/market/trades/list?srcCurrency=usdt&dstCurrency=rls' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "trades": [
+    {
+      "id": 123412,
+      "orderId": 1231222,
+      "srcCurrency": "Tether",
+      "dstCurrency": "﷼",
+      "market": "USDT-RLS",
+      "timestamp": "2022-07-05T09:57:38.560820+00:00",
+      "type": "sell",
+      "price": "316800",
+      "amount": "57.3605",
+      "total": "18171806.4",
+      "fee": "27257.7096"
+    }
+  ],
+  "hasNext": false
+}
+برای دریافت فهرست معاملات ۳ روز اخیر خود، از این درخواست استفاده نمایید.
+
+درخواست: GET /market/trades/list
+محدودیت فراخوانی: 30 درخواست در دقیقه
+صفحه بندی: دارد (پیش فرض ۳۰)
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+srcCurrency	string	اختیاری	رمزارز مبدا بازار	btc یا ...
+dstCurrency	string	اختیاری	رمزارز مقصد بازار	rls یا usdt
+fromId	int	اختیاری	حداقل شناسه	10023
+در فیلتر بازار هر دو پارامتر رمزارز مبدا و مقصد باید مقدار داشته باشند یا هر دو خالی باشند.
+در صورت اختصاص مقدار به حداقل شناسه تنها معاملاتی که شناسه‌ی آن‌ها بیشتر از یا مساوی با حداقل شناسه است برگردانده می‌شوند.
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+trades	list of Trade	فهرست معاملان کاربر	[{...Trade...}, ...]
+hasNext	boolean	صفحه بعدی دارد؟	false
+شی Trade
+فیلد	نوع	توضیحات	نمونه
+id	int	شناسه‌ی معامله	122545
+orderId	int	شناسه‌ی سفارش	214534534434
+srcCurrency	string	رمزارز مبدا معامله	Bitcoin یا Ethereum یا TRON یا ...
+dstCurrency	string	ارز مقصد معامله	﷼ یا Tether
+market	string	نماد بازار معامله	USDT-RLS
+timestamp	string	زمان انجام معامله	2022-07-05T09:57:38.560820+00:00
+type	string	نوع خرید یا فروش	buy یا sell
+price	monetary	قیمت انجام معامله	316800
+amount	monetary	مقدار معامله شده	57.3605
+total	monetary	قیمت کل معامله	18171806.4
+fee	monetary	کارمزد معامله	27257.7096
+معامله در بازار تعهدی
+موقعیت خرید و فروش تعهدی امکان معامله وکالتی را برای کاربران فراهم می‌کند. استفاده از این ویژگی به منزله پذیرش شروط، قوانین و ضوابط معاملات تعهدی در نوبیتکس است.
+
+ موقعیت خرید در مرحله تست بتا قرار دارد.
+مشاهده بازارهای معاملات تعهدی
+curl 'https://apiv2.nobitex.ir/margin/markets/list' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok", 
+  "markets": {
+    "BTCIRT": {
+      "srcCurrency": "btc",
+      "dstCurrency": "rls",
+      "positionFeeRate": "0.001",
+      "maxLeverage": "5",
+      "sellEnabled": true,
+      "buyEnabled": false
+    },
+    "BTCUSDT": {
+      "srcCurrency": "btc",
+      "dstCurrency": "usdt",
+      "positionFeeRate": "0.001",
+      "maxLeverage": "5",
+      "sellEnabled": true,
+      "buyEnabled": true
+    },
+    "DOGEIRT": {
+      "srcCurrency": "doge",
+      "dstCurrency": "rls",
+      "positionFeeRate": "0.001",
+      "maxLeverage": "4",
+      "sellEnabled": true,
+      "buyEnabled": false
+    },
+    "DOGEUSDT": {
+      "srcCurrency": "doge",
+      "dstCurrency": "usdt",
+      "positionFeeRate": "0.001",
+      "maxLeverage": "3",
+      "sellEnabled": true,
+      "buyEnabled": true
+    }
+  }
+}
+برای دریافت بازارهای پشتیبانی شده برای معاملات تعهدی از این درخواست استفاده نمایید.
+
+درخواست:: GET /margin/markets/list
+محدودیت فراخوانی: ۳۰ درخواست در هر دقیقه
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+status	string	وضعیت پاسخ	ok
+نماد بازار	MarginMarketSetting	تنظیمات بازار تعهدی	{"srcCurrency": "btc", ...}
+شی MarginMarketSetting
+فیلد	نوع	توضیحات	نمونه
+srcCurrency	string	رمزارز مبدا بازار	btc یا eth یا trx یا ...
+dstCurrency	string	رمزارز مقصد بازار	rls یا usdt
+positionFeeRate	decimal	نرخ کارمزد تمدید روزانه	0.001
+maxLeverage	decimal	بیشینه ضریب مجاز بازار	5
+sellEnabled	boolean	قابلیت فروش تعهدی	true
+buyEnabled	boolean	قابلیت خرید تعهدی	true
+نکات و ملاحظات
+بیشینه ضریب مجاز بازار هم به عمق بازار و هم به سطح کاربری وابسته است. بدین منظور برای دریافت مقدار دقیق با توجه سطح کاربری تان، درخواست را همراه با توکن احراز هویت خود ارسال نمایید.
+نرخ کارمزد تمدید روزانه به صورت پله‌ای بر اساس ارزش دارایی وکالت گرفته شده تعیین می‌شود. برای اطلاعات بیشتر به قوانین معاملات تعهدی مراجعه نمایید.
+مشاهده استخرهای مشارکت ارزی فعال
+curl 'https://apiv2.nobitex.ir/liquidity-pools/list' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok", 
+  "pools": {
+    "btc": {
+      "capacity": "30",
+      "filledCapacity": "28.082343"
+    },
+    "ltc": {
+      "capacity": "160",
+      "filledCapacity": "149.234"
+    },
+    "doge": {
+      "capacity": "5000000",
+      "filledCapacity": "5000000"
+    }
+  }
+}
+استخرهای مشارکت موجودی مورد نیاز برای اعطای وکالت خرید و فروش تعهدی را تامین می‌کنند. ظرفیت مشارکت افراد در معاملات تعهدی را موجودی استخرها تعیین می‌کنند. استخرها ممکن است در زمان‌هایی فعال و غیرفعال شوند. در استخرهای غیرفعال امکان ثبت سفارش جدید تعهدی وجود ندارد (اما بستن موقعیت همچنان میسر است). برای دریافت ظرفیت استخرهای فعال از این درخواست استفاده نمایید.
+
+درخواست:: GET /liquidity-pools/list
+محدودیت فراخوانی: ۱۲ درخواست در هر دقیقه
+انتقال پول به کیف‌پول تعهدی
+curl -X POST 'https://apiv2.nobitex.ir/wallets/transfer' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"currency": "rls", "amount": "2500000000", "src": "spot", "dst": "margin"}'
+
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok", 
+  "srcWallet": {
+    "id": 53456,
+    "currency": "rls",
+    "balance": "1870000000",
+    "blockedBalance": "420000000",
+    "activeBalance": "1450000000",
+    "rialBalance": "1870000000",
+    "rialBalanceSell": "1870000000",
+    "depositAddress": null,
+    "depositTag": null,
+    "depositInfo": {
+      "FIAT_MONEY": {
+        "address": null,
+        "tag": null
+      }
+    }
+  },
+  "dstWallet": {
+    "id": 86459,
+    "currency": "rls",
+    "balance": "2500000000",
+    "blockedBalance": "0",
+    "activeBalance": "2500000000",
+    "rialBalance": "2500000000",
+    "rialBalanceSell": "2500000000"
+  }
+}
+وجوه تضمین قبل از دریافت وکالت خرید و فروش تعهدی باید در کیف‌پول تعهدی قرار گیرند. برای انتقال موجودی میان دو کیف‌پول اسپات و تعهدی از این درخواست استفاده نمایید.
+
+درخواست:: POST /wallets/transfer
+محدودیت فراخوانی: ۱۰ درخواست در هر دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+currency	string	الزامی	ارز وجه تضمین	rls یا usdt
+amount	monetary	الزامی	مقدار انتقال	2500000000
+src	string	الزامی	نوع کیف‌پول مبدا	spot یا margin
+dst	string	الزامی	نوع کیف‌پول مقصد	spot یا margin
+نکات و ملاحظات
+نوع کیف‌پول مبدا و مقصد نباید یکسان باشد.
+کیف‌پول تعهدی ضمن اولین انتقال به آن ایجاد می‌شود. پس از آن موجودی این کیف‌پول را می‌توان از طریق لیست کیف‌پول‌ها مشاهده کرد.
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "InsufficientBalance",
+  "message": "Amount cannot exceed active balance"
+}
+کد خطا	توضیحات
+ParseError	فرمت ورودی‌ها مطابق فرمت خواسته شده نیست.
+InvalidAmount	مقدار نامعتبر است.
+SameDestination	کیف مبدا و مقصد از یک نوع (هر دو اسپات یا هر دو تعهدی) است.
+WalletNotFound	کیف‌پول تعهدی برای ارزهای غیر از ریال و تتر وجود ندارد.
+InsufficientBalance	مقدار انتقال از موجودی آزاد کیف‌پول مبدا بیشتر است.
+دریافت محدودیت‌های وکالت کاربر در بازار تعهدی
+curl 'https://apiv2.nobitex.ir/margin/v2/delegation-limit?market=BTCUSDT' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "limits": {
+    "buy": [
+      {
+        "leverage": "1",
+        "limit": "1250"
+      },
+      {
+        "leverage": "1.5",
+        "limit": "1875"
+      },
+      {
+        "leverage": "2",
+        "limit": "2500"
+      }
+    ],
+    "sell": [
+      {
+        "leverage": "1",
+        "limit": "0.021"
+      },
+      {
+        "leverage": "1.5",
+        "limit": "0.0315"
+      },
+      {
+        "leverage": "2",
+        "limit": "0.042"
+      }
+    ]
+  }
+}
+برای دریافت سقف باقی‌مانده وکالت کاربر در یک بازار تعهدی از این درخواست استفاده کنید. این نسخه جایگزین endpoint قدیمی GET /margin/delegation-limit شده است و به جای currency باید market ارسال شود. در پاسخ، محدودیت‌های باقی‌مانده به تفکیک سمت buy و sell و برای هر اهرم مجاز بازار بازگردانده می‌شود. در سمت sell واحد limit برابر رمزارز مبدا بازار و در سمت buy واحد limit برابر رمزارز مقصد بازار است.
+
+درخواست:: GET /margin/v2/delegation-limit
+محدودیت فراخوانی: ۱۲ درخواست در هر دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+market	string	الزامی	نماد بازار تعهدی نوبیتکس	BTCUSDT یا BTCIRT
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+status	string	وضعیت پاسخ	ok
+limits	object	محدودیت‌های باقی‌مانده وکالت به تفکیک سمت معامله	{"buy": [...], "sell": [...]}
+limits.buy	array	محدودیت‌های خرید تعهدی در بازار؛ واحد limit در این بخش برابر رمزارز مقصد بازار است	[{"leverage": "1", "limit": "1250"}]
+limits.sell	array	محدودیت‌های فروش تعهدی در بازار؛ واحد limit در این بخش برابر رمزارز مبدا بازار است	[{"leverage": "1", "limit": "0.021"}]
+شی DelegationLimitItem
+پارامتر	نوع	توضیحات	نمونه
+leverage	decimal	اهرم مربوط به محدودیت باقی‌مانده	1.5
+limit	decimal	سقف باقی‌مانده قابل استفاده در همان سمت و همان اهرم	1875
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+TradeLimitation	کاربر سطح احراز کافی ندارد.
+InvalidSymbol	نماد بازار (market) نامعتبر است.
+InvalidMarket	بازار درخواستی در نوبیتکس یافت نشد.
+UnsupportedMarginSymbol	بازار درخواستی از معاملات تعهدی پشتیبانی نمی‌کند.
+نکات و ملاحظات
+نمونه پاسخ بالا کوتاه‌شده است و آرایه هر سمت از اهرم 1 تا حداکثر اهرم مجاز آن بازار، با گام 0.5 ادامه پیدا می‌کند.
+مقدار limit در هر ورودی، سقف باقی‌مانده قابل استفاده برای همان سمت و همان اهرم است.
+با باز بودن موقعیت‌ها و سفارش‌های تعهدی، این مقادیر کاهش می‌یابند و با بستن یا تسویه آن‌ها دوباره افزایش پیدا می‌کنند.
+در سفارش فروش تعهدی، مقدار سفارش باید از sell.limit اهرم انتخابی کمتر یا مساوی باشد.
+در سفارش خرید تعهدی، ارزش کل سفارش (price × amount) باید از buy.limit اهرم انتخابی کمتر یا مساوی باشد.
+درج سفارش تعهدی
+curl -X POST 'https://apiv2.nobitex.ir/margin/orders/add' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"srcCurrency": "btc", "dstCurrency": "rls", "leverage": "2", "amount": "0.01", "price": "6400000000"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "order": {
+    "id": 25,
+    "type": "sell",
+    "execution": "Limit",
+    "tradeType": "Margin",
+    "srcCurrency": "btc",
+    "dstCurrency": "rls",
+    "price": "6400000000",
+    "amount": "0.01",
+    "status": "Active",
+    "totalPrice": "0",
+    "totalOrderPrice": "64000000",
+    "matchedAmount": 0,
+    "unmatchedAmount": "0.01",
+    "leverage": "2",
+    "side": "open",
+    "partial": false,
+    "fee": 0,
+    "created_at": "2022-10-20T11:36:13.592827+00:00",
+    "averagePrice": "0"
+  }
+}
+برای درج سفارش در بازار تعهدی از این درخواست استفاده نمایید.
+
+درخواست:: POST /margin/orders/add
+محدودیت فراخوانی: ۳۰۰ درخواست در هر ۱۰ دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+execution	string	limit	نحوه‌ی اجرای سفارش	limit یا ...
+srcCurrency	string	الزامی	رمزارز مبدا بازار	btc یا ...
+dstCurrency	string	الزامی	ارز مقصد بازار	rls یا usdt
+type	string	sell	جهت خرید یا فروش	sell یا buy
+leverage	monetary	1	ضریب وکالت	2
+amount	monetary	الزامی	مقدار مورد تقاضای وکالت	0.01
+price	monetary	الزامی	قیمت سفارش گذاری	13400000000
+stopPrice	monetary	اختیاری	قیمت توقف در حد ضرر	12600000000
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+order	Order	سفارش تعهدی	{"id": 25, ...}
+سفارش OCO
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+mode	string	الزامی	حالت سفارش	oco
+srcCurrency	string	الزامی	رمزارز مبدا بازار	btc یا ...
+dstCurrency	string	الزامی	ارز مقصد بازار	rls یا usdt
+type	string	sell	جهت خرید یا فروش	sell یا buy
+leverage	monetary	1	ضریب وکالت	2
+amount	monetary	الزامی	مقدار مورد تقاضای وکالت	0.01
+price	monetary	الزامی	قیمت سفارش گذاری	13400000000
+stopPrice	monetary	الزامی	قیمت توقف سفارش حد ضرر	12600000000
+stopLimitPrice	monetary	الزامی	قیمت سفارش حد ضرر	12610000000
+پارامترهای پاسخ OCO
+پارامتر	نوع	توضیحات	نمونه
+orders	list of Order	سفارش OCO تعهدی	[{"id": 25, ...}, {"id": 26, ...}]
+نکات و ملاحظات
+نوع اجرای سفارش یکی از موارد زیر می‌باشد:
+limit: با قیمت معین
+market: با قیمت بازار
+stop_limit: حد ضرر با قیمت معین
+stop_market: حد ضرر با قیمت بازار
+سفارش‌های خرید و فروش تعهدی ثبت شده را می‌توان در فهرست سفارش‌های کاربر مشاهده کرد.
+بعد از پر شدن سفارش تعهدی، موقعیت متناظر با آن باز خواهد شد.
+شرط قیمت سفارش OCO:
+خرید: price < آخرین قیمت بازار < stopPrice و stopLimitPrice
+فروش: price > آخرین قیمت بازار > stopPrice و stopLimitPrice
+ضریب عددی در محدوده 1 تا ضریب بیشینه هر بازار با دقت 0.5 است، مانند: 1, 1,5, 2, 2,5 و ...
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+FeatureUnavailable	شما از کاربران مجاز به استفاده از امکانات آزمایشی نیستید.
+ParseError	فرمت ورودی‌ها مطابق فرمت خواسته شده نیست.
+TradeLimitation	کاربر سطح احراز کافی ندارد.
+InvalidMarketPair	زوج مبدا/مقصد بازار در میان بازارهای نوبیتکس وجود ندارد.
+MarketClosed	بازار بسته شده یا هنوز باز نشده است.
+TradingUnavailable	کاربر محدودیت معامله (از جانب پشتیبانی) دارد.
+UnsupportedMarginSrc	رمزارز درخواستی برای معاملات خرید/فروش تعهدی پشتیبانی نمی‌شود.
+MarginClosed	معاملات خرید/فروش تعهدی بسته شده یا باز نشده است.
+AmountUnavailable	مقدار مورد تقاضا برای اخذ وکالت فروش در استخر موجود نیست.
+ExceedDlegationLimit	مقدار از سقف مجاز فروش باقی‌مانده کاربر بیشتر است.
+InsufficientBalance	موجودی کیف‌پول تعهدی کاربر برای تامین وجه تضمین به اندازه مبلغ کل سفارش کافی نیست.
+LeverageTooHigh	ضریب وکالت درخواست از بیشینه مجاز بازار بسته به استخر یا سطح کاربری بیشتر است.
+LeverageUnavailable	کاربر محدودیت استفاده از ضریب وکالت (از جانب پشتیبانی) دارد.
+BadPrice	قیمت سفارش نامعقول است. (مشابه درج سفارش اسپات)
+SmallOrder	سفارش کوچک است و کمینه اندازه سفارش بازار را رعایت نکرده است. (مشابه درج سفارش اسپات)
+PriceConditionFailed	شرط قیمت میان پارامترهای قیمتی و قیمت بازار در سفارش لحاظ نشده است. (مشابه اسپات)
+DuplicateOrder	سفارشی با همین مشخصات توسط شما در بازه زمانی ده ثانیه اخیر ارسال شده است. (مشابه اسپات)
+مشاهده لیست موقعیت‌ها
+curl 'https://apiv2.nobitex.ir/positions/list?srcCurrency=btc&status=active' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" 
+
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "positions": [
+    {
+      "id": 128,
+      "createdAt": "2022-10-20T11:36:13.604420+00:00",
+      "srcCurrency": "btc",
+      "dstCurrency": "rls",
+      "side": "sell",
+      "status": "Open",
+      "marginType": "Isolated Margin",
+      "collateral": "320000000",
+      "leverage": "2",
+      "openedAt": "2022-10-20T11:36:16.562038+00:00",
+      "closedAt": null,
+      "liquidationPrice": "25174302690",
+      "entryPrice": "6400000000",
+      "exitPrice": null,
+      "delegatedAmount": "0.03",
+      "liability": "0.0300450676",
+      "totalAsset": "831712000",
+      "marginRatio": "1.49",
+      "liabilityInOrder": "0",
+      "assetInOrder": "0",
+      "unrealizedPNL": "−576435",
+      "unrealizedPNLPercent": "−0.09",
+      "expirationDate": "2022-11-20",
+      "extensionFee": "320000",
+      "markPrice": "6430000000"
+    },
+    {
+      "id": 32,
+      "createdAt": "2022-08-14T15:09:58.001901+00:00",
+      "srcCurrency": "btc",
+      "dstCurrency": "usdt",
+      "side": "sell",
+      "status": "Closed",
+      "marginType": "Isolated Margin",
+      "collateral": "2130",
+      "leverage": "1",
+      "openedAt": "2022-08-14T15:10:19.937801+00:00",
+      "closedAt": "2022-08-17T18:39:52.890674+00:00",
+      "liquidationPrice": "38986.54",
+      "entryPrice": "21300",
+      "exitPrice": "19900",
+      "PNL": "118.46",
+      "PNLPercent": "5.56"
+    }
+  ],
+  "hasNext": false
+}
+برای دریافت لیست موقعیت‌های باز و تاریخچه موقعیت‌های پایان یافته از این درخواست استفاده کنید.
+
+درخواست:: GET /positions/list
+محدودیت فراخوانی: ۳۰ درخواست در هر دقیقه
+
+صفحه‌بندی: دارد (پیش فرض ۵۰)
+
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+srcCurrency	string	همه	رمزارز مبدا بازار	btc یا ...
+dstCurrency	string	همه	ارز مقصد بازار	rls یا usdt
+status	string	active	وضعیت موقعیت	active یا past
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+positions	list of Position	لیست موقعیت‌ها	[{... Position ...}]
+hasNext	boolean	صفحه بعدی دارد؟	false
+شی Position
+فیلد	نوع	توضیحات	نمونه
+id	int	شناسه‌ی موقعیت	128
+createdAt	string	زمان درخواست وکالت (درج سفارش) تعهدی	2022-10-20T11:36:13.604420+00:00
+srcCurrency	string	رمزارز مبدا بازار	btc یا eth یا trx یا ...
+dstCurrency	string	ارز مقصد بازار	rls یا usdt
+side	string	جهت خرید و فروش	sell یا buy
+status	string	وضعیت	Open یا Closed یا Liquidated یا Expired
+marginType	string	نوع تضمین سفارش	Isolated Margin
+collateral	monetary	وجه تضمین بلوکه شده در کیف‌پول تعهدی	640000000
+leverage	decimal	ضریب وکالت	2
+openedAt	string	تاریخ باز شدن موقعیت	2022-10-20T11:36:16.562038+00:00
+closedAt	string	تاریخ تسویه نهایی موقعیت	2022-10-25T09:57:38.560820+00:00
+liquidationPrice	monetary	قیمت لیکوئید شدن موقعیت	25174302690
+entryPrice	monetary	میانگین قیمت سفارش باز شدن موقعیت	6400000000
+exitPrice	monetary	میانگین قیمت سفارش‌های تسویه تعهد	6200000000
+[ویژه موقعیت باز:]			
+delegatedAmount	monetary	مقدار وکالت گرفته شده در لحظه (به رمزارز مبدا)	0.03
+liability	monetary	مقدار تعهد	0.0300450676
+totalAsset	monetary	دارایی کلی (به رمزارز مقصد)	831712000
+marginRatio	decimal	نسبت تعهد	1.49
+liabilityInOrder	monetary	بخشی از تعهد که سفارش تسویه باز دارد	0
+assetInOrder	monetary	بخشی از دارایی کلی که در سفارش تسویه باز است	0
+unrealizedPNL	monetary	سود و زیان محقق نشده/لحظه‌ای (به رمزارز مقصد)	-576435
+unrealizedPNLPercent	decimal	درصد سود و زیان محقق نشده/لحظه‌ای	−0.09
+expirationDate	string	تاریخ انقضای نهایی موقعیت	2022-11-20
+extensionFee	monetary	مقدار کارمزد تمدید در انتهای روز (به رمزارز مقصد)	320000
+markPrice	monetary	قیمت معیار بازار در لحظه	6430000000
+[ویژه موقعیت بسته:]			
+PNL	monetary	سود و زیان نهایی (به رمزارز مقصد)	35584000
+PNLPercent	decimal	درصد سود و زیان نهایی	5.56
+نکات و ملاحظات
+وضعیت: این پارامتر در ورودی بر دو قسم است:
+active: موقعیت‌های باز و تسویه نشده
+past: موقعیت‌های بسته، لیکوئید و منقضی شده که تسویه شده باشد
+همچنین در خروجی بر چند مقدار است:
+Open: باز -- همه یا بخشی از سفارش تعهدی در بازار پر شده است.
+Closed: بسته -- کاربر مقدار وکالت گرفته شده را بازپرداخت کرده است.
+Liquidated: لیکویید شده
+Expired: منقضی شده -- هر موقعیت از زمان ثبت سفارش اولیه حداکثر ۳۰ روز می‌تواند باز بماند.
+نوع تضمین سفارش: بر دو قسم می‌تواند باشد.
+Isolated Margin: ضرر حداکثر به اندازه وجه تضمین موقعیت خواهد بود. -- پیش‌فرض
+Cross Margin: ضرر حداکثر به اندازه تمام موجودی آزاد کیف‌پول تعهدی خواهد بود. -- در آینده
+تعهد خرید: مقدار وکالت گرفته شده + کارمزد سفارش خرید در موقعیت فروش یا - کارمزد سفارش خرید در موقعیت خرید
+دارایی کلی: مقدار وجه تضمین + باقی‌مانده وجه حاصل از فروش در موقعیت فروش یا ارزش لحظه‌ای دارایی خریداری شده در موقعیت خرید
+نسبت تعهد: نسبت اولیه آن ۲ و حداقل نسبت لازم برای لیکوئید نشدن ۱.۱ است.
+از زمان لیکویید/منقضی شدن یک موقعیت باز تا زمان تسویه تعهد با سفارش‌گذاری سیستمی و معامله در بازار، ممکنه است اندکی فاصله ایجاد شود. در این بازه، موقعیت لیکویید/منقضی شده به منزله موقعیت فعال باز می‌گردد.
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+ParseError	فرمت ورودی‌ها مطابق فرمت خواسته شده نیست.
+مشاهده یک موقعیت
+curl 'https://apiv2.nobitex.ir/positions/128/status' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" 
+
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "position": {
+    "id": 128,
+    "createdAt": "2022-10-20T11:36:13.604420+00:00",
+    "srcCurrency": "btc",
+    "dstCurrency": "rls",
+    "side": "sell",
+    "status": "Open",
+    "marginType": "Isolated Margin",
+    "collateral": "320000000",
+    "leverage": "2",
+    "openedAt": "2022-10-20T11:36:16.562038+00:00",
+    "closedAt": null,
+    "liquidationPrice": "25174302690",
+    "entryPrice": "6400000000",
+    "exitPrice": null,
+    "delegatedAmount": "0.03",
+    "liability": "0.0300450676",
+    "totalAsset": "831712000",
+    "marginRatio": "1.49",
+    "liabilityInOrder": "0",
+    "assetInOrder": "0",
+    "unrealizedPNL": "−576435",
+    "unrealizedPNLPercent": "−0.09",
+    "expirationDate": "2022-11-20",
+    "extensionFee": "320000",
+    "markPrice": "6430000000"
+  }
+}
+برای مشاهده وضعیت یک موقعیت از این درخواست استفاده کنید.
+
+درخواست:: GET /positions/:positionId:/status
+محدودیت فراخوانی: ۱۰۰ درخواست در هر ۱۰ دقیقه (محدودیت مشترک)
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+:positionId:	url-param	الزامی	شناسه‌ی موقعیت	128
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+position	Position	موقعیت	{"id": 128, ...}
+بستن موقعیت
+curl -X POST 'https://apiv2.nobitex.ir/positions/128/close' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"amount": "0.0100150225", "price": "6200000000"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "order": {
+    "id": 28,
+    "type": "buy",
+    "execution": "Limit",
+    "tradeType": "Margin",
+    "srcCurrency": "btc",
+    "dstCurrency": "rls",
+    "price": "6200000000",
+    "amount": "0.0100150225",
+    "status": "Active",
+    "totalPrice": "0",
+    "totalOrderPrice": "62093139",
+    "matchedAmount": 0,
+    "unmatchedAmount": "0.0100150225",
+    "leverage": "2",
+    "side": "close",
+    "partial": false,
+    "fee": 0,
+    "created_at": "2022-10-25T09:57:38.560820+00:00",
+    "averagePrice": "0"
+  }
+}
+برای بستن موقعیت با درج سفارش در جهت عکس سفارش اولیه جهت تسویه تعهد از این درخواست استفاده نمایید. به عبارتی با خرید تعهد موقعیت فروش یا فروش تعهد موقعیت خرید موقعیت شما قابل بسته شدن خواهد شد.
+
+درخواست:: POST /positions/:positionId:/close
+محدودیت فراخوانی: ۳۰۰ درخواست در هر ۱۰ دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+:positionId:	url-param	الزامی	شناسه‌ی موقعیت	128
+execution	string	limit	نحوه‌ی اجرای سفارش	limit یا ...
+amount	monetary	الزامی	مقدار سفارش	0.0100150225
+price	monetary	الزامی	قیمت سفارش	12600000000
+stopPrice	monetary	اختیاری	قیمت توقف در حد ضرر	12600000000
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+order	Order	سفارش خرید تعهد	{"id": 25, ...}
+سفارش OCO
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+:positionId:	url-param	الزامی	شناسه‌ی موقعیت	128
+mode	string	الزامی	حالت سفارش	oco
+amount	monetary	الزامی	مقدار سفارش	0.0100150225
+price	monetary	الزامی	قیمت سفارش	12600000000
+price	monetary	الزامی	قیمت سفارش گذاری	13400000000
+stopPrice	monetary	الزامی	قیمت توقف سفارش حد ضرر	13600000000
+stopLimitPrice	monetary	الزامی	قیمت سفارش حد ضرر	13610000000
+پارامترهای پاسخ OCO
+پارامتر	نوع	توضیحات	نمونه
+orders	list of Order	سفارش خرید تعهد	[{"id": 25, ...}, {"id": 26, ...}]
+نکات و ملاحظات
+نوع اجرای سفارش یکی از موارد زیر می‌باشد:
+limit: با قیمت معین
+market: با قیمت بازار
+stop_limit: حد ضرر با قیمت معین
+stop_market: حد ضرر با قیمت بازار
+سفارش‌های خرید و فروش تعهدی ثبت شده را می‌توان فهرست سفارش‌های کاربر مشاهده کرد.
+بعد از پر شدن سفارش تسویه تعهد، موقعیت بسته و سود و زیان آن واریز خواهد شد.
+سفارش‌های تسویه از دارایی کلی موقعیت تامین اعتبار می‌شوند. مقدار سفارش تسویه باید شروط زیر را داشته باشد:
+مجموع مقدار باز سفارشات تسویه موقعیت از تعهد موقعیت بیشتر نباشد. (liability - liabilityInOrder)
+در صورتی که مقدار با همه تعهد باقیمانده برابر نباشد --تسویه نهایی--، سفارش کوچک نباشد. (مثال: فرض کنید می‌خواهید موقعیت فروش ۰.۰۰۱ بیت‌کوین را با ارزش ۶۴۰ هزار تومان تسویه کنید و کف سفارش کوچک ۳۰۰ هزار تومان باشد. می‌توانید ۲ سفارش ۳۰۰ هزار تومانی خرید بگذارید. و در پایان برای ۴۰ هزار تومان باقیمانده سفارش کوچک بگذارید. اما نمی‌توانید سفارش‌های اولیه را کمتر از ۳۰۰ هزار تومان قرار دهید. -- مشابه تبدیل موجودی اندک در کیف پول)
+ارزش کل بخش باز سفارش‌های خرید تسویه (موجودی ضرب در قیمت) از دارایی کلی موقعیت فروش بیشتر نباشد. (totalAsset - assetInOrder)
+دقت کنید تعهد موقعیت حداکثر ۱۰ رقم دقت دارد که در زمان تسویه نهایی همه آن باید ارسال شود.
+شرط قیمت سفارش OCO:
+بستن فروش (با سفارش خرید): price < آخرین قیمت بازار < stopPrice و stopLimitPrice
+بستن خرید (با سفارش فروش): price > آخرین قیمت بازار > stopPrice و stopLimitPrice
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+ParseError	فرمت ورودی‌ها مطابق فرمت خواسته شده نیست.
+TradeLimitation	کاربر سطح احراز کافی ندارد.
+TradingUnavailable	کاربر محدودیت معامله (از جانب پشتیبانی) دارد.
+NoOpenPosition	موقعیت فعالی با این شناسه وجود ندارد.
+ExceedLiability	مقدار سفارش از تعهد خرید باقی‌مانده کاربر بیشتر است.
+ExceedTotalAsset	ارزش کل سفارش از دارایی کلی آزاد کاربر بیشتر است.
+BadPrice	قیمت سفارش نامعقول است. (مشابه درج سفارش اسپات)
+SmallOrder	سفارش کوچک است و کمینه اندازه سفارش بازار را رعایت نکرده است. (مشابه درج سفارش اسپات)
+PriceConditionFailed	شرط قیمت میان پارامترهای قیمتی و قیمت بازار در سفارش لحاظ نشده است. (مشابه اسپات)
+ویرایش وجه تضمین موقعیت باز
+curl -X POST 'https://apiv2.nobitex.ir/positions/128/edit-collateral' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"collateral": "230000000"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "position": {
+    "id": 128,
+    "createdAt": "2022-10-20T11:36:13.604420+00:00",
+    "srcCurrency": "btc",
+    "dstCurrency": "rls",
+    "side": "sell",
+    "status": "Open",
+    "marginType": "Isolated Margin",
+    "collateral": "230000000",
+    "leverage": "2",
+    "openedAt": "2022-10-20T11:36:16.562038+00:00",
+    "closedAt": null,
+    "liquidationPrice": "12230682570",
+    "entryPrice": "6400000000",
+    "exitPrice": "6100000000",
+    "PNL": null,
+    "delegatedAmount": "0.02",
+    "liability": "0.0200300451",
+    "totalAsset": "257023981",
+    "marginRatio": "2.03",
+    "liabilityInOrder": "0",
+    "assetInOrder": "0",
+    "unrealizedPNL": "23423565",
+    "unrealizedPNLPercent": "10.18",
+    "expirationDate": "2022-11-20",
+    "extensionFee": "320000",
+    "markPrice": "6090000000"
+  }
+}
+
+
+برای کاهش یا افزایش وجه تضمین موقعیت باز خود از این درخواست استفاده نمایید.
+
+درخواست:: POST /positions/:positionId:/edit-collateral
+محدودیت فراخوانی: ۶۰ درخواست در هر دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+:positionId:	url-param	الزامی	شناسه‌ی موقعیت	128
+collateral	monetary	الزامی	وجه تضمین جدید	230000000
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+position	Position	موقعیت تعهدی	{"id": 25, ...}
+نکات و ملاحظات
+در صورتی که موقعیت در سوددهی باشد (نسبت تعهد > نسبت تعهد اولیه = ضریب / 1 + 1)، کاربر می‌تواند مازاد وجه تضمین خود را تا نسبت تعهد اولیه از بلوکه در بیاورد. -- سود تنها زمان بسته شدن کامل موقعیت قابل دستیابی است.
+در صورتی که موقعیت به نقطه لیکوئید شدن نزدیک باشد و کاربر بخواهد موقعیت خود (به امید تغییر جهت بازار) باز نگهدارد، می‌تواند با افزایش وجه تضمین خود، قیمت لیکوئید شدن خود را بهبود دهد.
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+ParseError	فرمت ورودی‌ها مطابق فرمت خواسته شده نیست.
+TryAgainLater	موقتا امکان تغییر وجه تضمین وجود ندارد.
+LowMarginRatio	کاهش وجه تضمین کمتر از نسبت تعهد مجاز (=۲) است.
+InsufficientBalance	افزایش وجه تضمین بیشتر از موجودی أزاد کیف‌پول تعهدی است.
+برداشت رمزارزی
+ثبت درخواست برداشت رمزارزی
+curl -X POST 'https://apiv2.nobitex.ir/users/wallets/withdraw' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000' \
+  -H 'X-TOTP: 123456' \
+  -H 'Content-Type: application/json' \
+  --data '{"wallet": 3456, "invoice": "lnbc123m1pskcu80pp5qqqsyqcyq5rqwz..."}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "withdraw": {
+    "id": 432,
+    "createdAt": "2021-12-11T10:13:42.957103+00:00",
+    "status": "New",
+    "amount": "0.0123",
+    "currency": "btc",
+    "network": "BTCLN",
+    "invoice": "lnbc123m1pskcu80pp5qqqsyqcyq5rqwz...",
+    "address": "SaMpLeWaLlEtAdDrEsS",
+    "tag": "123456",
+    "wallet_id": 3456,
+    "blockchain_url": "https://nobitex.ir/receipt/Bitcoin/ewd23d...",
+    "is_cancelable": true
+  }
+}
+در صورت وجود داشتن آدرس مقصد در دفتر آدرس، نیازی به ارسال X-TOTP در هدر درخواست نیست.
+
+در صورت نبودن آدرس مقصد در دفتر آدرس، پس از ثبت درخواست برداشت، یک کد تایید یکبارمصرف به کاربر ایمیل و پیامک می‌شود.
+
+برای ثبت درخواست برداشت رمزارزی از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /users/wallets/withdraw
+محدودیت فراخوانی: 10 درخواست در 3 دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+wallet	int	الزامی	شناسه کیف پول کاربر	3456
+network	string	اختیاری	شبکه انتقال1	"BTCLN"
+invoice	string	اختیاری	صورت‌حساب2	"lnbc123m1pskcu80pp5qqqsyqcyq5rqwz..."
+amount	monetary	اختیاری	مقدار3	"0.123"
+address	string	اختیاری	آدرس مقصد4	"SaMpLeWaLlEtAdDrEsS"
+explanations	string	اختیاری	توضیحات	"sample explanation"
+noTag	boolean	false	بدون تگ5	false
+tag	string	اختیاری	تگ انتقال6	"123456"
+شبکه انتقال: مقادیر FIAT_MONEY, ETH, BSC, ADA, ALGO, APT, ARB, BCH, BNB, BTC, BTCLN, DOGE, DOT, EOS, ETC, LTC, PMN, TRX, OMNI, ZTRX, XLM, XMR, XRP, ATOM, EGLD, FIL, FLR, FLOW, FTM, MATIC, AVAX, HBAR, NEAR, TON, SOL, XTZ, ONE قابل قبول است. در مواردی که چند شبکه برداشت برای رمزارز درخواستی پشتیبانی می‌شود، می‌توان شبکه انتقال را تعیین نمود.
+صورت‌حساب: در انتقال‌های شبکه BTCLN الزامی است. در صورت وجود invoice پارامترهای amount و address از آن استخراج شده و در بدنه درخواست بلااستفاده خواهند شد. شبکه صورت‌حساب باید با network در صورت مشخص شدن در درخواست مطابقت داشته باشد.
+مقدار: در صورتی که بدون invoice درخواست برداشت ثبت می‌کنید، الزامی می‌شود.
+آدرس مقصد: آدرس کیف پول مقصد می‌باشد. در صورتی که از invoice برای برداشت استفاده می‌کنید، بلااستفاده خواهد شد.
+بدون تگ: برای برداشت از شبکه‌های BNB, EOS, PMN, XLM, XRP که نیاز به تگ انتقال دارند، اگر می خواهید تگ انتقال را وارد نکنید، مقدار گزینه‌ی مربوط به آن (noTag) را "true" وارد کنید.
+تگ انتقال: در شبکه‌هایی BNB, EOS, PMN, XLM, XRP که استفاده از تگ ضروری است این پارامتر الزامی است، مگر اینکه noTag فعال شده باشد. ممو، تگ یا کامنت چیست؟
+حالت‌های خطا
+در صورتی که درخواست برداشت معتبر نباشد، ممکن است یکی از این خطاها برگردانده شود. در صورت دریافت هر یک از این خطاها، درخواست شما ثبت نشده است و در صورت تمایل باید درخواست را دوباره ارسال کنید.
+
+کد خطا	توضیحات
+InvalidCurrency	بازار رمزارز مورد نظر غیرفعال است
+WithdrawUnavailable	کاربر محدودیت برداشت دارد
+WithdrawCurrencyUnavailable	امکان برداشت این رمزارز (در این شبکه) وجود ندارد
+CoinWithdrawDisabled	امکان برداشت این رمزارز موقتا غیرفعال شده است مثال: BTCWithdrawDisabled
+InvalidAddressTag	تگ معتبر نمی باشد
+MissingAddressTag	تگ فرستاده نشده یا اشتباه است
+ExchangeRequiredTag	تگ در این بازار الزامی می باشد
+RedundantTag	تگ ارسالی اضافی می باشد
+Invalid2FA	کد دوعاملی ارسالی اشتباه است
+WithdrawAmountLimitation	مقدار درخواست شده بیشتر از سقف محدودیت های کاربر (روزانه، ماهانه و ...) می باشد
+InsufficientBalance	موجودی ناکافی است
+WithdrawLimitReached	امکان ثبت درخواست به دلیل «محدودیت در تعداد درخواست با وضعیت مشابه» وجود ندارد
+AmountTooLow	مقدار درخواستی از حداقل مقدار مجاز این بازار(شبکه) کمتر می باشد
+AmountTooHigh	مقدار درخواستی از حداکثر مقدار مجاز این بازار(شبکه) بیشتر می باشد
+InvalidMobileNumber	کاربر موبایل تایید شده ندارد
+NotWhitelistedTargetAddress	حالت برداشت امن روی حساب فعال است اما شبکه، آدرس (یا تگ) در دفتر آدرس شما وجود ندارد
+نکات و ملاحظات
+در صورت موجود نبودن آدرس مقصد در دفتر آدرس، این درخواست نیاز به شناسایی دوعاملی دارد.
+کاربر درخواست دهنده بایستی اجازه برداشت از کیف پول خود را داشته باشد. (مثلا دارای حداقل سطح مجاز برای برداشت و شماره تماس تایید شده بوده و سقف برداشت مجاز روزانه و ماهانه خود را رد نکرده باشد و شرایط و پیشنیازات ذکر شده در مقررات نوبیتکس را رعایت کرده باشد.)
+در صورت فعال بودن حالت برداشت امن، شبکه، آدرس (و در صورت الزام شبکه، تگ) انتخاب شده باید در دفتر آدرس شما ثبت شده باشد.
+درخواست برداشت ثبت شده در این مرحله نیاز به تایید توسط کاربر دارد.
+تایید درخواست برداشت رمزارزی
+curl -X POST 'https://apiv2.nobitex.ir/users/wallets/withdraw-confirm' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000' \
+  -H 'Content-Type: application/json' \
+  --data '{"withdraw": 432, "otp": 623005}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "withdraw": {
+    "id": 432,
+    "createdAt": "2021-12-11T10:13:42.957103+00:00",
+    "status": "Verified",
+    "amount": "0.0123",
+    "currency": "btc",
+    "network": "BTCLN",
+    "invoice": "lnbc123m1pskcu80pp5qqqsyqcyq5rqwz...",
+    "address": "SaMpLeWaLlEtAdDrEsS",
+    "tag": "123456",
+    "wallet_id": 3456,
+    "blockchain_url": "https://nobitex.ir/receipt/Bitcoin/ewd23d...",
+    "is_cancelable": true
+  }
+}
+برای تایید درخواست برداشت رمزارزی از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /users/wallets/withdraw-confirm
+محدودیت فراخوانی: 30 درخواست در ساعت
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+withdraw	int	الزامی	شناسه درخواست برداشت	432
+otp	int	بسته به آدرس مقصد الزامی	رمز یکبارمصرف ارسال شده	623005
+نکات و ملاحظات
+در برداشت رمزارزی به آدرس‌های امن دفتر آدرس، نیازی به ارسال رمز یکبارمصرف نیست.
+برای تایید برداشت به آدرس‌های تایید نشده باید کد یکبارمصرف ارسال شده به شماره تلفن همراه یا ایمیل حساب کاربری خود را استخراج و به این API ارسال نمایید.
+امکان استفاده از آی‌پی اختصاصی به زودی فراهم خواهد شد.
+مشاهده جزئیات برداشت رمزارزی
+curl 'https://apiv2.nobitex.ir/withdraws/433' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "withdraw": {
+    "id": 433,
+    "createdAt": "2021-12-14T06:53:11.593812+00:00",
+    "status": "Processing",
+    "amount": "0.123",
+    "currency": "eth",
+    "network": "BSC",
+    "invoice": null,
+    "address": "SaMpLeWaLlEtAdDrEsS",
+    "tag": null,
+    "wallet_id": 3458,
+    "blockchain_url": "https://etherscan.io/tx/tx111111",
+    "is_cancelable": true
+  }
+}
+برای مشاهده وضعیت یک درخواست برداشت رمزارزی از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /withdraws/WITHDRAW
+محدودیت فراخوانی: ۶۰ درخواست در ۲ دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+WITHDRAW	int	الزامی	شناسه درخواست برداشت	433
+برداشت ریالی
+این سرویس‌ها فقط برای انجام برداشت‌های ریالی طراحی و پیاده‌سازی شده است. این فرایند امکان انتقال وجه ریالی میان حساب‌های بانکی کاربر و حساب کاربری او را فراهم می‌کند.
+
+ثبت درخواست برداشت ریالی
+curl -X POST 'https://apiv2.nobitex.ir/cobank/withdraw' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000' \
+  -H 'Content-Type: application/json' \
+  --data '{"destinationBankAccountId": 13568, "amount": "2500000000"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "result": {
+    "id": "CW430542",
+    "createdAt": "2021-12-11T10:13:42.957103+00:00",
+    "status": "New",
+    "amount": "2500000000",
+    "fee": "500000",
+    "fulfilledAmount": "499500000",
+    "bankAccountId": 13568,
+    "bankAccountInfo": "صادرات: IR670190123456789001234567",
+    "isCancelable": true,
+    "records": [
+      {
+        "amount": "1000000000",
+        "bankReferenceNumber": null,
+        "status": "Pending",
+        "estimatedSettleAt": null,
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "normal"
+      },
+      {
+        "amount": "1000000000",
+        "bankReferenceNumber": "35413545",
+        "status": "Failed",
+        "estimatedSettleAt": "2021-12-11T10:13:42.957103+00:00",
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "paya"
+      },
+      {
+        "amount": "499500000",
+        "bankReferenceNumber": "35415784546",
+        "status": "Transferred",
+        "estimatedSettleAt": "2021-12-11T10:13:42.957103+00:00",
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "satna"
+      }
+    ]
+  }
+}
+در صورتی که درخواست با خطا مواجه شود، پاسخ به این شکل خواهد بود
+
+{
+  "status": "failed",
+  "code": "WithdrawUnavailable",
+  "message": "WithdrawUnavailable"
+}
+برای ثبت درخواست برداشت ریالی از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /cobank/withdraw
+محدودیت فراخوانی: 10 درخواست در 3 دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+destinationBankAccountId	int	الزامی	شناسه حساب‌بانکی کاربر	13568
+amount	monetary	الزامی	مقدار (ریال)	2500000000
+destinationBankAccountId: شناسه حساب بانکی تایید شده کاربر جهت دریافت وجه
+پارامترهای خروجی
+پارامتر	نوع	توضیحات	نمونه
+id	int	شناسه درخواست برداشت ریالی که یک رشته خواهد بود و با WJ یا CW آغاز میشود و به دنبال آن عدد خواهد آمد.	CW13568
+createdAt	string	زمان ایجاد درخواست برداشت	2021-12-11T10:13:42.957103+00:00
+status	string	وضعیت درخواست برداشت	New
+amount	monetary	مقدار درخواست برداشت (ریال)	2500000000
+fee	monetary	مقدار کارمزد درخواست برداشت (ریال)	20000
+fulfilledAmount	monetary	مقدار برداشت انجام شده. (در ابتدا صفر است)	1500000000
+bankAccountId	int	شناسه حساب‌بانکی کاربر	13568
+bankAccountInfo	string	اطلاعات حساب‌بانکی شامل نام بانک و شماره حساب	صادرات: IR670190123456789001234567
+isCancelable	bool	امکان لغو درخواست وجود دارد یا خیر.	true, false
+records	array	لیست ریزتراکنش‌ها در صورت وجود	
+پارامترهای فیلد records
+پارامتر	نوع	توضیحات	نمونه
+amount	monetary	مقدار درخواست برداشت ارسال شده به بانک (ریال)	1000000000
+bankReferenceNumber	string	کد پیگیری بانک	123f345345g34634
+status	string	وضعیت ریز تراکنش‌	Pending, Failed, Transferred
+estimatedSettleAt	string	زمان تخمینی واریز وجه به حساب کاربر	2021-12-11T10:13:42.957103+00:00
+providerUpdatedAt	string	زمان بروزرسانی وضعیت ریزتراکنش از سمت پروایدر	2021-12-11T10:13:42.957103+00:00
+transferType	string	نوع انتقال وجه	normal, paya, satna
+وضعیت‌های درخواست برداشت
+وضعیت	توضیحات
+New	ثبت درخواست توسط کاربر
+Sent	ارسال درخواست به پروایدر
+Bank processing	پردازش درخواست توسط بانک
+Partially Done	بخشی از درخواست موفق
+Done	درخواست کاملا موفق
+Failed	درخواست کاملا ناموفق
+Rejected	رد درخواست (توسط نوبیتکس، پروایدر یا بانک)
+Canceled	لغو درخواست توسط کاربر
+حالت‌های خطا
+در صورتی که درخواست برداشت معتبر نباشد، ممکن است یکی از این خطاها برگردانده شود. در صورت دریافت هر یک از این خطاها، درخواست شما ثبت نشده است و در صورت تمایل باید درخواست را دوباره ارسال کنید.
+
+کد خطا	توضیحات
+UnAcceptedDisclaimerError	برای برداشت، لازم است موجودی کیف اسپات خود را تایید کنید.
+FeatureUnavailable	این امکان فعلا در دسترس شما نیست.
+ParseError	مشکلی در پارامتر ورودی وجود دارد.
+BankAccountNotFound	حساب بانکی مورد نظر پیدا نشد.
+TooManyRequests	قبلا درخواست داده‌اید، لطفا کمی صبر کنید.
+WithdrawUnavailable	برداشت ریالی برای شما محدود شده است.
+WithdrawAmountLimitation	مقدار برداشت نباید از حداکثر مقدار قابل برداشت بیشتر باشد.
+InsufficientBalance	موجودی کافی نیست.
+AmountTooLow	مقدار برداشت نباید از حداقل مقدار قابل برداشت کمتر باشد.
+InsufficientBalanceOrInactiveWallet	موجودی کافی نیست.
+WithdrawLimitReached	در هر ۲۴ ساعت فقط ۳ برداشت ریالی و ۱۰ برداشت رمزارزی امکان‌پذیر است.
+AmountTooHigh	مقدار برداشت نباید از حداکثر مقدار قابل برداشت بیشتر باشد.
+ShabaWithdrawCannotProceed	سقف واریز به هر شماره شبا ۲ میلیارد ریال است. می‌توانید مبلغ را به دو یا چند شماره شبا واریز کنید.
+نکات و ملاحظات
+مقدار estimatedSettleAt و bankReferenceNumber در ابتدای ثبت درخواست خالی می‌باشد و پس از دریافت اطلاعات از سمت بانک، این فیلدها مقداردهی خواهد شد.
+
+لغو درخواست برداشت ریالی
+curl -X POST 'https://apiv2.nobitex.ir/cobank/withdraw/<id>/cancel' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000' \
+  -H 'Content-Type: application/json'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "result": {
+    "id": "CW430542",
+    "createdAt": "2021-12-11T10:13:42.957103+00:00",
+    "status": "Canceled",
+    "amount": "2500000000",
+    "fee": "500000",
+    "fulfilledAmount": "499500000",
+    "bankAccountId": 13568,
+    "bankAccountInfo": "صادرات: IR670190123456789001234567",
+    "isCancelable": false,
+    "records": [
+      {
+        "amount": "1000000000",
+        "bankReferenceNumber": null,
+        "status": "Pending",
+        "estimatedSettleAt": null,
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "normal"
+      },
+      {
+        "amount": "1000000000",
+        "bankReferenceNumber": "35413545",
+        "status": "Failed",
+        "estimatedSettleAt": "2021-12-11T10:13:42.957103+00:00",
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "paya"
+      },
+      {
+        "amount": "499500000",
+        "bankReferenceNumber": "35415784546",
+        "status": "Transferred",
+        "estimatedSettleAt": "2021-12-11T10:13:42.957103+00:00",
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "satna"
+      }
+    ]
+  }
+}
+در صورت مواجه با خطا چنین پاسخی خواهید داشت
+
+{
+  "status": "failed",
+  "code": "WithdrawRequestNotFound",
+  "message": "Withdraw Request Not Found"
+}
+برای لغو درخواست برداشت ریالی از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /cobank/withdraw/<id>/cancel
+محدودیت فراخوانی: 60 درخواست در 1 ساعت
+محدودیت فراخوانی: 10 درخواست در 1 دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+id	string	الزامی	شناسه درخواست برداشت	CW256854
+نکات و ملاحظات
+امکان لغو درخواست برداشت تا زمانی ممکن است که وضعیت درخواست در حالت New باشد و بیش از ۳ دقیقه از زمان ثبت آن نگذشته باشد.
+
+حالت‌های خطا
+کد خطا	توضیحات
+WithdrawRequestNotFound	درخواست برداشت پیدا نشد.
+UnAcceptedDisclaimerError	برای برداشت، لازم است موجودی کیف اسپات خود را تایید کنید.
+CancellationFailed	لغو درخواست برداشت ناموفق شد.
+NotCancellable	لغو درخواست برداشت امکان‌پذیر نیست.
+مشاهده جزئیات برداشت ریالی
+curl -X GET 'https://apiv2.nobitex.ir/cobank/withdraw/<id>' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000' \
+  -H 'Content-Type: application/json'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "result": {
+    "id": "CW430542",
+    "createdAt": "2021-12-11T10:13:42.957103+00:00",
+    "status": "New",
+    "amount": "2500000000",
+    "fee": "500000",
+    "fulfilledAmount": "499500000",
+    "bankAccountId": 13568,
+    "bankAccountInfo": "صادرات: IR670190123456789001234567",
+    "isCancelable": true,
+    "records": [
+      {
+        "amount": "1000000000",
+        "bankReferenceNumber": null,
+        "status": "Pending",
+        "estimatedSettleAt": null,
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "normal"
+      },
+      {
+        "amount": "1000000000",
+        "bankReferenceNumber": "35413545",
+        "status": "Failed",
+        "estimatedSettleAt": "2021-12-11T10:13:42.957103+00:00",
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "paya"
+      },
+      {
+        "amount": "499500000",
+        "bankReferenceNumber": "35415784546",
+        "status": "Transferred",
+        "estimatedSettleAt": "2021-12-11T10:13:42.957103+00:00",
+        "providerUpdatedAt": "2021-12-11T10:13:42.957103+00:00",
+        "transferType": "satna"
+      }
+    ]
+  }
+}
+در صورت مواجه با خطا چنین پاسخی خواهید داشت
+
+{
+  "status": "failed",
+  "code": "WithdrawRequestNotFound",
+  "message": "Withdraw Request Not Found"
+}
+برای مشاهده جزئیات درخواست برداشت ریالی از این نوع درخواست استفاده نمایید:
+
+درخواست: POST /cobank/withdraw/<id>
+محدودیت فراخوانی: 60 درخواست در 2 دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+id	string	الزامی	شناسه درخواست برداشت	CW256854
+حالت‌های خطا
+کد خطا	توضیحات
+WithdrawRequestNotFound	درخواست برداشت پیدا نشد.
+UnAcceptedDisclaimerError	برای برداشت، لازم است موجودی کیف اسپات خود را تایید کنید.
+فهرست برداشت‌ها
+فهرست برداشت‌ها
+curl 'https://apiv2.nobitex.ir/users/wallets/withdraws/list' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "withdraws": [
+    {
+      "id": 10,
+      "createdAt": "2021-12-11T10:13:42.957103+00:00",
+      "status": "Canceled",
+      "amount": "0.0123",
+      "currency": "btc",
+      "network": "BTCLN",
+      "invoice": "lnbc123m1pskcu80pp5qqqsyqcyq5rqwz...",
+      "address": "SaMpLeWaLlEtAdDrEsS",
+      "tag": "123456",
+      "wallet_id": 3456,
+      "blockchain_url": "https://nobitex.ir/receipt/Bitcoin/ewd23d...",
+      "is_cancelable": true
+    },
+    {
+      "id": 238,
+      "createdAt": "2025-07-01T22:00:15.256089+00:00",
+      "status": "Done",
+      "amount": "1000000",
+      "currency": "rls",
+      "network": "FIAT_MONEY",
+      "invoice": null,
+      "address": "\u062a\u062c\u0627\u0631\u062a: IR140180000000003333333333",
+      "tag": null,
+      "wallet_id": 3451,
+      "blockchain_url": "nobitex://app/wallet/rls/transaction/CW238",
+      "is_cancelable": false
+    },
+    {
+      "id": 239,
+      "createdAt": "2025-07-01T22:05:15.256089+00:00",
+      "status": "Done",
+      "amount": "5000000",
+      "currency": "rls",
+      "address": "سامان: IR030560080180001896427001",
+      "tag": null,
+      "wallet_id": 341,
+      "blockchain_url": "nobitex://app/wallet/rls/transaction/WJ239",
+      "is_cancelable": false,
+      "network": "FIAT_MONEY",
+      "invoice": null
+    },
+    {
+      "id": 240,
+      "createdAt": "2025-07-02T22:05:15.256089+00:00",
+      "status": "Done",
+      "amount": "1",
+      "currency": "ltc",
+      "network": "LTC",
+      "address": "Lgn1zc77mEjk72KvX...",
+      "tag": null,
+      "wallet_id": 3454,
+      "blockchain_url": "https://live.blockcypher.com/ltc/tx/c1ed4229e598d4cf...",
+      "is_cancelable": false
+    }
+  ],
+  "hasNext": true
+}
+برای دریافت لیست آخرین برداشت‌ها اعم از ریالی و رمزارزی میتوانید از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /users/wallets/withdraws/list
+محدودیت فراخوانی: ۶۰ درخواست در ۲ دقیقه
+صفحه بندی: دارد (پیش فرض 20)
+فیلترزمانی: دارد
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+wallet	string	all	شناسه کیف پول کاربر	3456
+وب‌سوکت
+نوبیتکس برای ارائه اطلاعات لحظه‌ای به کاربران، از وب‌سوکت استفاده می‌کند. این سرویس با استفاده از سرور Centrifugo پیاده‌سازی شده است که برای زبان‌های مختلف، SDKهای متنوعی ارائه می‌دهد تا بتوانید به راحتی در کلاینت‌های خود به وب‌سوکت متصل شوید.
+
+لیست SDKهای قابل استفاده برای اتصال به وب‌سوکت نوبیتکس:
+
+ماژول SDK	مورد استفاده
+centrifuge-js	برای مرورگر، NodeJS و ReactNative
+centrifuge-python	برای استفاده در پایتون و قدرت گرفته از asyncio
+centrifuge-java	استفاده در جاوا و اپلیکیشن‌های Android
+centrifuge-go	برای Golang
+centrifuge-swift	استفاده از اپلیکشن‌های iOS
+centrifuge-dart	برای Dart و Flutter و استفاده در توسعه‌ی موبایل و وب با آن‌ها
+لیست SDKهای غیر رسمی:
+
+centrifuge-csharp - برای C# و .NET و Unity 2022.3+
+اتصال به وب‌سوکت
+نصب پکیج SDK با npm:
+
+npm install centrifuge
+اتصال به وب‌سوکت از طریق SDK:
+
+import { Centrifuge } from 'centrifuge';
+
+const client = new Centrifuge('wss://ws.nobitex.ir/connection/websocket', {});
+client.on('connected', (ctx) => {
+    console.log('connected', ctx);
+});
+client.connect();
+در صورتی که از این SDK استفاده نمی‌کنید، برای اتصال به وب‌سوکت پیام زیر را ارسال نمایید:
+
+{
+  "connect": {},
+  "id": 1
+}
+استفاده مستقیم در HTML؛ در انتهای body این اسکریپت را قرار دهید:
+
+<script src="https://unpkg.com/centrifuge@5.2.2/dist/centrifuge.js"></script>
+برای اتصال به وب‌سوکت نوبیتکس، از آدرس زیر استفاده کنید:
+
+آدرس وب‌سوکت: wss://ws.nobitex.ir/connection/websocket
+محدودیت نرخ: حداکثر 100 اتصال همزمان برای هر IP
+نیاز به ارسال توکن: ندارد
+پس از اتصال، سرور Centrifugo به صورت دوره‌ای پیام‌های ping ارسال می‌کند. اگر از SDKهای رسمی استفاده می‌کنید، این ابزارها به صورت خودکار به پیام‌های ping پاسخ pong می‌دهند. توجه داشته باشید که اگر در زمان ۲۵ ثانیه به پیام‌های ping پاسخ داده نشود، سرور به منظور مدیریت بهینه منابع، اتصال را قطع می‌کند. بنابراین اگر از SDK رسمی استفاده نمی‌کنید، از ارسال پیام PONG قبل از این زمان اطمینان حاصل کنید.
+
+در صورتی‌که از SDK رسمی استفاده می‌کنید نیاز به اقدامی برای مدیریت این مکانیزم ندارید.
+
+ مکانیزم پینگ‌پنگ به این شکل است که پیام خالی با محتوای {} به کلاینت ارسال شده و پیام پنگ نیز باید با همان محتوای {} باشد.
+اتصال به چند کانال همزمان
+برای اتصال به چند کانال به‌صورت همزمان نیاز به کلاینت‌های مجزا نیست؛ بلکه می‌توانید با استفاده از یک کلاینت به چند کانال همزمان متصل شوید.
+
+محدودیت subscription به کانال‌ها: حداکثر 450 کانال برای هر connection
+اتصال به چند کانال با استفاده از یک کلاینت:
+
+const channels = ['public:orderbook-BTCIRT', 'public:orderbook-USDTIRT', 'public:orderbook-FTMIRT']
+const subs = channels.map(channel => {
+  const sub = client.newSubscription(channel, { delta: 'fossil' })
+  sub.subscribe()
+  sub.on('publication', (ctx) => {
+    console.log(channel, ctx.data);
+  })
+  return sub
+});
+توجه: اتصال به وب‌سوکت با استفاده از SDK زبان‌های دیگر
+برای مطالعه‌ی جزئیات و چگونگی اتصال به وب‌سوکت نوبیتکس با استفاده از SDK زبان‌های دیگر، لطفاً به مستنداتی که در ابتدای بخش قرار دادیم مراجعه فرمایید. در SDK ها و محیط‌های مختلف، تفاوت‌های جزئی وجود دارد. به‌طور مثال در node.js، نیاز به نصب و پاس دادن مستقیم ماژول websocket به کلاینت در هنگام اتصال می‌باشیم که در مستندات آن SDK به این موضوع اشاره شده.
+
+دریافت توکن
+curl 'https://apiv2.nobitex.ir/auth/ws/token/' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "token": "yJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNjMiLCJleHAiOjE3MzE5Mzk0NDIsImlhdCI6MTczMTkzODI0MiwibWV0YSI6e319.AFZjNC0ugUcfchUKjjunNDl1kfemJkA0Y5IYRi1c0mSvIa_XxzQIeVeqg6qnTBzE-HG6zEqXXyCENJtAz7xc7wqcABWbpcHdH0fPtjG4pwDZco9O065RcXacXo7qpCN-IuC0te0qG2_2bAhc-aR7vWgHsTm6GXfrQQh_6uwVHShSarU7",
+  "status": "ok"
+}
+دریافت توکن وبسوکت با ارسال درخواست GET به auth/ws/token/ صورت می‌گیرد.
+
+درخواست: GET /auth/ws/token
+ برای سابسکرایب کردن و دریافت اطلاعات از کانال های که با پشوند private: آغاز می شوند نیاز به ارائه توکن قبل از سابسکرایب کردن می باشد.
+احراز هویت
+const centrifuge = new Centrifuge('wss://ws.nobitex.ir/connection/websocket', {
+    token: '<CONNECTION_TOKEN>'
+});
+برای احراز هویت به صورت خودکار می توان از قطعه کد زیر استفاده کرد.
+
+import { Centrifuge, UnauthorizedError } from 'centrifuge';
+
+async function getToken() {
+    if (!loggedIn) {
+        return "";
+    }
+    const res = await fetch('https://apiv2.nobitex.ir/auth/ws/token/', {
+    method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ApiToken`
+      }
+    });
+    if (!res.ok) {
+        if (res.status === 403) {
+            // Return special error to not proceed with token refreshes, client will be disconnected.
+            throw new UnauthorizedError();
+        }
+        // Any other error thrown will result into token refresh re-attempts.
+        throw new Error(`Unexpected status code ${res.status}`);
+    }
+    const data = await res.json();
+    return data.token;
+}
+
+const client = new Centrifuge(
+    'wss://ws.nobitex.ir/connection/websocket',
+    {
+        token: '<CONNECTION_TOKEN>',
+        getToken: getToken
+    }
+);
+
+client.on('connected', (ctx) => {
+    console.log('connected', ctx);
+});
+client.connect();
+در صورتی که از این SDK استفاده نمی‌کنید، برای اتصال به وب‌سوکت پیام زیر را ارسال نمایید:
+
+{
+  "connect": {"token": "<CONNECTION_TOKEN>"},
+  "id": 1
+}
+کانال‌هایی که با پیشوند private: آغاز میشوند حاوی اطلاعات اختصاصی برای هر کاربر هستند و دسترسی به آن‌ها مستلزم احراز هویت با استفاده از توکن و پارامتر {websocket_auth_token} است.
+
+انواع کانال ها:
+
+نوع کانال	الگو	توضیحات	نمونه
+عمومی	public:channelName	کانال‌های عمومی حاوی اطلاعاتی هستند که برای همه کاربران قابل دسترسی‌اند و نیازی به احراز هویت ندارند.	public:orderbook-BTCIRT
+خصوصی	private:channelName#{websocketAuthParam}	کانال‌های خصوصی شامل اطلاعات مرتبط با کاربر خاص هستند و دسترسی به آن‌ها نیازمند احراز هویت با استفاده از پارامتر {websocketAuthParam} و توکن است.	private:trades#1987577cdf7c7422dee369e188e276ee
+پارامتر {websocketAuthParam} را میبایست از بخش پروفایل دریافت کنید.
+
+مثال: کاربر با websocketAuthParam=1987577cdf7c7422dee369e188e276eeبرای دریافت آخرین معاملاتش میبایست به کانال private:trades#1987577cdf7c7422dee369e188e276ee سابسکرایب کند.
+
+ پارامتر {websocketAuthParam} یک مقدار ثابت و منحصر به فرد برای هر کاربر است که در طول زمان تغییر نمی‌کند. بنابراین، نیازی به به‌روزرسانی و رفرش کردن ندارد.
+کانال لیست سفارش‌ها: اردربوک
+کانال‌هایی با پیشوند زیر شامل اطلاعات اردربوک هستند و با هر تغییری در اردربوک، به مشترکین پیام ارسال می‌کنند:
+
+الگوی کانال‌های اردربوک: public:orderbook-*
+
+ به‌جای * باید سمبل بازار مربوطه را به‌شکل UPPERCASE (حروف بزرگ) قرار دهید. مثلاً BTCIRT و یا ETHUSDT و ...
+const sub = client.newSubscription('public:orderbook-BTCIRT', { delta: 'fossil' });
+sub.on('subscribed', (ctx) => {
+    console.log('subscribed');
+});
+sub.on('publication', (ctx) => {
+    console.log(ctx.data);
+});
+sub.subscribe();
+در صورتی که از SDK استفاده نمی‌کنید پیام زیر را ارسال نمایید:
+
+{
+  "id": 2,
+  "subscribe": {
+    "channel": "public:orderbook-BTCIRT"
+  }
+}
+که در کنسول، پیامی که console.log نموده‌اید به شکل زیر خواهد بود که همان مقدار data می‌باشد:
+
+{
+  "asks": [
+    ["35077909990", "0.009433"],
+    ["35078000000", "0.000274"],
+    ["35078009660", "0.00057"]
+  ],
+  "bids": [
+    ["35020080080", "0.185784"], 
+    ["35020070060", "0.086916"],
+    ["35020030010", "0.000071"]
+  ],
+  "lastTradePrice": "35077909990",
+  "lastUpdate": 1726581829816
+}
+همچنین اگر از SDK رسمی استفاده نمی‌کنید، در صورت اتصال و اشتراک صحیح، پیام‌های دریافتی از کانال به شکل زیر خواهد بود:
+
+{
+  "push": {
+    "channel": "public:orderbook-BTCIRT",
+    "pub": {
+      "data": "{\"asks\": [[\"35077909990\", \"0.009433\"], [\"35078000000\", \"0.000274\"], [\"35078009660\", \"0.00057\"]], \"bids\": [[\"35020080080\", \"0.185784\"], [\"35020070060\", \"0.086916\"], [\"35020030010\", \"0.000071\"]], \"lastTradePrice\": \"35077909990\", \"lastUpdate\": 1726581829816}",
+      "offset": 989153
+    }
+  }
+}
+مثال: برای دریافت تغییرات اردربوک بیت‌کوین به ریال، کافیست به کانال public:orderbook-BTCIRT متصل شوید.
+
+نکته مهم: این کانال‌ها تنها در صورت وقوع تغییر در اردربوک پیام ارسال می‌کنند. بنابراین، در بازارهایی با حجم معاملات کم، ممکن است مدت زمان زیادی بین پیام‌ها فاصله باشد. به‌منظور رفع این مشکل توصیه می‌شود قبل از اشتراک در کانال‌های وب‌سوکت، یک بار اطلاعات اولیه اردربوک را از طریق API اردربوک ورژن ۳ دریافت کنید.
+
+توجه: استفاده از فلگ { delta: 'fossil' } در تابع newSubscription اختیاری است. با استفاده از این فلگ، اطلاعات اردربوک به صورت diff به کلاینت ارسال می‌شود. اگر از کلاینت‌های رسمی Centrifugo استفاده می‌کنید، متوجه تغییری نخواهید شد و صرفاً استفاده از پهنای باند شبکه‌ی شما کاهش چشم‌گیری در حدود ۶۰٪ خواهد کرد. اما در صورتی که از کلاینت رسمی استفاده نمی‌کنید، یا باید از استفاده از این فلگ خودداری کنید و یا باید حتماً الگوریتم بازیابی داده‌ها از حالت فشرده شده به حالت اصلی را پیاده‌سازی کنید. برای این کار از الگوریتم فسیل استفاده کرده‌ایم.
+
+پارامترهای پاسخ
+پیام‌های وب‌سوکت شامل دو آرایه asks و bids بوده که در هر یک قیمت و مقدار سفارش‌های بازار وجود دارد. سفارش‌های خرید در bids و سفارش‌های فروش در asks بازگردانده می‌شوند. هر یک از این آرایه‌ها شامل دوتایی‌های «قیمت، مقدار» هستند.
+
+پارامتر پاسخ	نوع	توضیحات	نمونه
+asks	array	حاوی دوتایی‌های «قیمت، مقدار» از سفارش‌های فروش	[["1231", "0.1"],["1243", "1.02"]]
+bids	array	حاوی دوتایی‌های «قیمت، مقدار» از سفارش‌های خرید	[["1243", "1"],["1231", "2"]]
+lastTradePrice	string	مبلغ آخرین معامله	"35602702700"
+lastUpdate	int	زمان آخرین به‌روزرسانی به فرمت یونیکس	1726651067347
+کانال آمار OHLC بازار نوبیتکس
+برای توضیحات بیشتر در مورد OHLC به این لینک مراجعه کنید.
+
+
+کانال‌هایی با الگوی زیر شامل اطلاعات کندل بازار مورد نظر است.
+
+الگوی کانال‌های کندل ohlc: public:candle-{marketSymbol}-{resolution}
+
+ اطلاعات کندل ها به صورت دوره‌ای (حدودا هر ۱۰ ثانیه) پابلیش میشوند.
+ به‌جای {marketSymbol} باید سمبل بازار مربوطه را به‌شکل UPPERCASE (حروف بزرگ) قرار دهید. مثلاً BTCIRT و یا ETHUSDT و ...
+ به‌جای {resolution} باید رزولوشن مورد نظر را از جدول ذیل قرار دهید. مثلاً 5 و یا 2D و ...
+پارامتر {resolution} بازه زمانی کندل‌های خروجی می‌باشد و مقدار آن می‌تواند یکی از مقادیر زیر باشد:
+دقیقه‌ای	توضیح	ساعتی	توضیح	روزانه	توضیح
+1	یک دقیقه	60	یک ساعت	D	یک روز
+5	پنج دقیقه	180	سه ساعت	2D	دو روز
+15	یک ربع	240	چهار ساعت	3D	سه روز
+30	نیم ساعت	360	شش ساعت		
+720	دوازده ساعت		
+const sub = client.newSubscription('public:candle-BTCIRT-15', { delta: 'fossil' });
+sub.on('subscribed', (ctx) => {
+    console.log('subscribed');
+});
+sub.on('publication', (ctx) => {
+    console.log(ctx.data);
+});
+sub.subscribe();
+در صورتی که از SDK استفاده نمی‌کنید پیام زیر را ارسال نمایید:
+
+{
+  "id": 2,
+  "subscribe": {
+    "channel": "public:candle-BTCIRT-15"
+  }
+}
+که در کنسول، پیامی که console.log نموده‌اید به شکل زیر خواهد بود که همان مقدار data می‌باشد:
+
+{
+  "t": 1731852900,
+  "o": 6240000001.0,
+  "h": 6250000000.0,
+  "l": 6238000000.0,
+  "c": 6238031033.0,
+  "v": 1.26
+}
+همچنین اگر از SDK رسمی استفاده نمی‌کنید، در صورت اتصال و اشتراک صحیح، پیام‌های دریافتی از کانال به شکل زیر خواهد بود:
+
+{
+  "push": {
+    "channel": "public:candle-BTCUSDT-15",
+    "pub": {
+      "data": "{\"t\":1731852900,\"o\":6240000001.0,\"h\":6250000000.0,\"l\":6238000000.0,\"c\":6238031033.0,\"v\":1.26}",
+      "offset": 34575
+    }
+  }
+}
+مثال: برای دریافت کندل های 15 دقیقه ای بازار بیت‌کوین تومان، کافیست به کانال public:candle-BTCIRT-15 متصل شوید.
+
+توجه: استفاده از فلگ { delta: 'fossil' } در تابع newSubscription اختیاری است. با استفاده از این فلگ، اطلاعات اردربوک به صورت diff به کلاینت ارسال می‌شود. اگر از کلاینت‌های رسمی Centrifugo استفاده می‌کنید، متوجه تغییری نخواهید شد و صرفاً استفاده از پهنای باند شبکه‌ی شما کاهش چشم‌گیری در حدود ۶۰٪ خواهد کرد. اما در صورتی که از کلاینت رسمی استفاده نمی‌کنید، یا باید از استفاده از این فلگ خودداری کنید و یا باید حتماً الگوریتم بازیابی داده‌ها از حالت فشرده شده به حالت اصلی را پیاده‌سازی کنید. برای این کار از الگوریتم فسیل استفاده کرده‌ایم.
+
+پارامترهای پاسخ
+ساختار پیام‌های وبسوکت این کانال به این صورت می باشد.
+
+پارامتر پاسخ	نوع	توضیحات	نمونه
+t	int	شروع زمان	1731852900
+o	float	قیمت شروع	6240000001.0
+h	float	بیشترین قیمت	6250000000.0
+l	float	کمترین قیمت	6238000000.0
+c	float	قیمت پایانی	6238031033.0
+v	float	حجم معاملات	1.26
+کانال‌ عمومی معاملات
+در این کانال تمامی معاملات صورت گرفته در یک بازار منتشر می‌شود.
+
+الگوی کانال‌های عمومی معاملات : public:trades-{marketSymbol}
+
+نمونه پیام ارسالی در کانال‌های عمومی معاملات:
+
+{
+  "price": "120000000000",
+  "time": 1762781164192, 
+  "type": "sell", 
+  "volume": "0.000003"
+}
+پارامترهای پاسخ
+پارامتر پاسخ	نوع	توضیحات	نمونه
+price	monetary	قیمت معامله	12000.129
+time	int	زمان معامله	1762781164192
+type	string	نوع معامله	sell, buy
+volume	monetary	حجم معامله	13.002
+کانال‌ وضعیت بازارها
+در این کانال‌ها اطلاعات کلی مربوط به وضعیت بازارها طی ۲۴ ساعت اخیر منتشر می‌شود.
+
+الگوی کانال‌های‌ وضعیت تک بازار : public:market-stats-{marketSymbol}
+
+کانال‌ وضعیت تمامی بازارها : public:market-stats-all
+
+نمونه پیام ارسالی در کانال‌های وضعیت تک بازار:
+
+{
+  "isClosed": false, 
+  "bestSell": "121073861950", 
+  "bestBuy": "120000000000", 
+  "volumeSrc": "0.000185131782", 
+  "volumeDst": "21590044.0170869949", 
+  "latest": "114879999920", 
+  "mark": "123288285750", 
+  "dayLow": "110850000360", 
+  "dayHigh": "121073861950", 
+  "dayOpen": "121073861910", 
+  "dayClose": "114879999920", 
+  "dayChange": "-5.12"
+}
+پارامترهای پاسخ
+پارامتر پاسخ	نوع	توضیحات	نمونه
+isClosed	bool	باز یا بسته بودن بازار	true
+bestSell	monetary	بهترین قیمت فروش فعلی	1000
+bestBuy	monetary	بهترین قیمت خرید فعلی	1000
+volumeSrc	monetary	حجم معاملات ۲۴ ساعت اخیر	13.002
+volumeDst	monetary	ارزش معاملات ۲۴ ساعت اخیر	13002
+latest	monetary	آخرین قیمت معامله شده	1002
+mark	monetary	قیمت معیار فعلی	1002
+dayLow	monetary	کمترین قیمت ۲۴ ساعت اخیر	800
+dayHigh	monetary	بیشترین قیمت ۲۴ ساعت اخیر	1200
+dayOpen	monetary	نخستین قیمت ۲۴ ساعت اخیر	800
+dayClose	monetary	آخرین قیمت ۲۴ ساعت اخیر	1200
+dayChange	float	درصد تغییر قیمت طی ۲۴ ساعت اخیر	-2.12
+نمونه پیام ارسالی در کانال‌ وضعیت تمامی بازارها:
+
+{
+  "btc-irt": {
+    "isClosed": false, 
+    "bestSell": "121073861950", 
+    "bestBuy": "120000000000", 
+    "volumeSrc": "0.000185131782", 
+    "volumeDst": "21590044.0170869949", 
+    "latest": "114879999920", 
+    "mark": "123288285750", 
+    "dayLow": "110850000360", 
+    "dayHigh": "121073861950", 
+    "dayOpen": "121073861910", 
+    "dayClose": "114879999920", 
+    "dayChange": "-5.12"
+  },
+  "usdt-irt": {
+    "isClosed": false, 
+    "bestSell": "121073861950", 
+    "bestBuy": "120000000000", 
+    "volumeSrc": "0.000185131782", 
+    "volumeDst": "21590044.0170869949", 
+    "latest": "114879999920", 
+    "mark": "123288285750", 
+    "dayLow": "110850000360", 
+    "dayHigh": "121073861950", 
+    "dayOpen": "121073861910", 
+    "dayClose": "114879999920", 
+    "dayChange": "-5.12"
+  }
+}
+کانال خصوصی سفارشات کاربر
+در این کانال تمامی رخدادهای مربوط به سفارشات کاربر منتشر می‌شود.
+
+الگوی کانال سفارشات کاربر: private:orders#{websocketAuthParam}
+
+سابسکرایب به این کانال نیازمند احراز هویت از طریق توکن است.
+
+پارامترهای پیام
+پیام‌های ارسالی کانال به این صورت خواهد بود:
+
+{
+  "amount": "0.0002", 
+  "avgFilledPrice": "114879999920", 
+  "clientOrderId": null, 
+  "dstCurrency": "rls",
+  "eventTime": 1762779011366, 
+  "fee": "0.00000031", 
+  "filledAmount": "0.0002",
+  "lastFillTime": 1762779011258,
+  "marketType": "Spot", 
+  "orderId": 278339,
+  "orderType": "Market",
+  "param1": null, 
+  "price": null, 
+  "side": "Buy", 
+  "srcCurrency": "btc",
+  "status": "Done",
+  "tradeAmount": "0.0002", 
+  "tradeId": 92547, 
+  "tradePrice": "114879999920"
+}
+فیلد	نوع	توضیحات	نمونه
+amount	monetary	حجم سفارش	3.002
+avgFilledPrice	monetary	ارزش پر شده‌ سفارش (ریالی یا تتری)	520305923
+clientOrderId	string	شناسه پیگیری کاربر	1032
+dstCurrency	string	ارز مقصد سفارش	rls, usdt
+eventTime	int	زمان انجام رخداد	1762779011258
+fee	monetary	کارمزد سفارش	1.02
+filledAmount	monetary	حجم پر شده سفارش	2.7812
+lastFillTime	int	زمان آخرین ترید (nullable)	1762779011258
+marketType	string	نوع بازار سفارش‌گذاری	Spot, Margin
+orderId	int	شناسه سفارش	47150
+orderType	string	نوع سفارش	Market, Limit
+param1	monetary		47150.7989334
+price	monetary	قیمت سفارش (nullable)	47150.7989334
+side	string	جهت سفارش	Buy, Sell
+srcCurrency	monetary	ارز مبدا سفارش	btc
+status	string	وضعیت سفارش	Done
+tradeAmount	monetary	حجم آخرین ترید (nullable)	0.002
+tradeId	int	شناسه آخرین ترید (nullable)	65451
+tradePrice	monetary	قیمت آخرین ترید (nullable)	47150.7989334
+کانال خصوصی معاملات کاربر
+به محض انجام شدن هر معامله‌ای برای کاربر، اطلاعات معامله در این کانال برای کاربر منتشر می شود.
+
+الگوی کانال معاملات کاربر: private:trades#{websocketAuthParam}
+
+سابسکرایب به این کانال نیازمند احراز هویت از طریق توکن است.
+
+const sub = client.newSubscription('private:trades#1987577cdf7c7422dee369e188e276ee',  { delta: 'fossil' });
+sub.on('subscribed', (ctx) => {
+    console.log('subscribed');
+});
+sub.on('publication', (ctx) => {
+    console.log(ctx.data);
+});
+sub.subscribe();
+در صورتی که از SDK استفاده نمی‌کنید پیام زیر را ارسال نمایید:
+
+{
+  "id": 2,
+  "subscribe": {
+    "channel": "private:trades#1987577cdf7c7422dee369e188e276ee"
+  }
+}
+که در کنسول، پیامی که console.log نموده‌اید به شکل زیر خواهد بود که همان مقدار data می‌باشد:
+
+{
+    "srcCurrency": "btc",
+    "dstCurrency": "rls",
+    "timestamp": "2024-11-23T11:31:27.833332+00:00",
+    "price": "66683959340",
+    "amount": "0.000404",
+    "total": "26940319.57336",
+    "type": "sell",
+    "fee": "47150.7989334",
+    "id": 12942226,
+    "orderId": 520305923
+}
+همچنین اگر از SDK رسمی استفاده نمی‌کنید، در صورت اتصال و اشتراک صحیح، پیام‌های دریافتی از کانال به شکل زیر خواهد بود:
+
+{
+  "push": {
+    "channel": "private:trades#1987577cdf7c7422dee369e188e276ee",
+    "pub": {
+      "data": "{\"srcCurrency\":\"btc\",\"dstCurrency\":\"rls\", \"timestamp\":\"2024-11-23T11:31:27.833332+00:00\", \"price\":\"66683959340\",\"amount\":\"0.000404\",\"total\":\"26940319.57336\",\"type\":\"sell\",\"fee\":\"47150.7989334\",\"id\":12942226,\"orderId\":520305923}",
+      "offset": 34575
+    }
+  }
+}
+پارامترهای پیام
+فیلد	نوع	توضیحات	نمونه
+id	int	شناسه‌ی معامله	12942226
+orderId	int	شناسه‌ی سفارش	520305923
+srcCurrency	string	رمزارز مبدا معامله	btc یا eth یا xrp یا ...
+dstCurrency	string	ارز مقصد معامله	rls یا usdt
+timestamp	string	زمان انجام معامله	2024-11-23T11:31:27.833332+00:00
+type	string	نوع خرید یا فروش	buy یا sell
+price	monetary	قیمت انجام معامله	66683959340
+amount	monetary	مقدار معامله شده	0.000404
+total	monetary	قیمت کل معامله	26940319.57336
+fee	monetary	کارمزد معامله	47150.7989334
+دفتر آدرس و حالت برداشت امن
+دفتر آدرس (address book) و حالت برداشت امن (whitelist mode) به منظور ارتقاء امنیت و سرعت برداشت رمزارز کاربران پیاده سازی می شود و امکان تعریف آدرس‌های برداشت از پیش تعیین و تأیید شده را در دفتر آدرس برای کاربر فراهم می آورد. برداشت به آدرس‌های امن دفتر آدرس به رمز دوعاملی یا کد تایید یکبار مصرف نیازی ندارد.
+
+مشاهده لیست آدرس‌های دفتر آدرس
+curl 'https://apiv2.nobitex.ir/address_book' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "data": [
+    {
+      "id": 3,
+      "title": "TetherBinance",
+      "network": "BSC",
+      "address": "000000xxxxxxx111111111zzzzzzz",
+      "createdAt": "2023-08-09T10:12:37+00:00"
+    },
+    {
+      "id": 4,
+      "title": "BinanceCoinOKX",
+      "network": "BNB",
+      "address": "000000xxxxxxx222222222zzzzzzz",
+      "tag": "test17280992",
+      "createdAt": "2023-08-09T10:26:12+00:00"
+    }
+  ]
+}
+برای دریافت دفتر آدرس از این درخواست استفاده نمایید.
+
+درخواست:: GET /address_book
+محدودیت فراخوانی: 20 درخواست در هر دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+network	string	همه شبکه‌ها	فیلتر شبکه	BSC
+اضافه کردن آدرس جدید به دفتر آدرس
+curl -X POST 'https://apiv2.nobitex.ir/address_book' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" \
+  -H "content-type: application/json" \
+  --data '{"title": "test", "network": "BSC", "address": "000000xxxxxxx111111111zzzzzzz",
+    "otpCode": "123456", "tfaCode": "654321"}'
+
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok",
+  "data": {
+    "id": 5,
+    "title": "test",
+    "network": "BSC",
+    "address": "000000xxxxxxx111111111zzzzzzz",
+    "createdAt": "2023-08-09T10:22:37+00:00"
+  }
+}
+برای دریافت رمزیکبارمصرف otpCode از درخواست زیر استفاده نمایید:
+
+curl -X POST 'https://apiv2.nobitex.ir/v2/otp/request' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000' \
+  --data '{"type": "email", "usage": "address_book"}'
+درخواست:: POST /address_book
+محدودیت فراخوانی: 6 درخواست در هر دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+title	string	الزامی	عنوان آدرس	test
+network	string	الزامی	شبکه	BSC
+address	string	الزامی	آدرس	000000xxxxxxx111111111zzzzzzz
+tag	string	الزامی در شبکه‌های تگ‌اجباری	تگ	test17280992
+otpCode	string	الزامی	کد تأیید ایمیل و پیامک	123456
+tfaCode	string	الزامی	کد تأیید دوعاملی	654321
+نکات و ملاحظات
+مقدار آدرس در شبکه‌های بدون تگ نمی‌تواند تکراری باشد.
+در شبکه‌های BNB, EOS, PMN, XLM, XRP تگ اجباری است.
+مقدار تگ‌های یک آدرس در شبکه‌های تگ‌اجباری نمی‌تواند تکراری باشد. (زوج آدرس و تگ باید یکتا باشد.)
+برای دریافت کد تایید از طریق ایمیل (otpCode) از درخواست روبرو استفاده نمایید.
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+ParseError	نوع یا شرط الزامی بودن یکی از پارامترهای ورودی رعایت نشده است.
+InvalidOTP	مقدار tfa وارد شده نادرست است.
+Invalid2FA	مقدار otp وارد شده نادرست است.
+Inactive2FA	tfa فعال نیست
+InvalidAddress	آدرس مربوط به شبکه مشخص شده نمی‌باشد.
+DuplicatedAddress	آدرس قبلا ثبت شده و تکراری می باشد.
+InvalidTag	فرمت تگ مطابق شبکه مشخص شده نمی‌باشد.
+حذف یک دفتر آدرس
+curl 'https://apiv2.nobitex.ir/address_book/<address_id>/delete
+  -H "Authorization: Token yourTOKENhereHEX000000ook'" 
+
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok"
+}
+درخواست:: DELETE /address_book/<address_id>/delete
+محدودیت فراخوانی: 6 درخواست در هر دقیقه
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+NotFound	آدرسی با این شناسه وجود ندارد.
+فعال کردن برداشت امن
+در صورتی که حالت برداشت امن فعال باشد مقصدهای برداشت رمزارزی به آدرس‌های موجود در دفتر آدرس محدود خواهد شد و به استثنای برداشت در شبکه لایتنینگ، امکان برداشت رمزارزی به آدرس‌های غیر وجود نخواهد داشت.
+
+curl -X POST 'https://apiv2.nobitex.ir/address_book/whitelist/activate' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok"
+}
+درخواست:: POST /address_book/whitelist/activate
+محدودیت فراخوانی: 6 درخواست در هر دقیقه
+غیرفعال کردن برداشت امن
+با غیر فعال کردن برداشت امن، به جهت حفظ امنیت حساب امکان برداشت به مدت ۲۴ ساعت روی حساب کاربر محدود خواهد شد.
+
+curl 'https://apiv2.nobitex.ir/address_book/whitelist/deactivate' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000" 
+  -H "content-type: application/json" \
+  --data '{"otpCode": "1234", "tfaCode": "12345"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "ok"
+}
+درخواست:: POST /address_book/whitelist/deactivate
+محدودیت فراخوانی: 6 درخواست در هر دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+otpCode	string	الزامی	کد تأیید ایمیل و پیامک	1234
+tfaCode	string	الزامی	کد تأیید دوعاملی	12345
+حالت‌های خطا
+در صورت عدم پذیرش درخواست، پاسخ به این صورت خواهد بود:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human readable error message"
+}
+کد خطا	توضیحات
+ParseError	نوع یا شرط الزامی بودن یکی از پارامترهای ورودی رعایت نشده است.
+InvalidOTP	مقدار tfa وارد شده نادرست است.
+Invalid2FA	مقدار otp وارد شده نادرست است.
+Inactive2FA	tfa فعال نیست
+امنیت
+سابقه ورود
+curl 'https://apiv2.nobitex.ir/users/login-attempts' \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "attempts": [
+        {
+            "ip": "46.209.130.106",
+            "username": "name@example.com",
+            "status": "Successful",
+            "createdAt": "2018-11-28T14:16:08.264308+00:00"
+        },
+        ...
+    ]
+}
+برای دریافت سابقه ورود از این نوع درخواست استفاده نمایید:
+
+درخواست: GET /users/login-attempts
+فعالسازی لغو اضطراری
+curl 'https://apiv2.nobitex.ir/security/emergency-cancel/activate' \
+  -X GET \
+  -H "Authorization: Token yourTOKENhereHEX0000000000"
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "cancelCode": {
+        "code": "seJlef35L3"
+    }
+}
+جهت فعالسازی امکان لغو اضطراریِ درخواست های برداشت از این درخواست استفاده نمائید. پس از فعالسازی این امکان، پیامک و ایمیل ارسالی پس از ثبت درخواست برداشت، حاوی لینکی خواهد بود که شما میتوانید با استفاده از آن در صورتی که درخواست برداشت توسط شما ثبت نشده است، در کمترین زمان ممکن و بدون نیاز به لاگین، درخواست های برداشت خود را لغو نمایید.
+
+درخواست: GET /security/emergency-cancel/activate
+نکات و ملاحظات
+توجه داشته باشید: در صورتی که درخواست برداشت شما توسط این امکان لغو گردد، امکان ثبت درخواست برداشت تا ۷۲ ساعت برای شما غیرفعال خواهد شد.
+
+آنتی فیشینگ
+جهت امنیت حساب کاربری و همچنین اعتماد بیشتر کاربران به ایمیل هایی که از سمت توبیتکس ارسال میشود نیاز هست که کاربر بتواند کد یونیک برای حساب کاربری خود انتخاب کند که تمامی ایمیل هایی که از سمت نوبیتکس به صورت اتوماتیک ارسال میشود حاوی این کد باشد. .این کد به کاربر این اطمینان را میدهد که این ایمیل قطعا از نوبیتکس ارسال شده است.
+
+ایجاد کد آنتی فیشینگ
+نمونه درخواست:
+
+curl --location --request POST 'https://apiv2.nobitex.ir/security/anti-phishing' \
+--header 'Authorization: Token yourTOKENhereHEX0000000000' \
+--form 'code="sample_anti_phishing"' \
+--form 'otpCode="123456"'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok"
+}
+برای دریافت رمزیکبارمصرف otpCode باید از API زیر با پارامترهای مشخص شده استفاده نمایید:
+
+curl -X POST 'https://apiv2.nobitex.ir/v2/otp/request' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000' \
+  --data '{"type": "email", "usage": "anti_phishing_code"}'
+حالت های خطا
+
+در صورتی که پارامتر کدیکبارمصرف یا آنتی فیشینگ را ارسال نکرده باشید با این خطا روبرو خواهید شد.
+
+{
+    "status": "failed",
+    "code": "ParseError",
+    "message": "Missing string value"
+}
+در صورتی که کدیکبار مصرف ارسال شده، نامعتبر باشد با این خطا روبرو خواهید بود.
+
+{
+  "status": "failed",
+  "code": "InvalidOTPCode",
+  "message": "Please use otp/request endpoint"
+}
+در صورتی که طول عبارت ارسالی نامناسب باشد با این خطا مواجه خواهید شد
+
+{
+    "status": "failed",
+    "code": "InvalidCodeLength",
+    "message": "Code length must be between 4 and 15 characters"
+}
+درخواست: POST /security/anti-phishing
+محدودیت فراخوانی: ۱۰ درخواست در هر دقیقه
+
+پارامترهای ورودی
+
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+code	string	الزامی	کد آنتی فیشینگ تعیین شده توسط کاربر	sample_anti_phishing
+otpCode	number	الزامی	کد یکبار مصرف ارسال شده به شماره همراه کاربر	12345
+دریافت کد آنتی فیشینگ
+درخواست: GET /security/anti-phishing
+محدودیت فراخوانی: ۱۰ درخواست در هر دقیقه
+نمونه درخواست:
+
+curl --location --request GET 'https://apiv2.nobitex.ir/security/anti-phishing' \
+--header 'Authorization: Token yourTOKENhereHEX0000000000' 
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+   "status": "ok",
+   "antiPhishingCode": "s*********g"
+}
+در صورتی که آنتی‌فیشینگ کد برای کاربر فعال نشده باشد با این پاسخ مواجه خواهید شد
+
+{
+    "status": "failed",
+    "code": "NotFound",
+    "message": "AntiPhishingCode is not declared for this user"
+}
+طرح معرفی دوستان
+نوبیتکس طرحی به نام معرفی دوستان در نظر گرفته است که از طریق آن هم به گسترش نوبیتکس کمک می‌کنید و هم از مزایای آن بهره‌مند می‌شوید. براساس این طرح شما می‌توانید دوستان خود را با لینک اختصاصی خود به نوبیتکس دعوت کنید و درصدی از کارمزد معاملات آن‌ها را به عنوان پاداش دریافت نمایید. برای اطلاعات بیشتر به صفحه قوانین طرح معرفی دوستان مراجعه کنید.
+
+معرفی دوستان با استفاده از ایجاد «کد دعوت» انجام می‌شود. هر کاربر نوبیتکس می‌تواند برای خود یک یا چند کد دعوت بسازد. کدهای دعوت معمولاً شامل شش رقم هستند ولی می‌توانند طول متفاوتی داشته باشند یا حتی رشته‌های دلخواه باشند. در زمان ساخت هر کد دعوت می‌توان سهم کاربر معرف و کاربر دعوت شده از کارمزد اهدایی را مشخص نمود.
+
+با استفاده از «فهرست کدهای دعوت» می‌توانید فهرستی از کدهای دعوت فعلی خود را دریافت نمایید. به همراه این فهرست، میزان سود شما و برخی دیگر از آمار مربوط به کاربران ثبت‌نامی با آن کد دعوت ارسال می‌شود. اگر هنوز کد دعوتی ندارید، برای شروع استفاده از طرح معرفی دوستان می‌توانید با استفاده از «ایجاد کد دعوت»، یک کد دعوت بسازید.
+
+ برای ساخت پیوند از روی کد دعوت، آن را در این آدرس قرار دهید:
+https://nobitex.ir/signup/?refcode=CODE
+فهرست کدهای دعوت
+curl -X GET 'https://apiv2.nobitex.ir/users/referral/links-list' \
+  --header 'Authorization: Token yourTOKENhereHEX0000000000'
+درخواست: POST /users/referral/links-list
+محدودیت فراخوانی: ۵۰ درخواست در هر ۱۰ دقیقه
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+links	list of ReferralLink	فهرست کدهای دعوت این کاربر	[{...ReferralLink...}, ...]
+شی ReferralLink
+فیلد	نوع	توضیحات	نمونه
+id	int	شناسه یکتای لینک	1001
+referralCode	string	کد دعوت	40404
+createdAt	datetime	تاریخ ایجاد کد	2020-07-15T11:32:38.326809+00:00
+userShare	int	سهم کاربر معرف از کارمزد معاملات کاربر دعوت شده	20
+friendShare	int	سهم کاربر دعوت شده از کارمزد معاملات خود	10
+description	string	توضیحات اختیاری کاربر برای این کد	Shared on Instagram page X
+statsRegisters	int	آمار: کاربران ثبت‌نام کرده با این کد	20
+statsTrades	int	آمار: مجموع تعداد معاملات کاربران ثبت‌نام کرده با این کد	240
+statsProfit	monetary: IRR	آمار: مجموع ریالی درآمد کاربر از این کد دعوت	3200000
+ایجاد کد دعوت
+curl -X GET 'https://apiv2.nobitex.ir/users/get-referral-code' \
+--header 'Authorization: Token yourTOKENhereHEX0000000000'
+برای ایجاد یک کد دعوت جدید برای کاربر، از «ایجاد کد دعوت» استفاده نمایید.
+
+درخواست: POST /users/referral/links-add
+محدودیت فراخوانی: ۵ درخواست در هر دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+friendShare	int	0	سهم کارمزد اهدایی به دوست دعوت شده با این کد	10
+حالت‌های خطا
+کد خطا	توضیحات
+InvalidGivebackShare	سهم کارمزد دوست قابل قبول نیست. پارامتر friendShare را بررسی کنید.
+TooManyReferralLinks	سهمیه ۳۰ تایی کدهای دعوت قابل ساخت برای هر کاربر به پایان رسیده است.
+ReferralCodeUnavailable	امکان ایجاد کد دعوت در حال حاضر وجود ندارد.
+ReferralCodeExists	خطایی در ثبت کد دعوت رخ داده است.
+وضعیت دعوت کاربر
+curl -X GET 'https://apiv2.nobitex.ir/users/referral/referral-status' \
+--header 'Authorization: Token yourTOKENhereHEX0000000000'
+برای اطلاع از این که کاربر فعلی توسط کاربر دیگری به نوبیتکس دعوت شده است یا خیر، از «وضعیت دعوت کاربر» استفاده نمایید.
+
+درخواست: POST /users/referral/referral-status
+محدودیت فراخوانی: ۵۰ درخواست در هر ۱۰ دقیقه
+پارامترهای پاسخ
+پارامتر	نوع	توضیحات	نمونه
+hasReferrer	boolean	آیا کاربر توسط کاربر دیگری دعوت شده است؟	true
+ثبت معرف کاربر
+curl -X GET 'https://apiv2.nobitex.ir/users/referral/set-referrer' \
+  --header 'Authorization: Token yourTOKENhereHEX0000000000'
+کد دعوت باید در زمان ثبت‌نام توسط کاربر وارد شده یا با استفاده از پیوند دعوت به صورت خودکار پر شود. با این حال تا ۲۴ ساعت پس از ثبت‌نام نیز امکان ثبت معرف توسط کاربر با استفاده از این API وجود دارد. منظور از کاربر معرف، کاربری است که کاربر فعلی را دعوت نموده است.
+
+درخواست: POST /users/referral/set-referrer
+محدودیت فراخوانی: ۵۰ درخواست در هر ۱۰ دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+referrerCode	string	الزامی	کد دعوت کاربر دعوت کننده	40404
+حالت‌های خطا
+کد خطا	توضیحات
+ReferrerChangeUnavailable	بیش از ۲۴ ساعت از ثبت‌نام کاربر گذشته است و تعریف معرف دیگر ممکن نیست.
+احراز هویت
+روش پیشنهادی دریافت توکن
+روش پیشنهادی نوبیتکس برای دریافت توکن استفاده از API، دریافت آن از پنل کاربری است. برای دریافت توکن می‌توانید با مراجعه به پنل کاربری خود در نوبیتکس، از بخش پروفایل وارد صفحه تنظیمات شده و توکن خود را دریافت نمایید. در صورتی که گزینه «مرا به خاطر بسپار» را در هنگام ورود به نوبیتکس انتخاب کرده باشید، این توکن تا ۳۰ روز یا زمان لاگ‌اوت شما از نوبیتکس معتبر خواهد ماند.
+
+در ادامه روش دریافت خودکار توکن با استفاده از کد توضیح داده می‌شود. معمولاً دریافت خودکار توکن ضروری نیست و روش پیشنهادی ما برای اغلب کاربران دریافت مستقیم توکن از پنل کاربری است. تنها در صورتی که با مخاطرات ذخیره گذرواژه خود در کد و روش‌های امن این کار آشنا هستید، در استفاده از API مهارت دارید، و از طرفی نیاز به دریافت کاملاً خودکار توکن دارید، از API دریافت توکن استفاده نمایید.
+
+همین طور پیشنهاد می‌شود که گام‌های اولیه توسعه کد خود را با دریافت توکن از پنل انجام دهید تا با فرآیند استفاده از API نوبیتکس بیشتر آشنا شوید و تنها در صورت نیاز و در گام نهایی‌سازی کد خود اقدام به خودکارسازی دریافت توکن نمایید. لازم به توضیح است که به دلیل مسائل امنیتی مانند شناسایی دوعاملی و کپچا و ... برای دریافت خودکار توکن باید به دقت مستندات این بخش را مطالعه نمایید.
+
+ورود - دریافت توکن
+برای دریافت توکن، از این کد استفاده کنید:
+
+curl 'https://apiv2.nobitex.ir/auth/login/' \
+  -X POST \
+  --header "Content-Type: application/json" \
+  --header "X-TOTP: <Your TOTP value>" \
+  --header "User-Agent: TraderBot/<Your bot version and name>" \
+  --data $'{"username":"name@example.com","password":"secret-password-1234","captcha":"api"}'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "success",
+    "key": "db2055f743c1ac8c30d23278a496283b1e2dd46f",
+    "device": "AlRyansW"
+}
+دریافت توکن به صورت خودکار و با ارسال درخواست به /auth/login/ صورت می‌گیرد. این تنها APIی است که نیاز دارید به آن نام کاربری و رمز عبور خود را ارسال کنید. تمامی دیگر APIها از توکن به جای رمز عبور برای احراز هویت استفاده می‌کنند. توکن‌های صادر شده بعد از چهار ساعت منقضی می‌شوند و باید مجددا با ارسال درخواست لاگین، توکن جدیدی دریافت کنید. در صورتی که نیاز به ایجاد توکن‌های بلند مدت دارید، از پارامتر remember=yes استفاده کنید تا توکن ایجاد شده به مدت سی روز معتبر بماند. توجه داشته باشید، در صورتی که قصد استفاده از وب سرویس بدون ورود کپچای تصویری را دارید، نیاز است مقدار captcha حتما برابر api تنظیم شود و کد دوعاملی بر روی حساب کاربری تنظیم گردد و مقدار لحظه ای آن در هدر ریکویست ارسال شود. همینطور مقدار هدر User-Agent را مطابق الگوی TraderBot/XXXXX ارسال نمایید، که بخش XXXXX هر نام یکتایی است که می‌توانید برای بات خود انتخاب کنید. جهت تنظیم کد دوعاملی، توضیحات دقیق‌تر را از اینجا مطالعه فرمایید.
+
+درخواست: /POST /auth/login
+محدودیت فراخوانی: ۳۰ درخواست در هر ۱۰ دقیقه
+پارامترهای ورودی
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+username	string	الزامی	ایمیل کاربر	name@example.com
+password	string	الزامی	گذرواژه کاربر	secret-password-1234
+remember	string	no	آیا توکن بلند مدت صادر شود؟	yes یا no
+captcha	string	الزامی	کپچا	api
+پارامترهای هدر
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+X-TOTP	string	الزامی	کد دوعاملی	123456
+User-Agent	string	الزامی	ایجنت	TraderBot/1.0.0
+نکات و ملاحظات
+دقت نمایید که انتهای آدرس url ارسال درخواست، حتماً باید / گذاشته شود.
+توکن‌های دریافت شده از این روش، بعد از اتمام زمان اعتبار یا انجام عملیات لاگ‌اوت منقضی می‌شوند. زمان پیش‌فرض اعتبار توکن چهار ساعت است که می‌توانید با استفاده از پارامتر remember توکن‌هایی با زمان اعتبار یک ماه دریافت نمایید.
+برای لاگین و دریافت توکن، حتماً باید از آی‌پی ایران درخواست ارسال شود. در غیر این صورت، خطای 429 برگردانده می‌شود. بدیهی است که استفاده از هر VPN یا VPS خارجی، منجر به این خطا خواهد شد. در حالت استفاده از آی‌پی ایران می‌توانید مقدار کپچا را در درخواست برابر api مقداردهی کنید.
+در صورت مشکل در دریافت توکن، می‌توانید مطابق روش پیشنهادی دریافت توکن از توکن‌‌های موجود در تنظیمات پروفایل خود استفاده کنید.
+سوالات متداول دریافت توکن
+آیا نوبیتکس توکن بلند مدت هم ارائه می‌دهد؟
+در نوبیتکس می‌توانید توکن‌هایی با تاریخ انقضای حداکثر یک ماه دریافت نمایید. در صورتی که گزینه «مرا به خاطر بسپار» را در زمان لاگین به سایت نوبیتکس انتخاب نمایید، توکنی که در بخش پروفایل دریافت می‌کنید برای مدت یک ماه معتبر خواهد بود. در صورتی که از API دریافت توکن استفاده می‌کنید، می‌توانید از پارامتر remember استفاده کنید. مد نظر داشته باشید که در صورت انجام عملیات لاگ‌اوت از حساب خود در سایت یا API توکن شما دیگر معتبر نخواهد ماند.
+
+من با استفاده از گوگل در نوبیتکس ثبت نام کرده‌ام. چگونه می‌توانم با API کار کنم؟
+روش پیشنهادی دریافت توکن، دریافت آن از پنل کاربری است و با این روش تمام کاربران مستقل از روش ورود به نوبیتکس می‌توانند توکن خود را مشاهده و دریافت نمایند. کاربرانی که با استفاده از حساب گوگل در نوبیتکس ثبت‌نام کرده باشند و بخواهند از روش خودکار دریافت توکن استفاده کنند، می‌توانند از امکان فراموشی رمز عبور استفاده کرده و رمز جدید برای حساب خود تعیین و پس از آن اقدام به استفاده از API نمایند.
+
+در هنگام لاگین با خطای MissingCaptcha روبرو شده‌ام. مشکل چیست؟
+مطابق روش پیشنهادی دریافت توکن، برای دریافت توکن به پنل کاربری خود در سایت، بخش «پروفایل: تنظیمات» مراجعه نمایید. اگر از روش خودکار دریافت توکن استفاده می‌کنید، مستندات مربوطه را با دقت مطالعه نمایید.
+
+در هنگام لاگین با خطای MissingOTP روبرو شده ام. چگونه این مشکل حل میشود؟
+هنگامی که شناسایی دوعاملی حساب شما فعال باشد، در هنگام استفاده از API نیز می‌بایست این حالت حفظ شده و رمز یکبار مصرف ارسال گردد. این کار از طریق ارسال این رمز با استفاده از پارامتر X-TOTP امکان‌پذیر خواهد بود. تولید کد دوعاملی با استفاده از فرمول استانداردی در کد ممکن است.
+
+خروج - سوزاندن توکن
+برای خروج یا سوزاندن توکن، از این کد استفاده کنید:
+
+curl -X POST 'https://apiv2.nobitex.ir/auth/logout/' \
+--header 'Authorization: Token yourTOKENhereHEX0000000000'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "detail": "خروج با موفقیت انجام شد.",
+    "message": "خروج با موفقیت انجام شد."
+}
+درخواست: /POST /auth/logout
+سود و زیان
+«پرتفو» یا «پنل سود و زیان» کاربر، گزارشی است که با توجه به معاملات یا افزایش و کاهش قیمت رمزارزها در مارکت میزان سود یا ضرر بدست آمده و درصدهای آنها را نسبت به قیمت خریداری شده (موجودی) نمایش میدهد.
+
+در حال حاضر این اطلاعات در پرتفو هر کاربر ارائه می‌شود:
+
+سود و زیان روزانه هفته گذشته
+سود زیان کل به صورت روزانه در هفته گذشته
+سود و زیان کل ماه گذشته
+ توجه: این ویژگی به صورت بتا عرضه شده است
+سود و زیان روزانه هفته گذشته
+curl -X POST 'https://apiv2.nobitex.ir/users/portfolio/last-week-daily-profit' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "data": [
+        {
+            "report_date": "2021-06-30",
+            "total_profit": 0,
+            "total_profit_percentage": 0,
+            "total_balance": 0
+        },
+        {
+            "report_date": "2021-07-01",
+            "total_profit": 0,
+            "total_profit_percentage": 0,
+            "total_balance": 0
+        },
+        {
+            "report_date": "2021-07-02",
+            "total_profit": 0,
+            "total_profit_percentage": 0,
+            "total_balance": 0
+        },
+        {
+            "report_date": "2021-07-03",
+            "total_profit": 0,
+            "total_profit_percentage": 0,
+            "total_balance": 0
+        },
+        {
+            "report_date": "2021-07-04",
+            "total_profit": 0,
+            "total_profit_percentage": 0,
+            "total_balance": 0
+        },
+        {
+            "report_date": "2021-07-05",
+            "total_profit": "0E-10",
+            "total_profit_percentage": "0E-10",
+            "total_balance": "4516559.9205900000"
+        },
+        {
+            "report_date": "2021-07-06",
+            "total_profit": "152570.1426800000",
+            "total_profit_percentage": "3.3780165737",
+            "total_balance": "4669130.0632700000"
+        }
+    ]
+}
+در صورتی که این ویژگی برای کاربر فعال نباشد با این جواب روبرو خواهند شد
+
+{
+    "status": "failed",
+    "code": "PortfolioDisabled",
+    "message": "Portfolio feature is not available for your user."
+}
+در صورتی که اطلاعاتی از سود و زیان کاربر وجود نداشته باشد
+
+{
+    "status": "failed",
+    "code": "LastWeekDailyProfitFail",
+    "message": "اطلاعاتی جهت نمایش وجود ندارد"
+}
+برای دریافت اطلاعات سود و زیان روزانه هفته گذشته از این درخواست استفاده نمایید:
+
+درخواست: POST users/portfolio/last-week-daily-profit
+محدودیت فراخوانی: 10 درخواست در 3 دقیقه
+نکات و ملاحظات:
+این API به صورت پیش فرض اطلاعات 7 روز گذشته را ارائه می دهد. برای دریافت اطلاعات ماهانه یا ۳۰ روز گذشته کافیست پارامتر monthly با مقدار true را به همراه این درخواست ارسال نمایید.
+
+سود زیان کل به صورت روزانه در هفته گذشته
+curl -X POST 'https://apiv2.nobitex.ir/users/portfolio/last-week-daily-total-profit' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "data": [
+        {
+            "report_date": "2021-06-27",
+            "total_profit": 0,
+            "total_profit_percentage": 0
+        },
+        {
+            "report_date": "2021-06-28",
+            "total_profit": 0,
+            "total_profit_percentage": 0
+        },
+        {
+            "report_date": "2021-06-29",
+            "total_profit": "4507274.2415300000",
+            "total_profit_percentage": "197.3669039200"
+        },
+        {
+            "report_date": "2021-06-30",
+            "total_profit": "9020935.7092505000",
+            "total_profit_percentage": "-307.6135237294"
+        },
+        {
+            "report_date": "2021-07-01",
+            "total_profit": "-5373087.9340195000",
+            "total_profit_percentage": "1302.7642741973"
+        },
+        {
+            "report_date": "2021-07-02",
+            "total_profit": "313580813.4306171358",
+            "total_profit_percentage": "-899.0991999052"
+        },
+        {
+            "report_date": "2021-07-03",
+            "total_profit": "313580813.4306171358",
+            "total_profit_percentage": "-899.0991999052"
+        }
+    ]
+}
+در صورتی که این ویژگی برای کاربر فعال نباشد با این جواب روبرو خواهند شد
+
+{
+    "status": "failed",
+    "code": "PortfolioDisabled",
+    "message": "Portfolio feature is not available for your user."
+}
+در صورتی که اطلاعاتی از سود و زیان کاربر وجود نداشته باشد
+
+{
+    "status": "failed",
+    "code": "LastWeekDailyProfitFail",
+    "message": "اطلاعاتی جهت نمایش وجود ندارد"
+}
+برای دریافت اطلاعات سود و زیان روزانه هفته گذشته از این درخواست استفاده نمایید:
+
+درخواست: POST users/portfolio/last-week-daily-total-profit
+محدودیت فراخوانی: 10 درخواست در 3 دقیقه
+سود و زیان کل ماه گذشته
+curl -X POST 'https://apiv2.nobitex.ir/users/portfolio/last-month-total-profit' \
+  -H 'Authorization: Token yourTOKENhereHEX0000000000'
+در صورت فراخوانی درست، پاسخ به این صورت خواهد بود:
+
+{
+    "status": "ok",
+    "data": {
+        "total_profit": "8987787000.0000000000",
+        "total_profit_percentage": "83.60700983438201160181729556"
+    }
+}
+در صورتی که این ویژگی برای کاربر فعال نباشد با این جواب روبرو خواهند شد
+
+{
+    "status": "failed",
+    "code": "PortfolioDisabled",
+    "message": "Portfolio feature is not available for your user."
+}
+در صورتی که اطلاعاتی از سود و زیان کاربر وجود نداشته باشد
+
+{
+    "status": "failed",
+    "code": "LastWeekDailyProfitFail",
+    "message": "اطلاعاتی جهت نمایش وجود ندارد"
+}
+برای دریافت اطلاعات سود و زیان روزانه هفته گذشته از این درخواست استفاده نمایید:
+
+درخواست: POST users/portfolio/last-month-total-profit
+محدودیت فراخوانی: 10 درخواست در 3 دقیقه
+سایر
+تنظیمات سیستم
+curl 'https://apiv2.nobitex.ir/v2/options'
+ساختار کلی پاسخ به صورت زیر خواهد بود. کلیدهای موجود در هر بخش در مستندات توضیح داده شده‌اند.
+
+{
+    "status": "ok",
+    "features": {
+        "fcmEnabled": true,
+        "chat": "livechat",
+        "walletsToNet": false,
+        "autoKYC": true,
+        "enabledFeatures": [
+            "PriceAlert",
+            "StopLoss",
+            "GiftCard",
+            "OCO"
+        ],
+        "betaFeatures": []
+    },
+    "coins": [
+        {
+            "coin": "rls",
+            "name": "Rial",
+            "defaultNetwork": "FIAT_MONEY",
+            "displayPrecision": "10",
+            "networkList": {
+                "FIATMONEY": {
+                    "addressRegex": "",
+                    "coin": "rls",
+                    "depositEnable": true,
+                    "isDefault": true,
+                    "minConfirm": 0,
+                    "name": "FIAT",
+                    "network": "FIAT_MONEY",
+                    "withdrawEnable": true,
+                    "withdrawFee": "4_000_0.00000000",
+                    "withdrawIntegerMultiple": "0.10000000",
+                    "withdrawMax": "500_000_000_0.00000000",
+                    "withdrawMin": "15_000_0.00000000"
+                }
+            },
+            "stdName": "﷼"
+        },
+        ... Other Coins Options
+    ],
+    "nobitex": {
+        "allCurrencies": [
+            "rls",
+            "btc",
+            ... Other currencies
+        ],
+        "activeCurrencies": [
+            "rls",
+            "btc",
+            "eth",
+            "ltc",
+            ... Other active currencies
+        ],
+        "xchangeCurrencies": [],
+        "topCurrencies": [
+            "btc",
+            "eth",
+            "usdt",
+            "doge",
+            "shib",
+            "trx",
+            "ada",
+            "ltc",
+            "xrp"
+        ],
+        "testingCurrencies": [
+            "hbar"
+        ],
+        "withdrawLimits": {
+            "normal": {
+                "dailyCoin": "0",
+                "dailyRial": "0",
+                "dailySummation": "0",
+                "monthlySummation": "0"
+            },
+            "level0": {
+                "dailyCoin": "0",
+                "dailyRial": "0",
+                "dailySummation": "0",
+                "monthlySummation": "0"
+            },
+            "44": {
+                "dailyCoin": "1000000000",
+                "dailyRial": "200000000",
+                "dailySummation": "1000000000",
+                "monthlySummation": "15000000000"
+            },
+            ... Other withdraw options
+        },
+        "minOrders": {
+            "rls": "3000000",
+            "usdt": "11",
+            "2": "3000000",
+            "13": "11"
+        },
+        "amountPrecisions": {
+            "BTCIRT": "0.000001",
+            "BTCUSDT": "0.000001",
+            "ETHIRT": "0.00001",
+            ... Other amount precisions
+        },
+        "pricePrecisions": {
+            "BTCIRT": "10",
+            "BTCUSDT": "0.01",
+            "ETHIRT": "10",
+            ... Other market precisions
+        },
+        "giftCard": {
+            "physicalFee": "360000"
+        }
+    }
+}
+عملکرد سیستم نوبیتکس بر اساس پارامترهای مختلف تنظیم می‌شود که با استفاده از API «تنظیمات سیستم» می‌توانید مقادیر این پارامترها را دریافت نمایید. مواردی مانند رمزارزهای فعال، حداقل معامله در هر بازار، پله‌های کارمزد، سقف برداشت و بسیاری اطلاعات مفید دیگر از این طریق در دسترس شما قرار خواهد داشت. پاسخ در دو کلید nobitex شامل تنظیمات کلی سیستمی، و کلید coins شامل تنظیمات مخصوص هر رمزارز بازگردانده می‌شود. همچنین هر رمزارز دارای چندین «شبکه» است که برخی تنظیمات ممکن است فقط در سطح شبکه تعریف شوند یا در سطح رمزارز به صورت عمومی وجود داشته باشند ولی در بعضی شبکه‌های آن رمزارز متفاوت بوده و بازتعریف شوند.
+
+درخواست: GET /v2/options
+نیاز به ارسال توکن: ندارد
+پارامتر ورودی: ندارد
+رمزارز بیبی‌دوج به خاطر رعایت برخی از نکات فنی در اپلیکیشن‌های قدیمی در خروجی‌های این API لیست نمیشود.
+پارامترهای پاسخ - features
+کلید	نوع	توضیحات
+fcmEnabled	bool	وضعیت فعال بودن FCM
+autoKYC	bool	وضعیت فعال بودن احراز خودکار
+enabledFeatures	list of str	لیست Featureهای فعال
+betaFeatures	list of str	لیست featureهای بتا
+پارامترهای پاسخ - nobitex
+کلید	نوع	توضیحات
+allCurrencies	list of str	نماد تمام رمزارزهای موجود در بازارها
+activeCurrencies	list of str	نماد رمزارزهای اصلی و سطح یک
+xchangeCurrencies	list of str	نماد رمزارزهای صرافی
+topCurrencies	list of str	رمزارزهای برتر بازار
+testingCurrencies	list of str	رمزارزهای در حال توسعه و آزمایش
+withdrawLimits	dict	محدودیت های روزانه و ماهانه در سطوح مختلف
+minOrders	dict	حداقل مبلغ سفارش ریالی و تتری
+amountPrecisions	dict	دقت اعشار مقدار در بازارهای مختلف
+pricePrecisions	dict	دقت اعشار قیمت در بازارهای مختلف
+giftCard	dict	هزینه چاپ گیفت کارتهای فیزیکی
+پارامترهای پاسخ - Coins
+فیلد	نوع	توضیحات	نمونه
+coin	str	نماد یکتای رمزارز، معمولاً با حروف کوچک	rls یا btc یا eth یا …
+name	str	نام انگلیسی رمزارز	Bitcoin یا TRON یا Dogecoin یا …
+default_network	str	شبکه پیش‌فرض رمزارز، یکی از کلیدهای NetworkOptions آن رمزارز	FIAT_MONEY یا BTC یا BSC یا …
+network_list	dict	یک دیکشنری از شبکه‌های مختلف این رمزارز، با کلیدهای نام انگلیسی هر شبکه و مقادیر از نوع NetworkOptions	
+displayPrecision	str	دقت اعشار پیش‌فرض نمایش مقادیر این رمزارز	0.0001 یا 0.1 یا 1
+stdName	str	عنوان رمز ارز	ریال
+پارامترهای پاسخ - Network
+فیلد	نوع	توضیحات	نمونه
+network	str	نماد یکتای شبکه، معمولاً با حروف بزرگ	FIAT_MONEY یا BTC یا BSC یا …
+name	str	نام انگلیسی خوانای شبکه	BTC یا ERC20 یا …
+isDefault	boolean	آیا این شبکه پیش‌فرض برای این رمزارز در نوبیتکس است؟	false
+beta	boolean	آیا این شبکه هنوز در حالت آزمایشی است؟	false
+addressRegex	str	الگوی آدرس‌ها در این شبکه	^0x[0-9A-Fa-f]{40}$
+memoRequired	boolean	آیا تراکنش روی این شبکه نیازمند ممو است؟	false
+memoRegex	str	در صورت وجود، ممو باید چه الگویی داشته باشد؟	^[0-9A-Za-z]{1,28}$
+depositEnable	boolean	آیا واریز رمزارز روی این شبکه فعال است؟	true
+minConfirm	int	حداقل تعداد کانفیرم شبکه برای تایید اولیه واریز	1
+depositInfo	dict	فهرست پارامترهای واریز	{"standard": {"depositMin": "0.01"}}
+depositInfo.standard.depositMin	monetary	حداقل مقدار واریز این رمزارز روی شبکه	0
+depositInfo.standard.depositMax	monetary	حداکثر مقدار واریز این رمزارز روی شبکه	1000
+withdrawEnable	boolean	آیا برداشت رمزارز روی این شبکه فعال است؟	false
+withdrawIntegerMultiple	monetary	حداقل مقدار تغییر مقدار قابل برداشت	0.000001
+withdrawFee	monetary	کارمزد برداشت	0.1
+withdrawMin	monetary	حداقل مقدار قابل برداشت	0.1
+withdrawMax	monetary	حداکثر مقدار قابل برداشت	1000
+ملاحظات عمومی
+راهنمای اشکال‌یابی
+به نوع درخواست دقت کنید، احتمال دارد درخواست از نوع HTTP POST باشد و شما از GET استفاده کرده باشید.
+آدرس API را مجددا بررسی نمایید. همچنین به وجود یا عدم وجود / در انتهای آدرس دقت کنید.
+پاسخ‌های موفق
+نمونه پاسخ موفق:
+
+{
+  "status": "ok",
+  "otherFields": "..."
+}
+در تمامی API ها در صورتی که عملیات مد نظر به درستی انجام شده باشد، پاسخ به صورت یک شی در قالب JSON بازگردانده می‌شود و با وضعیت HTTP 200 است. این پاسخ در حالت موفق یک کلید status با مقدار ok دارد. بنا به API مورد استفاده ممکن است یک یا چند کلید دیگر نیز در این پاسخ بازگردانده شود.
+
+پاسخ‌های ناموفق
+نمونه پاسخ ناموفق:
+
+{
+  "status": "failed",
+  "code": "ErrorCode",
+  "message": "Human-readable error message"
+}
+در تمامی APIها در صورتی که به هر دلیل امکان پردازش و انجام آن درخواست وجود نداشته باشد، یک پاسخ ناموفق بازگردانده می‌شود. پاسخ‌های ناموفق به دو صورت هستند، یا با کد خطای HTTP مشخص می‌شوند که مطابق با معانی وضعیت در پروتکل HTTP قابل تفسیر هستند.
+
+در صورتی که پارامترهای ورودی قابل تفسیر باشند، ولی عملیات مد نظر قابل انجام نباشد، پاسخ با وضعیت HTTP 200 بازگردانده می‌شود، و توضیحات تکمیلی به صورت یک شی در قالب JSON خواهد بود که مقدار کلید status آن برابر failed است. کلید code در این شرایط، خطای دقیق رخ داده شده را مشخص می‌کند که در بخش «حالت‌های خطا» در توضیحات هر API فهرستی از کدهای خطای ممکن و توضیحات آن ارائه شده است. معمولاً در یک کلید message توضیح بیشتری در مورد آن خطا نیز ارائه می‌شود که جهت رفع عیب یا نمایش مستقیم به کاربر نهایی می‌تواند مفید باشد.
+
+ پیشنهاد می‌شود برای نمایش پیام خطا از مقدار code استفاده شود و طبق زبان کاربر نهایی، پیام مناسبی به وی نمایش داده شود. مقدار message تنها برای کمک به اشکال‌یابی ارائه می‌شود و برای نمایش به کاربر بهینه نیست.
+برخی وضعیت‌های پرکاربرد
+کد HTTP	عنوان	توضیحات	‌
+200	OK	درخواست دریافت و پاسخ داده شده، وضعیت اصلی درخواست در فیلد status پاسخ مشخص می‌شود	🐱
+400	Bad Request	پارامترهای درخواست نادرست یا ناکافی است به طوری که امکان بررسی بیشتر و پاسخ بهتر به آن وجود ندارد	🐱
+401	Unauthorized	کاربر احراز هویت نشده است	🐱
+403	Forbidden	انجام این عملیات مجاز نمی‌باشد	🐱
+404	Not Found	آدرس یا شی مد نظر وجود ندارد	🐱
+422	Unprocessable Content	پارامترهای درخواست درست است، اما از نظر معنایی درخواست قابل انجام نیست	🐱
+429	Too Many Requests	تعداد درخواست بیشتر از اندازه مجاز است	🐱
+500	Internal Server Error	مشکلی به صورت موقت در سرور نوبیتکس رخ داده است	🐱
+صفحه‌بندی
+پارامترهای زیر در API های دریافت لیست دارای صفحه‌بندی قابل استفاده است:
+
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+page	int	اختیاری	شماره صفحه	2
+pageSize	int	اختیاری	اندازه صفحه	10
+ برای page و pageSize مقادیر بین 1 تا 100 قابل قبول است.
+ اندازه صفحه پیش‌فرض برای هر API جداگانه مشخصetim می‌شود، اما به طور عمومی 50 عدد در صفحه است.
+فیلتر زمانی
+پارامترهای زیر در API های دریافت لیست قابل فیلتر زمانی قابل استفاده است:
+
+پارامتر	نوع	پیش‌فرض	توضیحات	نمونه
+from	date	اختیاری	از تاریخ	2022-05-12
+to	date	اختیاری	تا تاریخ	2022-07-22
+مقادیر پولی (monetary)
+در موارد متعددی پارامترهای ورودی درخواست‌ها از نوع مقدار پولی یا monetary مشخص شده است. برای داشتن بالاترین دقت، پیشنهاد می‌شود که این مقادیر را به صورت رشته‌ای ارسال نمایید، چرا که استفاده از انواع داده‌ای مانند float در کاربردهای دقیق مالی توصیه نمی‌شود.
+
+اعتبارسنجی دو عاملی
+در صورتی که اعتبارسنجی دو عاملی (2 Factor Authentication) را برای حساب خود فعال کرده باشید، باید در هنگام استفاده از برخی APIها، به خصوص در هنگام دریافت توکن از API لاگین، علاوه بر سایر پارامترها، رمز یک‌بار مصرف خود را نیز در هدرهای درخواست به این صورت ارسال نمایید: X-TOTP: 123456.
+
+محدودیت فراخوانی
+نمونه پاسخ ناموفق:
+
+{
+  "status": "failed",
+  "code": "TooManyRequests",
+  "message": "تعداد درخواست شما بیش از حد معمول تشخیص داده شده. لطفا 12 ثانیه صبر نمایید.",
+  "backOff": 12,
+  "limit": 60
+}
+برخی از APIهای نوبیتکس دارای محدودیت تعداد فراخوانی در هر بازه‌ی زمانی هستند. با این حال اگر شما به صورت معمولی و مشابه استفاده‌ی متداول کاربران از API استفاده کنید، با این محدودیت‌ها مواجه نخواهید شد. محدودیت‌ها به ازای هر API مستقلا محاسبه و اعمال می‌شوند. محدودیت‌ها معمولا بر اساس آدرس IP درخواست دهنده و در برخی موارد هم بر اساس کاربر (توکن) درخواست دهنده می‌باشند.
+
+در صورتی که تعداد درخواست‌ها از این محدودیت فراتر رود، خطای TooManyRequests با کد 429 در پاسخ بازگردانده می‌شود که همراه با توضیحات مشخص در خصوص آن محدودیت است.
+
+برای ارسال مجدد درخواست به همان آدرس، لازم است به اندازه مقدار مشخص‌شده در پارامتر backOff (به واحد ثانیه) صبر کنید. پارامتر limit سقف مجاز تعداد درخواست را در بازه مشخص‌شده نشان می‌دهد.
+
+نادیده گرفتن محدودیت فراخوانی به دفعات زیاد و تکرار بی‌امان درخواست‌ها، موجب مسدودی توکن کاربر به مدت ۲ دقیقه در تمامی APIها خواهد شد.
+محدودیت‌های استفاده از APIها بر اساس ظرفیت پردازشی نوبیتکس یا به منظور حفظ امنیت برای هر کاربر تعیین می‌شود تا کیفیت خدمات برای همه کاربران به‌طور یکنواخت حفظ گردد. در زمان‌های ازدحام شدید بازار، به‌منظور ایجاد فرصت برابر برای همه کاربران، ممکن است محدودیت فراخوانی یک API به ازای یک کاربر کاهش یابد.
+
+اگر به صورت مداوم با محدودیتی در استفاده از یک API مواجه می‌شوید و بر این باور هستید که افزایش تعداد فراخوانی مجاز آن API مفید خواهد بود، لطفا از طریق ایجاد یک مسئله در گیت‌هاب درخواست خود را با ما در میان بگذارید.
+
+محدودیت مشترک APIهای سفارش‌گذاری
+توجه داشته باشید که تمامی API‌های مربوط به ثبت سفارش دارای محدودیت مشترک روی تعداد سفارش‌هایی که ثبت می‌شوند هستند. برای مثال، اگر همزمان هم در بازار اسپات و هم در بازار تعهدی سفارش ثبت می‌کنید، محدودیت فراخوانی شامل مجموع سفارش‌های ثبت شده در این دو بازار می‌شود.
+
+مقدار محدودیت مشترک: ۳۰۰ درخواست در ۱۰ دقیقه
+
+محدودیت احراز ناموفق
+به منظور حفاظت از امنیت حساب‌های کاربران، در صورتی که بیش از ۱۰۰ درخواست با توکن اشتباه (یا منقضی) از یک آدرس IP در مدت زمان کمتر از ۳۰ دقیقه ارسال شود، آن IP تا پایان این بازه زمانی مسدود خواهد شد. برای پیشگیری از بروز این مسئله، توصیه می‌شود فرایند تولید و تجدید توکن خود را مطابق با توضیحات احراز هویت مدیریت نمایید.
+
+حالت متداول و Pro
+در برخی از درخواست‌ها جهت حفاظت بهتر از کاربران، برخی محدودیت‌ها اعمال می‌شود. در چنین مواردی در بخش ملاحظات این محدودیت‌ها توضیح داده شده و در انتهای آن عبارت «غیرفعال در حالت Pro» ذکر شده است. با ارائه پارامتر pro به مقدار yes به عنوان ورودی، این محدودیت برای آن درخواست غیرفعال می‌شود. با این حال دقت کنید که محدودیت‌های حالت متداول برای جلوگیری از حالت‌های خاص و اشتباهات رایج تعبیه شده است و تنها در صورت نیاز و آگاهی از تبعات احتمالی آن، اقدام به فعال‌سازی حالت Pro نمایید.
+
+سوالات متداول
+سوالی در مورد لاگین و دریافت توکن دارم
+در این زمینه ابتدا مطالعه توضیحات احراز هویت و توکن، راهنمای شروع به کار با API و روش پیشنهادی دریافت توکن پیشنهاد می‌شود. سپس می‌توانید در بخش سوالات متداول دریافت توکن برخی سوالات متداول در این زمینه را مشاهده کنید.
+
+آیا نوبیتکس محیط آزمایشی (Test) دارد؟
+بله، شما میتوانید برای استفاده از کلیه امکانات بازار نوبیتکس و همچنین api ها از محیط آزمایشی نوبیتکس به آدرس‌های ذیل استفاده نمائید:
+
+آدرس نوبیتکس آزمایشی : https://testnet.nobitex.ir
+
+آدرس api آزمایشی : https://testnetapiv2.nobitex.ir
+
+آیا برای استفاده از apiها محدودیتی وجود دارد؟
+بله، برای مثال شما حتماً باید از IPهای ایران درخواست خود را ارسال نمائید، و یا محدودیت‌های مخصوص به هر api که در توضیحات هر کدام از endpointها آورده شده است.
+
+فرمت استفاده شده برای تاریخ چیست؟
+ساعت یونیکس Unix Time یکی از مقیاس اندازه‌گیری زمان آنی است. این عدد که تعداد ثانیه‌ها از ساعت ۰۰:۰۰:۰۰ ساعت هماهنگ جهانی اول ژانویه ۱۹۷۰ است، شامل ثانیه‌های کبیسه نمی‌شود. برای زمان‌های قبل از اول ژانویه از اعداد منفی استفاده می‌شود.
+
+به عنوان مثال [۰۱/۰۱/۱۹۷۰ ۰۰:۰۰:۰۰] برابر با صفر (۰) و [۰۱/۰۱/۱۹۷۰ ۰۰:۰۱:۰۰] برابر با شصت(۶۰) است.
+
+فرمول اصلی آن به این صورت می‌باشد:
+
+تعداد (روزهای گذشته از اول ژانویه ۱۹۷۰) × ۸۶۴۰۰(تعداد ثانیه‌های هر روز)
+
+به منظور مطالعه بیشتر به آدرس زیر مراجعه نمائید https://en.wikipedia.org/wiki/Unix_time
+
+آیا برای apiها کدهای نمونه تهیه شده است؟
+بله، collection کلیه api ها برای استفاده در برنامه postman تهیه و از اینجا میتوانید به آن دسترسی داشته باشید. در این collection شما میتوانید نمونه فراخوانی هر کدام از این apiها را به زبان‌های مختلف برنامه نویسی نظیر پی اچ پی، پایتون، سی شارپ و … در این مجموعه مشاهده کرده و آن را در سیستم خود اجرا نمائید.

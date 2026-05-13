@@ -1,0 +1,26 @@
+{
+    "status": "OK",
+    "status_det": "OK",
+    "data": {
+        "status": "OK",
+        "auth": "L4TG+paZ0Qk1C0tf4dRRAB0cY2Dol7g9LJhNpZdm/NWiRGZVfjFx1PpuzNRUMfJ/xlH5mshY/69Dkyg3QlGbf4LILlddxSdovFc2aWsyeQx0Hy9TvMVFun/dXDMMuK5dWgH8u3O/yolsSpdlr+aVozmJ2x3JCEAuGMcgAkygxyI=",
+        "user": {
+            "user_guid": "u0FFUmK0cb1f431f041459e5c3f956b1",
+            "first_name": "\u062d\u0633\u0627\u0645",
+            "last_name": "\u0648\u0635\u0627\u0644",
+            "phone": "989335533272",
+            "username": "Hessam_vesal",
+            "last_online": 1778187654,
+            "is_deleted": false,
+            "is_verified": false,
+            "online_time": {
+                "type": "Exact",
+                "exact_time": 1778187654
+            }
+        },
+        "timestamp": "1778187671"
+    },
+    "tmp": "995dvxozo5ou16ermfuysqsokunogcdq",
+    "auth": "bexldeqjwmutesjiypqxqzkmlhfhvdax",
+    "private": "-----BEGIN RSA PRIVATE KEY-----\nMIICXQIBAAKBgQCVH60j2gvQUrd6GfqrBXUmPKb2dQxCyYQKnYX1HpQkaGQ1yRyg\nm1W4slP25KPCRZxXg2gKp3MtJRDMEyDClj93YCpHyzc8Xif2xSA14sXl+33cpVrq\nT+/vMdcD8DvOZDcMO9KBfd/haXGzCNG5GbvVtuGpyhalp7X3ZZHHo5xS6QIDAQAB\nAoGAQWPB9roauw9CYBq7NbnvbERlTCX4KeMWcNcxEdKGUE6sPn+A+5YRqSsdMWKB\nwmLm0uMOwLk7gnzB2FK850ad7i1+X9o5o4OxHOivLxrhbstARrzSACdGJod3ZFgT\n41MZmX0NJFX0s5VP/9yJ0F3ldFP341S/ehtWkjl8MyTiL78CQQC3fNczxpDh0srz\n5GZh0snepj8iONAkqoQcMjezdHxAu/X14O9vTOTwF/+aknuswbI/fPgeost4ZPe3\npB9wESt/AkEA0A5KlpSfDkZjFxYs2jWt7NyoTb5+xGIJp3+tzqTp6ZrSXnQU2Lgc\nYznhElN0G1/79qwM+AilyKt6nwsbQTXVlwJBAJw/swJkFPw4hJsr5ANpfH4dE6YQ\nuy5+BgH8wXIPv79gUBMReNNOp6XMydzW4Ho8d42Y3bE48AuV71xyZlMITAECQBr3\nHzew/4RsHv+pAhsuBeLDHpUk8W0mf7XT2IUF3sNGK6nORb1o71T09XTYmB3MLO3l\nkrC6/jGp9/SRDfE/tvUCQQCwS+dGr/1Fg2UeXKlwe+cyGusSP33ii88B8f5Hqz1M\nFDrB4FSl9jhUOSJ5yPWQqBDIzSh9LDRqaUm6SVxup6AN\n-----END RSA PRIVATE KEY-----"
+}

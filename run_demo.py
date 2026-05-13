@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""
+Demo Runner - Run the trading bot in demo/paper trading mode.
+"""
+
+import sys
+import os
+import asyncio
+import signal
+import time
+from datetime import datetime
+
+# Add the project root to Python path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from app.config import get_settings
+from main import NobitexQuantTrader
+
+
+def setup_demo_environment():
+    """Setup environment for demo mode."""
+    # Ensure we're in paper trading mode
+    os.environ["TRADING_MODE"] = "paper"
+    print("Demo mode activated - Paper trading enabled")
+
+
+async def run_demo():
+    """Run the bot in demo mode."""
+    print("Starting Nobitex Quant Trader in Demo Mode")
+    print("=" * 50)
+    
+    # Setup demo environment
+    setup_demo_environment()
+    
+    # Get settings to show configuration
+    settings = get_settings()
+    print(f"Trading Mode: {settings.trading.mode.value}")
+    print(f"Symbols: {', '.join(settings.trading.symbols)}")
+    print(f"Timeframe: {settings.trading.timeframe.value}")
+    print(f"Update Interval: {settings.data.update_interval}s")
+    print(f"Risk Per Trade: {settings.trading.risk_per_trade:.2%}")
+    print(f"Enabled Strategies: {', '.join(settings.strategy.enabled_strategies)}")
+    print("=" * 50)
+    
+    # Create and start the bot
+    bot = NobitexQuantTrader()
+    
+    # Setup signal handlers for graceful shutdown
+    def signal_handler(signum, frame):
+        print(f"\nReceived signal {signum}, shutting down gracefully...")
+        asyncio.create_task(bot.stop())
+    
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    
+    try:
+        print("Initializing trading bot...")
+        await bot.start()
+    except KeyboardInterrupt:
+        print("\nManual interrupt received")
+        await bot.stop()
+    except Exception as e:
+        print(f"Error running demo: {e}")
+        import traceback
+        traceback.print_exc()
+        await bot.stop()
+        sys.exit(1)
+
+
+def show_demo_instructions():
+    """Show instructions for demo mode."""
+    print("""
+DEMO MODE INSTRUCTIONS:
+======================
+
+1. The bot will run in paper trading mode (no real trades)
+2. Market data will be simulated
+3. Strategies will generate signals
+4. Risk management will be applied
+5. Press Ctrl+C to stop the bot
+
+WHAT YOU'LL SEE:
+===============
+- Strategy initialization
+- Market data processing
+- Signal generation
+- Risk assessments
+- Trade executions (simulated)
+- Portfolio updates
+- Performance metrics
+
+The demo will run continuously until stopped.
+""")
+
+
+if __name__ == "__main__":
+    show_demo_instructions()
+    
+    try:
+        # Ask for confirmation
+        response = input("Start demo mode? (y/N): ")
+        if response.lower() not in ['y', 'yes']:
+            print("Demo cancelled.")
+            sys.exit(0)
+            
+        print("\nStarting demo mode...\n")
+        asyncio.run(run_demo())
+    except KeyboardInterrupt:
+        print("\nDemo interrupted by user.")
+        sys.exit(0)
+    except Exception as e:
+        print(f"Fatal error: {e}")
+        sys.exit(1)
