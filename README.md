@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 Nobitex Quant Trader
 
 <div align="center">
@@ -688,3 +689,6 @@ For questions and support:
 **Happy Trading! 📈**
 
 </div>
+=======
+# tadex
+>>>>>>> 5c15b18c3ca2634aa9b88587698eb1dfdd45f91d
